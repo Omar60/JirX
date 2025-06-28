@@ -1,9 +1,7 @@
-const { startMysticNameAnimation } = require("./startMysticNameAnimation");
-
 // Personaje Lottie - Narrador Interactivo
-const lottiePlayer = document.getElementById('lottiePlayer');
-const characterSpeech = document.getElementById('characterSpeech');
-const characterMessage = document.getElementById('characterMessage');
+let lottiePlayer = null;
+let characterSpeech = null;
+let characterMessage = null;
 
 // Variables para navegación (se inicializarán cuando el DOM esté listo)
 let navigationControls = null;
@@ -11,7 +9,8 @@ let prevButton = null;
 let nextButton = null;
 
 // Historia del narrador - Secuencia de mensajes CON CONTENIDO
-const storySequence = [    {
+const storySequence = [
+    {
         message: "¡Hola! Mi nombre es... 🐱 Haz clic en mí para comenzar esta historia especial...",
         action: "welcome",
         content: null,
@@ -474,16 +473,25 @@ function setupNavigation() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM cargado, inicializando...');
     
-    // Verificar que todos los elementos existan
+    // Inicializar todas las variables del DOM
+    lottiePlayer = document.getElementById('lottiePlayer');
+    characterSpeech = document.getElementById('characterSpeech');
+    characterMessage = document.getElementById('characterMessage');
+    
     const dynamicContainer = document.getElementById('dynamicContent');
-    const lottiePlayerElement = document.getElementById('lottiePlayer');
-    const speechBubble = document.getElementById('characterSpeech');
     
     console.log('Elementos encontrados:', {
-        dynamicContainer,
-        lottiePlayerElement,
-        speechBubble
+        lottiePlayer,
+        characterSpeech,
+        characterMessage,
+        dynamicContainer
     });
+    
+    // Verificar que los elementos críticos existen
+    if (!lottiePlayer || !characterSpeech || !characterMessage) {
+        console.error('Error: No se encontraron elementos críticos del DOM');
+        return;
+    }
       // Esperar a que Lottie se cargue
     setTimeout(() => {
         setupLottieInteractions();
@@ -494,11 +502,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         console.log('Mostrando mensaje inicial...');
         const firstMessage = storySequence[0];
-        if (firstMessage.useMysticName) {
-            showMysticMessage(firstMessage.message);
-        } else {
-            showCharacterMessageWithAdjustment(firstMessage.message);
+        
+        // Test de funcionalidad básica
+        console.log('Test: Mostrando mensaje básico primero');
+        if (characterMessage && characterSpeech) {
+            characterMessage.textContent = "¡Hola! Test de mensaje 🐱";
+            characterSpeech.classList.add('show');
+            console.log('Test básico aplicado');
         }
+        
+        // Luego aplicar el mensaje místico
+        setTimeout(() => {
+            if (firstMessage.useMysticName) {
+                showMysticMessage(firstMessage.message);
+            } else {
+                showCharacterMessageWithAdjustment(firstMessage.message);
+            }
+        }, 1000);
+        
         // Actualizar botones de navegación
         updateNavigationButtons();
     }, 2000);
@@ -797,6 +818,12 @@ function adjustSpeechBubble() {
 // Función para mostrar mensaje del gatito con ajuste automático y debug
 function showCharacterMessageWithAdjustment(message) {
     console.log('Mostrando mensaje del gatito:', message);
+    
+    if (!characterMessage || !characterSpeech) {
+        console.error('Error: characterMessage o characterSpeech no están definidos');
+        return;
+    }
+    
     characterMessage.textContent = message;
     adjustSpeechBubble();
     characterSpeech.classList.add('show');
@@ -807,11 +834,17 @@ function showCharacterMessageWithAdjustment(message) {
 function showMysticMessage(finalMessage) {
     console.log('Mostrando mensaje místico:', finalMessage);
     
+    if (!characterSpeech || !characterMessage) {
+        console.error('Error: characterSpeech o characterMessage no están definidos');
+        return;
+    }
+    
     // Mostrar la burbuja primero
     characterSpeech.classList.add('show');
     
-    // Establecer el mensaje inicial
-    characterMessage.textContent = finalMessage;
+    // Establecer el mensaje base para la animación
+    const baseMessage = "¡Hola! Mi nombre es ᚦᚱᚨᚾᚲ 🐱 Haz clic en mí para comenzar esta historia especial...";
+    characterMessage.textContent = baseMessage;
     
     // Iniciar la animación continua del nombre
     startMysticNameAnimation(characterMessage);
@@ -827,7 +860,7 @@ const enchantmentChars = [
 ];
 
 // Función para generar nombre místico aleatorio
-export function generateMysticName(length = 8) {
+function generateMysticName(length = 8) {
     let name = '';
     for (let i = 0; i < length; i++) {
         name += enchantmentChars[Math.floor(Math.random() * enchantmentChars.length)];
@@ -836,7 +869,35 @@ export function generateMysticName(length = 8) {
 }
 
 // Función para animar el nombre constantemente como en Minecraft
-export let nameAnimationInterval = null;
+let nameAnimationInterval = null;
+
+function startMysticNameAnimation(element) {
+    console.log('Iniciando animación mística para elemento:', element);
+    
+    // Limpiar animación anterior si existe
+    if (nameAnimationInterval) {
+        clearInterval(nameAnimationInterval);
+    }
+    
+    nameAnimationInterval = setInterval(() => {
+        const mysticName = generateMysticName(6);
+        const currentText = element.textContent;
+        
+        console.log('Texto actual:', currentText);
+        console.log('Nombre místico generado:', mysticName);
+        
+        // Mantener el resto del mensaje, solo cambiar el nombre
+        if (currentText.includes('Mi nombre es')) {
+            const beforeName = currentText.split('Mi nombre es')[0];
+            const afterName = currentText.split('🐱')[1] || ' 🐱 Haz clic en mí para comenzar esta historia especial...';
+            const newText = `${beforeName}Mi nombre es ${mysticName} 🐱${afterName}`;
+            element.textContent = newText;
+            console.log('Texto actualizado:', newText);
+        } else {
+            console.log('No se encontró "Mi nombre es" en el texto');
+        }
+    }, 150); // Cambiar cada 150ms
+}
 
 function stopMysticNameAnimation() {
     if (nameAnimationInterval) {
