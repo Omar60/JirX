@@ -905,3 +905,5 @@ function stopMysticNameAnimation() {
         nameAnimationInterval = null;
     }
 }
+
+// Final del archivo - Versión limpia
