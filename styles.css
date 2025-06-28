@@ -1,0 +1,672 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b94d4 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    /* Evitar scroll innecesario por animaciones */
+    max-width: 100vw;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Asegurar que las animaciones no causen scroll */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* Contenido dinámico */
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.dynamic-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding: 2rem;
+    text-align: center;
+}
+
+.dynamic-text {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 1rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+    border: 2px solid rgba(255, 192, 203, 0.5);
+    position: relative;
+    z-index: 10;
+}
+
+.dynamic-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dynamic-text h2 {
+    color: #667eea;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.dynamic-text p {
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.dynamic-text .signature {
+    font-style: italic;
+    color: #667eea;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(102, 126, 234, 0.3);
+    padding-top: 1rem;
+}
+
+
+.dynamic-text h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.dynamic-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+.dynamic-text .signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 1.5rem;
+}
+
+.message-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 1s ease-out 1s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.message-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #8b94d4, #764ba2);
+}
+
+.message-card h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.main-message {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.love-message, .confession-message {
+    margin: 2rem 0;
+}
+
+.love-message h3, .confession-message h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.confession-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+    padding: 0 0.5rem;
+}
+
+.reasons-list {
+    list-style: none;
+    padding: 0;
+}
+
+.reasons-list li {
+    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.1rem;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.reasons-list li:nth-child(1) { animation-delay: 2s; }
+.reasons-list li:nth-child(2) { animation-delay: 2.3s; }
+.reasons-list li:nth-child(3) { animation-delay: 2.6s; }
+.reasons-list li:nth-child(4) { animation-delay: 2.9s; }
+
+.reasons-list li::before {
+    content: '💖';
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.final-message {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,107,107,0.3);
+}
+
+.final-message p {
+    font-size: 1.2rem;
+    color: #667eea;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem !important;
+    color: #333 !important;
+    font-style: italic;
+}
+
+/* Corazones flotantes */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    color: rgba(255, 107, 107, 0.6);
+    font-size: 20px;
+    animation: float 6s infinite ease-in-out;
+}
+
+.heart::before {
+    content: '💖';
+}
+
+.heart:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.heart:nth-child(2) {
+    top: 20%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+.heart:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+.heart:nth-child(4) {
+    bottom: 10%;
+    right: 20%;
+    animation-delay: 3s;
+}
+
+.heart:nth-child(5) {
+    top: 50%;
+    left: 5%;
+    animation-delay: 4s;
+}
+
+/* Corazones interactivos */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.interactive-heart {
+    position: absolute;
+    color: #ff6b6b;
+    font-size: 24px;
+    animation: heartFloat 3s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Personaje Lottie - POSICIÓN LATERAL */
+.lottie-container {
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    z-index: 100;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    transition: all 0.3s ease;
+}
+
+.lottie-container:hover {
+    transform: scale(1.1);
+}
+
+#lottiePlayer {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    background: transparent;
+    box-shadow: none;
+}
+
+#lottiePlayer:hover {
+    transform: scale(1.05);
+}
+
+.character-speech-bubble {
+    position: absolute;
+    bottom: 140px;
+    right: -20px;
+    background: white;
+    padding: 12px 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    text-align: center;
+    min-width: 120px;
+    max-width: 250px;
+    white-space: normal;
+    border: 2px solid rgba(255, 192, 203, 0.5);
+    z-index: 101;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+.character-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 30px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+.character-speech-bubble.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Controles de navegación */
+.navigation-controls {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    opacity: 1; /* Cambiar de 0 a 1 para debug */
+    transition: opacity 0.3s ease;
+    z-index: 200;
+}
+
+.navigation-controls.show {
+    opacity: 1;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.95);
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+
+.nav-button:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.nav-button:active {
+    transform: scale(0.95);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
+}
+
+.nav-button:disabled:hover {
+    transform: none;
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
+}
+
+.prev-button {
+    animation: pulseLeft 2s infinite ease-in-out;
+}
+
+.next-button {
+    animation: pulseRight 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 20px rgba(102, 126, 234, 0);
+    }
+}
+
+/* Efecto de resaltado para texto en lectura */
+.reading-highlight {
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    animation: readingGlow 2s ease-in-out;
+}
+
+@keyframes readingGlow {
+    0%, 100% {
+        background-position: -100% 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
+}
+
+@keyframes pulseLeft {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-3px); }
+}
+
+@keyframes pulseRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .main-title {
+        font-size: 3rem;
+    }
+    
+    .message-card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .message-card h2 {
+        font-size: 2rem;
+    }
+    
+    .main-message, .confession-text {
+        font-size: 1rem;
+    }    /* Personaje Lottie centrado en móvil */
+    .lottie-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .character-speech-bubble {
+        font-size: 13px;
+        padding: 10px 14px;
+        bottom: 160px;
+        max-width: 85vw;
+        line-height: 1.3;
+    }
+    
+    .dynamic-content {
+        padding: 1rem;
+    }
+    
+    .dynamic-text {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .lottie-container {
+        bottom: 40px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+    }
+    
+    .character-speech-bubble {
+        bottom: 130px;
+        right: -10px;
+        max-width: 180px;
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+    
+    .dynamic-content {
+        padding: 1rem;
+        min-height: 40vh;
+    }
+    
+    .dynamic-text {
+        padding: 1.5rem;
+        margin: 0.5rem 0;
+        max-width: 90%;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.8rem;
+    }
+    
+    .dynamic-text p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .message-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .message-card h2 {
+        font-size: 1.8rem;
+    }    /* Personaje más pequeño en móviles pequeños */
+    .lottie-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .character-speech-bubble {
+        bottom: 110px;
+        max-width: 150px;
+        font-size: 12px;
+    }
+    
+    .dynamic-text {
+        padding: 1rem;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navigation-controls {
+        bottom: -45px;
+        gap: 10px;
+    }
+    
+    .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+}

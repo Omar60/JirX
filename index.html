@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo que quiero decirte</title>    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</head>
+<body>
+    <div class="container">        <div class="header">
+            <h1 class="main-title">Para Ti</h1>
+            <div class="subtitle">Algo importante que quiero que sepas</div>
+        </div>
+        
+        <div class="content">
+            <!-- El contenido ahora será mostrado dinámicamente por el gatito -->
+            <div id="dynamicContent" class="dynamic-content">
+                <!-- Aquí aparecerán los textos guiados por el gatito -->
+            </div>
+        </div>        
+        <div class="hearts-container" id="heartsContainer"></div>
+          <!-- Personaje Lottie - CENTRO DE LA EXPERIENCIA -->
+        <div class="lottie-container" id="lottieContainer">
+            <dotlottie-player 
+                id="lottiePlayer"
+                src="https://lottie.host/673d59bb-3263-4fa5-bfa9-693b417157b1/MJA5L9tUbA.lottie" 
+                background="transparent" 
+                speed="1" 
+                style="width: 200px; height: 200px" 
+                loop 
+                autoplay>
+            </dotlottie-player>
+            <div class="character-speech-bubble" id="characterSpeech">
+                <p id="characterMessage">¡Hola! 💕</p>
+            </div>
+            
+            <!-- Controles de navegación -->
+            <div class="navigation-controls" id="navigationControls">
+                <button class="nav-button prev-button" id="prevButton" title="Mensaje anterior">
+                    <span>◀</span>
+                </button>
+                <button class="nav-button next-button" id="nextButton" title="Siguiente mensaje">
+                    <span>▶</span>
+                </button>
+            </div>
+        </div>
+        </div>
+        
+        <div class="floating-hearts">
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
