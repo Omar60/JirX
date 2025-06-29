@@ -1,4 +1,4 @@
-// Gestión del marco de personajes adaptativo
+// Gestión del marco de personajes adaptativo sin bordes
 export class CharacterFrameManager {
     constructor() {
         this.frameElement = null;
@@ -28,6 +28,7 @@ export class CharacterFrameManager {
         
         this.detectedImages = [];
         this.frameLayout = null;
+        this.currentViewport = this.getViewportSize();
     }
 
     async init() {
@@ -40,16 +41,17 @@ export class CharacterFrameManager {
         // Detectar imágenes disponibles
         await this.detectAvailableImages();
         
-        // Generar layout adaptativo
-        this.generateAdaptiveLayout();
+        // Generar layout adaptativo según viewport
+        this.generateResponsiveLayout();
         
-        // Crear el marco dinámicamente
-        this.createAdaptiveFrame();
+        // Crear el collage dinámicamente
+        this.createAdaptiveCollage();
         
         this.setupInteractions();
         this.startAnimations();
+        this.setupResizeListener();
         
-        console.log(`🎭 Marco adaptativo creado con ${this.detectedImages.length} imágenes`);
+        console.log(`🎭 Collage adaptativo creado con ${this.detectedImages.length} imágenes para viewport ${this.currentViewport}`);
     }
 
     async detectAvailableImages() {
@@ -71,7 +73,7 @@ export class CharacterFrameManager {
         // Si no hay imágenes locales, usar placeholders
         if (this.detectedImages.length === 0) {
             console.log('📸 Usando imágenes placeholder de Pexels');
-            this.detectedImages = this.generatePlaceholderImages(12);
+            this.detectedImages = this.generatePlaceholderImages(18);
         }
         
         console.log(`📊 Total de imágenes detectadas: ${this.detectedImages.length}`);
@@ -90,82 +92,112 @@ export class CharacterFrameManager {
         return placeholders;
     }
 
-    generateAdaptiveLayout() {
-        const imageCount = this.detectedImages.length;
-        console.log(`🎨 Generando layout para ${imageCount} imágenes`);
-        
-        // Calcular distribución óptima para marco cerrado
-        this.frameLayout = this.calculateOptimalLayout(imageCount);
-        console.log('📐 Layout calculado:', this.frameLayout);
+    getViewportSize() {
+        const width = window.innerWidth;
+        if (width <= 480) return 'mobile';
+        if (width <= 768) return 'tablet';
+        if (width <= 1024) return 'laptop';
+        return 'desktop';
     }
 
-    calculateOptimalLayout(count) {
-        // Distribuciones predefinidas para diferentes cantidades de imágenes
-        const layouts = {
-            4: { corners: 4, sides: 0, topBottom: 0 },
-            6: { corners: 4, sides: 2, topBottom: 0 },
-            8: { corners: 4, sides: 4, topBottom: 0 },
-            10: { corners: 4, sides: 4, topBottom: 2 },
-            12: { corners: 4, sides: 4, topBottom: 4 },
-            14: { corners: 4, sides: 6, topBottom: 4 },
-            16: { corners: 4, sides: 6, topBottom: 6 },
-            18: { corners: 4, sides: 8, topBottom: 6 },
-            20: { corners: 4, sides: 8, topBottom: 8 },
-            24: { corners: 4, sides: 10, topBottom: 10 }
+    generateResponsiveLayout() {
+        const viewport = this.getViewportSize();
+        const imageCount = this.detectedImages.length;
+        
+        console.log(`🎨 Generando layout para ${imageCount} imágenes en viewport ${viewport}`);
+        
+        // Layouts adaptativos según dispositivo y cantidad de imágenes
+        const responsiveLayouts = {
+            mobile: {
+                maxImages: Math.min(imageCount, 12),
+                distribution: this.calculateMobileLayout(Math.min(imageCount, 12))
+            },
+            tablet: {
+                maxImages: Math.min(imageCount, 16),
+                distribution: this.calculateTabletLayout(Math.min(imageCount, 16))
+            },
+            laptop: {
+                maxImages: Math.min(imageCount, 20),
+                distribution: this.calculateLaptopLayout(Math.min(imageCount, 20))
+            },
+            desktop: {
+                maxImages: imageCount,
+                distribution: this.calculateDesktopLayout(imageCount)
+            }
         };
 
-        // Encontrar el layout más cercano
-        const availableLayouts = Object.keys(layouts).map(Number).sort((a, b) => a - b);
-        let selectedLayout = availableLayouts[0];
+        this.frameLayout = responsiveLayouts[viewport];
+        this.currentViewport = viewport;
         
-        for (const layoutCount of availableLayouts) {
-            if (count >= layoutCount) {
-                selectedLayout = layoutCount;
-            } else {
-                break;
-            }
-        }
-
-        // Si tenemos más imágenes que el layout máximo, distribuir proporcionalmente
-        if (count > 24) {
-            const ratio = count / 24;
-            return {
-                corners: 4,
-                sides: Math.ceil(10 * ratio),
-                topBottom: Math.ceil(10 * ratio)
-            };
-        }
-
-        return layouts[selectedLayout];
+        console.log('📐 Layout responsivo calculado:', this.frameLayout);
     }
 
-    createAdaptiveFrame() {
-        // Limpiar marco existente
+    calculateMobileLayout(count) {
+        // En móvil: priorizar esquinas y pocos laterales
+        if (count <= 4) return { corners: count, sides: 0, topBottom: 0 };
+        if (count <= 8) return { corners: 4, sides: count - 4, topBottom: 0 };
+        return { corners: 4, sides: 4, topBottom: count - 8 };
+    }
+
+    calculateTabletLayout(count) {
+        // En tablet: distribución equilibrada
+        if (count <= 4) return { corners: count, sides: 0, topBottom: 0 };
+        if (count <= 10) return { corners: 4, sides: count - 4, topBottom: 0 };
+        return { corners: 4, sides: 6, topBottom: count - 10 };
+    }
+
+    calculateLaptopLayout(count) {
+        // En laptop: más densidad
+        if (count <= 4) return { corners: 4, sides: 0, topBottom: 0 };
+        if (count <= 12) return { corners: 4, sides: count - 4, topBottom: 0 };
+        return { corners: 4, sides: 8, topBottom: count - 12 };
+    }
+
+    calculateDesktopLayout(count) {
+        // En desktop: usar todas las imágenes disponibles
+        if (count <= 4) return { corners: count, sides: 0, topBottom: 0 };
+        if (count <= 12) return { corners: 4, sides: count - 4, topBottom: 0 };
+        
+        const remaining = count - 4;
+        const sidesCount = Math.min(remaining, Math.ceil(remaining * 0.6));
+        const topBottomCount = remaining - sidesCount;
+        
+        return { corners: 4, sides: sidesCount, topBottom: topBottomCount };
+    }
+
+    createAdaptiveCollage() {
+        // Limpiar collage existente
         this.frameElement.innerHTML = '';
         
         let imageIndex = 0;
-        const layout = this.frameLayout;
+        const layout = this.frameLayout.distribution;
+        const maxImages = this.frameLayout.maxImages;
         
-        // Crear esquinas (siempre 4)
-        this.createCorners(imageIndex);
-        imageIndex += 4;
+        // Crear esquinas
+        if (layout.corners > 0) {
+            imageIndex = this.createCorners(imageIndex, Math.min(layout.corners, 4));
+        }
         
         // Crear lados
-        if (layout.sides > 0) {
-            imageIndex = this.createSides(imageIndex, layout.sides);
+        if (layout.sides > 0 && imageIndex < maxImages) {
+            imageIndex = this.createSides(imageIndex, layout.sides, maxImages);
         }
         
         // Crear superior e inferior
-        if (layout.topBottom > 0) {
-            this.createTopBottom(imageIndex, layout.topBottom);
+        if (layout.topBottom > 0 && imageIndex < maxImages) {
+            this.createTopBottom(imageIndex, layout.topBottom, maxImages);
         }
+        
+        // Aplicar clase de densidad según viewport
+        this.frameElement.setAttribute('data-viewport', this.currentViewport);
+        this.frameElement.setAttribute('data-image-count', maxImages);
         
         // Actualizar referencias
         this.characters = this.frameElement.querySelectorAll('[data-character]');
-        console.log(`🎭 Marco creado con ${this.characters.length} elementos`);
+        console.log(`🎭 Collage creado con ${this.characters.length} elementos para ${this.currentViewport}`);
     }
 
-    createCorners(startIndex) {
+    createCorners(startIndex, cornerCount) {
         const positions = [
             { class: 'character-corner top-left', position: 'top-left' },
             { class: 'character-corner top-right', position: 'top-right' },
@@ -173,29 +205,32 @@ export class CharacterFrameManager {
             { class: 'character-corner bottom-right', position: 'bottom-right' }
         ];
 
-        positions.forEach((pos, i) => {
+        for (let i = 0; i < cornerCount && i < positions.length; i++) {
             if (startIndex + i < this.detectedImages.length) {
                 const element = this.createImageElement(
-                    pos.class,
+                    positions[i].class,
                     startIndex + i + 1,
                     this.getImageSrc(startIndex + i),
-                    pos.position
+                    positions[i].position
                 );
                 this.frameElement.appendChild(element);
             }
-        });
+        }
+        
+        return startIndex + cornerCount;
     }
 
-    createSides(startIndex, sideCount) {
-        const sidesPerSide = Math.ceil(sideCount / 2);
+    createSides(startIndex, sideCount, maxImages) {
+        const leftCount = Math.ceil(sideCount / 2);
+        const rightCount = sideCount - leftCount;
         let currentIndex = startIndex;
         
         // Lado izquierdo
-        if (sidesPerSide > 0) {
+        if (leftCount > 0) {
             const leftSide = document.createElement('div');
-            leftSide.className = 'character-side left-side';
+            leftSide.className = `character-side left-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < sidesPerSide && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < leftCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
@@ -209,12 +244,11 @@ export class CharacterFrameManager {
         }
         
         // Lado derecho
-        const rightSideCount = sideCount - sidesPerSide;
-        if (rightSideCount > 0) {
+        if (rightCount > 0) {
             const rightSide = document.createElement('div');
-            rightSide.className = 'character-side right-side';
+            rightSide.className = `character-side right-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < rightSideCount && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < rightCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
@@ -230,16 +264,17 @@ export class CharacterFrameManager {
         return currentIndex;
     }
 
-    createTopBottom(startIndex, topBottomCount) {
+    createTopBottom(startIndex, topBottomCount, maxImages) {
         const topCount = Math.ceil(topBottomCount / 2);
+        const bottomCount = topBottomCount - topCount;
         let currentIndex = startIndex;
         
         // Parte superior
         if (topCount > 0) {
             const topSide = document.createElement('div');
-            topSide.className = 'character-side top-side';
+            topSide.className = `character-side top-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < topCount && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < topCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
@@ -253,12 +288,11 @@ export class CharacterFrameManager {
         }
         
         // Parte inferior
-        const bottomCount = topBottomCount - topCount;
         if (bottomCount > 0) {
             const bottomSide = document.createElement('div');
-            bottomSide.className = 'character-side bottom-side';
+            bottomSide.className = `character-side bottom-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < bottomCount && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < bottomCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
@@ -307,6 +341,23 @@ export class CharacterFrameManager {
         return this.generatePlaceholderImages(1)[0];
     }
 
+    setupResizeListener() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const newViewport = this.getViewportSize();
+                if (newViewport !== this.currentViewport) {
+                    console.log(`📱 Viewport cambió de ${this.currentViewport} a ${newViewport}`);
+                    this.generateResponsiveLayout();
+                    this.createAdaptiveCollage();
+                    this.setupInteractions();
+                    this.startAnimations();
+                }
+            }, 300);
+        });
+    }
+
     setupInteractions() {
         this.characters.forEach((character, index) => {
             character.addEventListener('mouseenter', () => {
@@ -329,7 +380,7 @@ export class CharacterFrameManager {
         tooltip.innerHTML = `
             <div class="tooltip-content">
                 <span class="character-name">${this.characterNames[index]}</span>
-                <span class="character-description">Imagen ${index + 1} de ${this.detectedImages.length} ✨</span>
+                <span class="character-description">Imagen ${index + 1} de ${this.frameLayout.maxImages} • ${this.currentViewport} ✨</span>
             </div>
         `;
 
@@ -348,7 +399,6 @@ export class CharacterFrameManager {
         tooltip.style.opacity = '0';
         tooltip.style.transition = 'opacity 0.3s ease';
         tooltip.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
-        tooltip.style.border = '1px solid rgba(255, 192, 203, 0.5)';
 
         document.body.appendChild(tooltip);
 
@@ -371,16 +421,15 @@ export class CharacterFrameManager {
     }
 
     triggerCharacterEffect(character, index) {
-        character.style.transform = 'scale(1.2) rotate(5deg)';
-        character.style.boxShadow = '0 15px 40px rgba(255, 107, 107, 0.6)';
+        character.style.transform = 'scale(1.15) rotate(3deg)';
+        character.style.filter = 'brightness(1.2) saturate(1.3)';
         
         setTimeout(() => {
             character.style.transform = '';
-            character.style.boxShadow = '';
+            character.style.filter = '';
         }, 300);
 
         this.createHeartsFromCharacter(character);
-        this.addGlowEffect(character);
         this.showCharacterMessage(index);
     }
 
@@ -411,7 +460,6 @@ export class CharacterFrameManager {
         messageDiv.style.fontWeight = '600';
         messageDiv.style.opacity = '0';
         messageDiv.style.transition = 'all 0.3s ease';
-        messageDiv.style.border = '2px solid rgba(255, 192, 203, 0.5)';
 
         document.body.appendChild(messageDiv);
 
@@ -436,7 +484,7 @@ export class CharacterFrameManager {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
                 heart.innerHTML = '💕';
@@ -444,12 +492,12 @@ export class CharacterFrameManager {
                 heart.style.left = centerX + 'px';
                 heart.style.top = centerY + 'px';
                 heart.style.pointerEvents = 'none';
-                heart.style.fontSize = '20px';
+                heart.style.fontSize = '18px';
                 heart.style.zIndex = '1000';
                 heart.style.animation = 'heartBurst 2s ease-out forwards';
 
                 const angle = (Math.random() * 360) * Math.PI / 180;
-                const distance = 50 + Math.random() * 50;
+                const distance = 40 + Math.random() * 40;
                 const endX = centerX + Math.cos(angle) * distance;
                 const endY = centerY + Math.sin(angle) * distance;
 
@@ -459,7 +507,7 @@ export class CharacterFrameManager {
                     heart.style.left = endX + 'px';
                     heart.style.top = endY + 'px';
                     heart.style.opacity = '0';
-                    heart.style.transform = 'scale(1.5)';
+                    heart.style.transform = 'scale(1.3)';
                 }, 100);
 
                 setTimeout(() => {
@@ -471,19 +519,12 @@ export class CharacterFrameManager {
         }
     }
 
-    addGlowEffect(character) {
-        character.style.filter = 'brightness(1.3) saturate(1.2)';
-        setTimeout(() => {
-            character.style.filter = '';
-        }, 500);
-    }
-
     startAnimations() {
         this.characters.forEach((character, index) => {
             const timeout = setTimeout(() => {
                 character.style.opacity = '1';
                 character.style.transform = 'translateY(0) scale(1)';
-            }, index * 150);
+            }, index * 100);
             
             this.animationTimeouts.push(timeout);
         });
@@ -494,19 +535,19 @@ export class CharacterFrameManager {
     startFloatingAnimation() {
         const floatInterval = setInterval(() => {
             this.characters.forEach((character, index) => {
-                if (Math.random() < 0.3) {
+                if (Math.random() < 0.25) {
                     const currentTransform = character.style.transform || '';
-                    const randomY = (Math.random() - 0.5) * 10;
-                    const randomRotate = (Math.random() - 0.5) * 4;
+                    const randomY = (Math.random() - 0.5) * 8;
+                    const randomRotate = (Math.random() - 0.5) * 3;
                     
                     character.style.transform = `translateY(${randomY}px) rotate(${randomRotate}deg)`;
                     
                     setTimeout(() => {
                         character.style.transform = currentTransform;
-                    }, 2000);
+                    }, 1500);
                 }
             });
-        }, 3000);
+        }, 4000);
 
         this.animationTimeouts.push(floatInterval);
     }
@@ -536,10 +577,10 @@ export class CharacterFrameManager {
     updateCharacterImages(imageUrls) {
         if (!Array.isArray(imageUrls)) return;
         this.detectedImages = imageUrls;
-        this.generateAdaptiveLayout();
-        this.createAdaptiveFrame();
+        this.generateResponsiveLayout();
+        this.createAdaptiveCollage();
         this.setupInteractions();
-        console.log('✅ Imágenes actualizadas y marco regenerado');
+        console.log('✅ Imágenes actualizadas y collage regenerado');
     }
 
     setCharacterNames(names) {
@@ -549,13 +590,13 @@ export class CharacterFrameManager {
     }
 
     async reloadImages() {
-        console.log('🔄 Recargando marco adaptativo...');
+        console.log('🔄 Recargando collage adaptativo...');
         await this.detectAvailableImages();
-        this.generateAdaptiveLayout();
-        this.createAdaptiveFrame();
+        this.generateResponsiveLayout();
+        this.createAdaptiveCollage();
         this.setupInteractions();
         this.startAnimations();
-        console.log('✅ Marco recargado con layout adaptativo');
+        console.log('✅ Collage recargado con layout responsivo');
     }
 
     updateAvailableImages(imageList) {
@@ -578,9 +619,9 @@ export class CharacterFrameManager {
     }
 }
 
-// Estilos adicionales para el marco adaptativo
-const adaptiveFrameStyles = document.createElement('style');
-adaptiveFrameStyles.textContent = `
+// Estilos adicionales para collage sin bordes
+const borderlessCollageStyles = document.createElement('style');
+borderlessCollageStyles.textContent = `
     @keyframes heartBurst {
         0% {
             opacity: 1;
@@ -588,11 +629,11 @@ adaptiveFrameStyles.textContent = `
         }
         50% {
             opacity: 1;
-            transform: scale(1.2);
+            transform: scale(1.1);
         }
         100% {
             opacity: 0;
-            transform: scale(1.5);
+            transform: scale(1.4);
         }
     }
 
@@ -615,58 +656,51 @@ adaptiveFrameStyles.textContent = `
     }
 
     .character-description {
-        font-size: 11px;
+        font-size: 10px;
         opacity: 0.8;
         color: #ffc0cb;
     }
 
-    /* Marco adaptativo - distribución inteligente */
-    .character-side.left-side,
-    .character-side.right-side {
-        gap: -25px; /* Mayor solapamiento vertical */
+    /* Layouts específicos por viewport */
+    .mobile-layout {
+        gap: -15px;
     }
 
-    .character-side.top-side,
-    .character-side.bottom-side {
-        gap: -30px; /* Mayor solapamiento horizontal */
+    .tablet-layout {
+        gap: -20px;
     }
 
-    /* Ajustes para marcos con muchas imágenes */
-    .character-frame[data-image-count="high"] .character-corner {
+    .laptop-layout {
+        gap: -25px;
+    }
+
+    .desktop-layout {
+        gap: -30px;
+    }
+
+    /* Ajustes por cantidad de imágenes */
+    .character-frame[data-image-count="12"] .character-corner {
+        width: 120px !important;
+        height: 150px !important;
+    }
+
+    .character-frame[data-image-count="16"] .character-corner {
+        width: 110px !important;
+        height: 140px !important;
+    }
+
+    .character-frame[data-image-count="20"] .character-corner {
         width: 100px !important;
         height: 130px !important;
     }
 
-    .character-frame[data-image-count="high"] .character-item {
-        width: 70px !important;
-        height: 90px !important;
-        margin: -12px !important;
-    }
-
-    /* Distribución densa para muchas imágenes */
-    .character-side.dense {
-        gap: -35px;
-    }
-
-    .character-side.dense .character-item {
-        margin: -18px;
-    }
-
-    /* Efectos especiales para marco cerrado */
-    .character-corner.special-effect,
-    .character-item.special-effect {
-        animation: specialGlow 1s ease-in-out;
-    }
-
-    @keyframes specialGlow {
-        0%, 100% {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        50% {
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6), 
-                        0 0 20px rgba(255, 107, 107, 0.4);
-        }
+    /* Efectos hover mejorados sin bordes */
+    .character-corner:hover,
+    .character-item:hover {
+        transform: scale(1.08) rotate(2deg);
+        filter: brightness(1.15) saturate(1.2);
+        z-index: 50;
     }
 `;
 
-document.head.appendChild(adaptiveFrameStyles);
+document.head.appendChild(borderlessCollageStyles);
