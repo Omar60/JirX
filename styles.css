@@ -12,7 +12,6 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    /* Evitar scroll innecesario por animaciones */
     max-width: 100vw;
 }
 
@@ -21,18 +20,7 @@ html {
     max-width: 100vw;
 }
 
-/* Asegurar que las animaciones no causen scroll */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 0;
-}
-
+/* Contenedor principal */
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -50,7 +38,7 @@ body::before {
 
 .main-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 8vw, 4rem);
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     margin-bottom: 0.5rem;
@@ -58,7 +46,7 @@ body::before {
 }
 
 .subtitle {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem);
     color: rgba(255,255,255,0.9);
     font-weight: 300;
     animation: fadeInUp 1s ease-out 0.5s both;
@@ -90,9 +78,10 @@ body::before {
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     backdrop-filter: blur(10px);
     max-width: 600px;
+    width: 100%;
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s ease;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     border: 2px solid rgba(255, 192, 203, 0.5);
     position: relative;
     z-index: 10;
@@ -106,14 +95,14 @@ body::before {
 .dynamic-text h2 {
     color: #667eea;
     font-family: 'Dancing Script', cursive;
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
     margin-bottom: 1rem;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .dynamic-text p {
     color: #444;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
     line-height: 1.6;
     margin-bottom: 1rem;
 }
@@ -125,137 +114,6 @@ body::before {
     margin-top: 1.5rem;
     border-top: 1px solid rgba(102, 126, 234, 0.3);
     padding-top: 1rem;
-}
-
-
-.dynamic-text h2 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-    color: #667eea;
-    margin-bottom: 1rem;
-}
-
-.dynamic-text p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 1rem;
-}
-
-.dynamic-text .signature {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: #333;
-    margin-top: 1.5rem;
-}
-
-.message-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
-    animation: fadeInUp 1s ease-out 1s both;
-    position: relative;
-    overflow: hidden;
-}
-
-.message-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #667eea, #8b94d4, #764ba2);
-}
-
-.message-card h2 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.main-message {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.love-message, .confession-message {
-    margin: 2rem 0;
-}
-
-.love-message h3, .confession-message h3 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2rem;
-    color: #667eea;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.confession-text {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 1.5rem;
-    text-align: justify;
-    padding: 0 0.5rem;
-}
-
-.reasons-list {
-    list-style: none;
-    padding: 0;
-}
-
-.reasons-list li {
-    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 1.1rem;
-    margin: 1rem 0;
-    padding-left: 1.5rem;
-    position: relative;
-    opacity: 0;
-    animation: slideInLeft 0.8s ease-out forwards;
-}
-
-.reasons-list li:nth-child(1) { animation-delay: 2s; }
-.reasons-list li:nth-child(2) { animation-delay: 2.3s; }
-.reasons-list li:nth-child(3) { animation-delay: 2.6s; }
-.reasons-list li:nth-child(4) { animation-delay: 2.9s; }
-
-.reasons-list li::before {
-    content: '💖';
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.final-message {
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,107,107,0.3);
-}
-
-.final-message p {
-    font-size: 1.2rem;
-    color: #667eea;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-.signature {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem !important;
-    color: #333 !important;
-    font-style: italic;
 }
 
 /* Corazones flotantes */
@@ -280,37 +138,13 @@ body::before {
     content: '💖';
 }
 
-.heart:nth-child(1) {
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
+.heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+.heart:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 2s; }
+.heart:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 3s; }
+.heart:nth-child(5) { top: 50%; left: 5%; animation-delay: 4s; }
 
-.heart:nth-child(2) {
-    top: 20%;
-    right: 10%;
-    animation-delay: 1s;
-}
-
-.heart:nth-child(3) {
-    bottom: 20%;
-    left: 20%;
-    animation-delay: 2s;
-}
-
-.heart:nth-child(4) {
-    bottom: 10%;
-    right: 20%;
-    animation-delay: 3s;
-}
-
-.heart:nth-child(5) {
-    top: 50%;
-    left: 5%;
-    animation-delay: 4s;
-}
-
-/* Corazones interactivos */
+/* Contenedor de corazones interactivos */
 .hearts-container {
     position: fixed;
     top: 0;
@@ -330,7 +164,7 @@ body::before {
     pointer-events: none;
 }
 
-/* Personaje Lottie - POSICIÓN LATERAL */
+/* Personaje Lottie */
 .lottie-container {
     position: fixed;
     bottom: 60px;
@@ -339,7 +173,7 @@ body::before {
     cursor: pointer;
     width: 150px;
     height: 150px;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lottie-container:hover {
@@ -350,13 +184,9 @@ body::before {
     width: 100% !important;
     height: 100% !important;
     border-radius: 15px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background: transparent;
     box-shadow: none;
-}
-
-#lottiePlayer:hover {
-    transform: scale(1.05);
 }
 
 .character-speech-bubble {
@@ -369,7 +199,7 @@ body::before {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 14px;
     text-align: center;
     min-width: 120px;
@@ -395,7 +225,7 @@ body::before {
 
 .character-speech-bubble.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
 }
 
 /* Controles de navegación */
@@ -406,7 +236,7 @@ body::before {
     transform: translateX(-50%);
     display: flex;
     gap: 15px;
-    opacity: 1; /* Cambiar de 0 a 1 para debug */
+    opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 200;
 }
@@ -425,21 +255,22 @@ body::before {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 18px;
     color: #667eea;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     font-weight: bold;
+    user-select: none;
 }
 
-.nav-button:hover {
+.nav-button:hover:not(:disabled) {
     background: #667eea;
     color: white;
     transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-.nav-button:active {
+.nav-button:active:not(:disabled) {
     transform: scale(0.95);
 }
 
@@ -448,46 +279,12 @@ body::before {
     cursor: not-allowed;
     background: rgba(200, 200, 200, 0.5);
     color: #999;
+    border-color: #ccc;
 }
 
-.nav-button:disabled:hover {
-    transform: none;
-    background: rgba(200, 200, 200, 0.5);
-    color: #999;
-}
-
-.prev-button {
-    animation: pulseLeft 2s infinite ease-in-out;
-}
-
-.next-button {
-    animation: pulseRight 2s infinite ease-in-out;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
-    }
-    50% {
-        transform: scale(1.1);
-        box-shadow: 0 0 0 20px rgba(102, 126, 234, 0);
-    }
-}
-
-/* Efecto de resaltado para texto en lectura */
-.reading-highlight {
-    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
-    animation: readingGlow 2s ease-in-out;
-}
-
-@keyframes readingGlow {
-    0%, 100% {
-        background-position: -100% 0;
-    }
-    50% {
-        background-position: 100% 0;
-    }
+.nav-button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
 }
 
 /* Animaciones */
@@ -499,17 +296,6 @@ body::before {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
     }
 }
 
@@ -535,75 +321,36 @@ body::before {
     }
 }
 
-@keyframes pulseLeft {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-3px); }
+@keyframes sparkle {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
 }
 
-@keyframes pulseRight {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(3px); }
+@keyframes fall {
+    0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         padding: 10px;
-    }
-    
-    .main-title {
-        font-size: 3rem;
-    }
-    
-    .message-card {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-    }
-    
-    .message-card h2 {
-        font-size: 2rem;
-    }
-    
-    .main-message, .confession-text {
-        font-size: 1rem;
-    }    /* Personaje Lottie centrado en móvil */
-    .lottie-container {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .character-speech-bubble {
-        font-size: 13px;
-        padding: 10px 14px;
-        bottom: 160px;
-        max-width: 85vw;
-        line-height: 1.3;
-    }
-    
-    .dynamic-content {
-        padding: 1rem;
-    }
-    
-    .dynamic-text {
-        padding: 1.5rem;
-        margin: 0.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .lottie-container {
-        bottom: 40px;
-        right: 20px;
-        width: 120px;
-        height: 120px;
-    }
-    
-    .character-speech-bubble {
-        bottom: 130px;
-        right: -10px;
-        max-width: 180px;
-        font-size: 13px;
-        padding: 10px 14px;
     }
     
     .dynamic-content {
@@ -614,30 +361,37 @@ body::before {
     .dynamic-text {
         padding: 1.5rem;
         margin: 0.5rem 0;
-        max-width: 90%;
+        max-width: 95%;
     }
     
-    .dynamic-text h2 {
-        font-size: 1.8rem;
+    .lottie-container {
+        bottom: 40px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
     }
     
-    .dynamic-text p {
-        font-size: 1rem;
+    .character-speech-bubble {
+        bottom: 130px;
+        right: -10px;
+        max-width: 200px;
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+    
+    .navigation-controls {
+        bottom: -45px;
+        gap: 10px;
+    }
+    
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
     }
 }
 
 @media (max-width: 480px) {
-    .main-title {
-        font-size: 2.5rem;
-    }
-    
-    .message-card {
-        padding: 1.5rem 1rem;
-    }
-    
-    .message-card h2 {
-        font-size: 1.8rem;
-    }    /* Personaje más pequeño en móviles pequeños */
     .lottie-container {
         width: 100px;
         height: 100px;
@@ -645,7 +399,7 @@ body::before {
     
     .character-speech-bubble {
         bottom: 110px;
-        max-width: 150px;
+        max-width: 180px;
         font-size: 12px;
     }
     
@@ -653,20 +407,33 @@ body::before {
         padding: 1rem;
     }
     
-    .dynamic-text h2 {
-        font-size: 1.6rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .navigation-controls {
-        bottom: -45px;
-        gap: 10px;
-    }
-    
     .nav-button {
         width: 35px;
         height: 35px;
         font-size: 12px;
     }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Estados de focus mejorados */
+.lottie-container:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 3px;
+}
+
+/* Optimizaciones de rendimiento */
+.heart, .interactive-heart, .character-speech-bubble, .nav-button {
+    will-change: transform, opacity;
+}
+
+.dynamic-text {
+    contain: layout style paint;
 }
