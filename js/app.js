@@ -5,6 +5,7 @@ import { EffectsManager } from './effects.js';
 import { ContentManager } from './content.js';
 import { NavigationManager } from './navigation.js';
 import { CharacterFrameManager } from './character-frame.js';
+import { DigitalPhotoFrame } from './digital-frame.js';
 
 class App {
     constructor() {
@@ -13,12 +14,14 @@ class App {
         this.effectsManager = new EffectsManager();
         this.contentManager = new ContentManager();
         this.characterFrameManager = new CharacterFrameManager();
+        this.digitalFrame = new DigitalPhotoFrame();
         this.navigationManager = new NavigationManager(
             this.storyManager,
             this.characterManager,
             this.contentManager
         );
         this.isInitialized = false;
+        this.frameMode = 'story'; // 'story' o 'digital'
     }
 
     async init() {
@@ -99,6 +102,10 @@ class App {
                 this.characterFrameManager.reloadImages();
                 console.log('🔄 Recargando imágenes de personajes');
             }
+            if (e.key === 'd' || e.key === 'D') {
+                this.toggleDigitalFrame();
+                console.log('🖼️ Marco digital alternado');
+            }
         });
     }
 
@@ -148,17 +155,51 @@ class App {
         this.characterFrameManager.reloadImages();
     }
 
+    // Nuevo método para alternar marco digital
+    async toggleDigitalFrame() {
+        if (this.frameMode === 'story') {
+            // Cambiar a modo marco digital
+            this.frameMode = 'digital';
+            this.characterFrameManager.hide();
+            await this.digitalFrame.init();
+            console.log('🖼️ Marco digital activado');
+        } else {
+            // Cambiar a modo historia
+            this.frameMode = 'story';
+            this.digitalFrame.cleanup();
+            this.characterFrameManager.show();
+            console.log('📖 Modo historia activado');
+        }
+    }
+
+    // Método para inicializar solo el marco digital
+    async initDigitalFrameOnly() {
+        console.log('🖼️ Inicializando solo marco digital...');
+        await this.digitalFrame.init();
+        this.frameMode = 'digital';
+    }
+
     cleanup() {
         this.characterManager.cleanup();
         this.effectsManager.cleanup();
         this.characterFrameManager.cleanup();
+        this.digitalFrame.cleanup();
     }
 }
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();
-    app.init();
+    
+    // Verificar si se quiere iniciar directamente en modo marco digital
+    const urlParams = new URLSearchParams(window.location.search);
+    const frameMode = urlParams.get('mode');
+    
+    if (frameMode === 'digital') {
+        app.initDigitalFrameOnly();
+    } else {
+        app.init();
+    }
 
     // Cleanup al cerrar la página
     window.addEventListener('beforeunload', () => {
@@ -173,23 +214,37 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setCharacterNames = (names) => app.setCharacterNames(names);
     window.toggleFrame = () => app.toggleCharacterFrame();
     window.reloadImages = () => app.reloadCharacterImages();
+    window.toggleDigitalFrame = () => app.toggleDigitalFrame();
+    window.startDigitalFrame = () => app.initDigitalFrameOnly();
     
     // Mostrar instrucciones en consola
     console.log(`
-🎭 MARCO DE PERSONAJES - INSTRUCCIONES
-=====================================
+🎭 MARCO DE PERSONAJES + MARCO DIGITAL - INSTRUCCIONES
+====================================================
 
 📁 Imágenes detectadas en: assets/characters/
    • ${app.characterFrameManager?.availableImages?.length || 18} imágenes PNG encontradas
 
 ⌨️  Controles de teclado:
-   • F: Mostrar/ocultar marco
+   • F: Mostrar/ocultar marco de personajes
    • R: Recargar imágenes
+   • D: Alternar marco digital de fotos
+
+🖼️ Marco Digital de Fotos:
+   • Escaneo automático de imágenes
+   • Renombrado secuencial automático
+   • Detección de nuevas imágenes
+   • Slideshow con controles
+   • Registro completo de operaciones
 
 🎨 Personalización:
    • setCharacterNames(['Nombre1', 'Nombre2', ...])
    • updateCharacters(['url1', 'url2', ...])
-   • reloadImages() - después de añadir imágenes
+   • toggleDigitalFrame() - Alternar entre modos
+   • startDigitalFrame() - Solo marco digital
+
+🚀 URLs especiales:
+   • ?mode=digital - Iniciar directamente en marco digital
 
 ✨ ¡Disfruta creando tu página especial!
     `);
