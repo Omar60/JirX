@@ -1,4 +1,4 @@
-// Gestión del marco de personajes
+// Gestión del marco de personajes adaptativo
 export class CharacterFrameManager {
     constructor() {
         this.frameElement = null;
@@ -6,93 +6,309 @@ export class CharacterFrameManager {
         this.isVisible = false;
         this.animationTimeouts = [];
         this.characterNames = [
-            'Personaje Especial 1',
-            'Personaje Especial 2', 
-            'Personaje Especial 3',
-            'Personaje Especial 4',
-            'Personaje Especial 5',
-            'Personaje Especial 6',
-            'Personaje Especial 7',
-            'Personaje Especial 8',
-            'Personaje Especial 9',
-            'Personaje Especial 10',
-            'Personaje Especial 11',
-            'Personaje Especial 12'
+            'Personaje Especial 1', 'Personaje Especial 2', 'Personaje Especial 3',
+            'Personaje Especial 4', 'Personaje Especial 5', 'Personaje Especial 6',
+            'Personaje Especial 7', 'Personaje Especial 8', 'Personaje Especial 9',
+            'Personaje Especial 10', 'Personaje Especial 11', 'Personaje Especial 12',
+            'Personaje Especial 13', 'Personaje Especial 14', 'Personaje Especial 15',
+            'Personaje Especial 16', 'Personaje Especial 17', 'Personaje Especial 18',
+            'Personaje Especial 19', 'Personaje Especial 20', 'Personaje Especial 21',
+            'Personaje Especial 22', 'Personaje Especial 23', 'Personaje Especial 24'
         ];
-        // Mapeo de las imágenes disponibles
+        
+        // Detectar imágenes disponibles automáticamente
         this.availableImages = [
-            'pngwing.com (12).png',
-            'pngwing.com (13).png',
-            'pngwing.com (14).png',
-            'pngwing.com (15).png',
-            'pngwing.com (16).png',
-            'pngwing.com (17).png',
-            'pngwing.com (18).png',
-            'pngwing.com (19).png',
-            'pngwing.com (20).png',
-            'pngwing.com (21).png',
-            'pngwing.com (22).png',
-            'pngwing.com (23).png',
-            'pngwing.com (24).png',
-            'pngwing.com (25).png',
-            'pngwing.com (26).png',
-            'pngwing.com (27).png',
-            'pngwing.com (28).png',
-            'pngwing.com (29).png'
+            'pngwing.com (12).png', 'pngwing.com (13).png', 'pngwing.com (14).png',
+            'pngwing.com (15).png', 'pngwing.com (16).png', 'pngwing.com (17).png',
+            'pngwing.com (18).png', 'pngwing.com (19).png', 'pngwing.com (20).png',
+            'pngwing.com (21).png', 'pngwing.com (22).png', 'pngwing.com (23).png',
+            'pngwing.com (24).png', 'pngwing.com (25).png', 'pngwing.com (26).png',
+            'pngwing.com (27).png', 'pngwing.com (28).png', 'pngwing.com (29).png'
         ];
+        
+        this.detectedImages = [];
+        this.frameLayout = null;
     }
 
-    init() {
+    async init() {
         this.frameElement = document.getElementById('characterFrame');
         if (!this.frameElement) {
             console.warn('Character frame element no encontrado');
             return;
         }
 
-        this.characters = this.frameElement.querySelectorAll('[data-character]');
-        this.loadCharacterImages();
+        // Detectar imágenes disponibles
+        await this.detectAvailableImages();
+        
+        // Generar layout adaptativo
+        this.generateAdaptiveLayout();
+        
+        // Crear el marco dinámicamente
+        this.createAdaptiveFrame();
+        
         this.setupInteractions();
         this.startAnimations();
+        
+        console.log(`🎭 Marco adaptativo creado con ${this.detectedImages.length} imágenes`);
     }
 
-    loadCharacterImages() {
-        console.log('🎭 Cargando imágenes de personajes...');
+    async detectAvailableImages() {
+        console.log('🔍 Detectando imágenes disponibles...');
+        this.detectedImages = [];
         
-        this.characters.forEach((character, index) => {
-            const img = character.querySelector('img');
-            if (img && this.availableImages[index]) {
-                const characterNumber = index + 1;
-                const imagePath = `assets/characters/${this.availableImages[index]}`;
-                const fallbackImagePath = img.src; // Mantener la imagen de Pexels como fallback
-                
-                // Intentar cargar la imagen local primero
-                const testImage = new Image();
-                testImage.onload = () => {
-                    // Si la imagen local existe, usarla
-                    img.src = imagePath;
-                    img.alt = this.characterNames[index] || `Personaje ${characterNumber}`;
-                    console.log(`✅ Imagen cargada: ${this.availableImages[index]}`);
-                };
-                
-                testImage.onerror = () => {
-                    // Si no existe, mantener la imagen de Pexels
-                    img.alt = `${this.characterNames[index]} (Placeholder)`;
-                    console.log(`⚠️ Error cargando: ${this.availableImages[index]}, usando placeholder`);
-                };
-                
-                testImage.src = imagePath;
-            } else if (img) {
-                // Si no hay imagen disponible, usar placeholder
-                const characterNumber = index + 1;
-                img.alt = `${this.characterNames[index]} (Placeholder)`;
-                console.log(`⚠️ No hay imagen disponible para personaje ${characterNumber}`);
+        for (const imageName of this.availableImages) {
+            try {
+                const response = await fetch(`assets/characters/${imageName}`, { method: 'HEAD' });
+                if (response.ok) {
+                    this.detectedImages.push(imageName);
+                    console.log(`✅ Imagen encontrada: ${imageName}`);
+                }
+            } catch (error) {
+                console.log(`⚠️ Imagen no encontrada: ${imageName}`);
+            }
+        }
+        
+        // Si no hay imágenes locales, usar placeholders
+        if (this.detectedImages.length === 0) {
+            console.log('📸 Usando imágenes placeholder de Pexels');
+            this.detectedImages = this.generatePlaceholderImages(12);
+        }
+        
+        console.log(`📊 Total de imágenes detectadas: ${this.detectedImages.length}`);
+    }
+
+    generatePlaceholderImages(count) {
+        const placeholders = [];
+        const pexelsIds = [1040881, 1239291, 1181686, 1181690, 1040880, 1239288, 
+                          1181681, 1181687, 1040882, 1239289, 1181683, 1181688,
+                          1040883, 1239290, 1181684, 1181689, 1040884, 1239292];
+        
+        for (let i = 0; i < count; i++) {
+            const id = pexelsIds[i % pexelsIds.length];
+            placeholders.push(`https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`);
+        }
+        return placeholders;
+    }
+
+    generateAdaptiveLayout() {
+        const imageCount = this.detectedImages.length;
+        console.log(`🎨 Generando layout para ${imageCount} imágenes`);
+        
+        // Calcular distribución óptima para marco cerrado
+        this.frameLayout = this.calculateOptimalLayout(imageCount);
+        console.log('📐 Layout calculado:', this.frameLayout);
+    }
+
+    calculateOptimalLayout(count) {
+        // Distribuciones predefinidas para diferentes cantidades de imágenes
+        const layouts = {
+            4: { corners: 4, sides: 0, topBottom: 0 },
+            6: { corners: 4, sides: 2, topBottom: 0 },
+            8: { corners: 4, sides: 4, topBottom: 0 },
+            10: { corners: 4, sides: 4, topBottom: 2 },
+            12: { corners: 4, sides: 4, topBottom: 4 },
+            14: { corners: 4, sides: 6, topBottom: 4 },
+            16: { corners: 4, sides: 6, topBottom: 6 },
+            18: { corners: 4, sides: 8, topBottom: 6 },
+            20: { corners: 4, sides: 8, topBottom: 8 },
+            24: { corners: 4, sides: 10, topBottom: 10 }
+        };
+
+        // Encontrar el layout más cercano
+        const availableLayouts = Object.keys(layouts).map(Number).sort((a, b) => a - b);
+        let selectedLayout = availableLayouts[0];
+        
+        for (const layoutCount of availableLayouts) {
+            if (count >= layoutCount) {
+                selectedLayout = layoutCount;
+            } else {
+                break;
+            }
+        }
+
+        // Si tenemos más imágenes que el layout máximo, distribuir proporcionalmente
+        if (count > 24) {
+            const ratio = count / 24;
+            return {
+                corners: 4,
+                sides: Math.ceil(10 * ratio),
+                topBottom: Math.ceil(10 * ratio)
+            };
+        }
+
+        return layouts[selectedLayout];
+    }
+
+    createAdaptiveFrame() {
+        // Limpiar marco existente
+        this.frameElement.innerHTML = '';
+        
+        let imageIndex = 0;
+        const layout = this.frameLayout;
+        
+        // Crear esquinas (siempre 4)
+        this.createCorners(imageIndex);
+        imageIndex += 4;
+        
+        // Crear lados
+        if (layout.sides > 0) {
+            imageIndex = this.createSides(imageIndex, layout.sides);
+        }
+        
+        // Crear superior e inferior
+        if (layout.topBottom > 0) {
+            this.createTopBottom(imageIndex, layout.topBottom);
+        }
+        
+        // Actualizar referencias
+        this.characters = this.frameElement.querySelectorAll('[data-character]');
+        console.log(`🎭 Marco creado con ${this.characters.length} elementos`);
+    }
+
+    createCorners(startIndex) {
+        const positions = [
+            { class: 'character-corner top-left', position: 'top-left' },
+            { class: 'character-corner top-right', position: 'top-right' },
+            { class: 'character-corner bottom-left', position: 'bottom-left' },
+            { class: 'character-corner bottom-right', position: 'bottom-right' }
+        ];
+
+        positions.forEach((pos, i) => {
+            if (startIndex + i < this.detectedImages.length) {
+                const element = this.createImageElement(
+                    pos.class,
+                    startIndex + i + 1,
+                    this.getImageSrc(startIndex + i),
+                    pos.position
+                );
+                this.frameElement.appendChild(element);
             }
         });
     }
 
+    createSides(startIndex, sideCount) {
+        const sidesPerSide = Math.ceil(sideCount / 2);
+        let currentIndex = startIndex;
+        
+        // Lado izquierdo
+        if (sidesPerSide > 0) {
+            const leftSide = document.createElement('div');
+            leftSide.className = 'character-side left-side';
+            
+            for (let i = 0; i < sidesPerSide && currentIndex < this.detectedImages.length; i++) {
+                const item = this.createImageElement(
+                    'character-item',
+                    currentIndex + 1,
+                    this.getImageSrc(currentIndex),
+                    'left-side'
+                );
+                leftSide.appendChild(item);
+                currentIndex++;
+            }
+            this.frameElement.appendChild(leftSide);
+        }
+        
+        // Lado derecho
+        const rightSideCount = sideCount - sidesPerSide;
+        if (rightSideCount > 0) {
+            const rightSide = document.createElement('div');
+            rightSide.className = 'character-side right-side';
+            
+            for (let i = 0; i < rightSideCount && currentIndex < this.detectedImages.length; i++) {
+                const item = this.createImageElement(
+                    'character-item',
+                    currentIndex + 1,
+                    this.getImageSrc(currentIndex),
+                    'right-side'
+                );
+                rightSide.appendChild(item);
+                currentIndex++;
+            }
+            this.frameElement.appendChild(rightSide);
+        }
+        
+        return currentIndex;
+    }
+
+    createTopBottom(startIndex, topBottomCount) {
+        const topCount = Math.ceil(topBottomCount / 2);
+        let currentIndex = startIndex;
+        
+        // Parte superior
+        if (topCount > 0) {
+            const topSide = document.createElement('div');
+            topSide.className = 'character-side top-side';
+            
+            for (let i = 0; i < topCount && currentIndex < this.detectedImages.length; i++) {
+                const item = this.createImageElement(
+                    'character-item',
+                    currentIndex + 1,
+                    this.getImageSrc(currentIndex),
+                    'top-side'
+                );
+                topSide.appendChild(item);
+                currentIndex++;
+            }
+            this.frameElement.appendChild(topSide);
+        }
+        
+        // Parte inferior
+        const bottomCount = topBottomCount - topCount;
+        if (bottomCount > 0) {
+            const bottomSide = document.createElement('div');
+            bottomSide.className = 'character-side bottom-side';
+            
+            for (let i = 0; i < bottomCount && currentIndex < this.detectedImages.length; i++) {
+                const item = this.createImageElement(
+                    'character-item',
+                    currentIndex + 1,
+                    this.getImageSrc(currentIndex),
+                    'bottom-side'
+                );
+                bottomSide.appendChild(item);
+                currentIndex++;
+            }
+            this.frameElement.appendChild(bottomSide);
+        }
+    }
+
+    createImageElement(className, characterNumber, imageSrc, position) {
+        const element = document.createElement('div');
+        element.className = className;
+        element.setAttribute('data-character', characterNumber);
+        element.setAttribute('data-position', position);
+        
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = this.characterNames[characterNumber - 1] || `Personaje ${characterNumber}`;
+        img.loading = 'lazy';
+        
+        // Fallback para imágenes locales
+        if (imageSrc.startsWith('assets/')) {
+            img.onerror = () => {
+                const fallbackIndex = (characterNumber - 1) % 18;
+                const pexelsIds = [1040881, 1239291, 1181686, 1181690, 1040880, 1239288, 
+                                  1181681, 1181687, 1040882, 1239289, 1181683, 1181688,
+                                  1040883, 1239290, 1181684, 1181689, 1040884, 1239292];
+                const id = pexelsIds[fallbackIndex];
+                img.src = `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`;
+            };
+        }
+        
+        element.appendChild(img);
+        return element;
+    }
+
+    getImageSrc(index) {
+        if (index < this.detectedImages.length) {
+            const imageName = this.detectedImages[index];
+            return imageName.startsWith('http') ? imageName : `assets/characters/${imageName}`;
+        }
+        return this.generatePlaceholderImages(1)[0];
+    }
+
     setupInteractions() {
         this.characters.forEach((character, index) => {
-            // Hover effects con información del personaje
             character.addEventListener('mouseenter', () => {
                 this.showCharacterInfo(character, index);
             });
@@ -101,7 +317,6 @@ export class CharacterFrameManager {
                 this.hideCharacterInfo();
             });
 
-            // Click para efectos especiales
             character.addEventListener('click', () => {
                 this.triggerCharacterEffect(character, index);
             });
@@ -109,17 +324,15 @@ export class CharacterFrameManager {
     }
 
     showCharacterInfo(character, index) {
-        // Crear tooltip con información del personaje
         const tooltip = document.createElement('div');
         tooltip.className = 'character-tooltip';
         tooltip.innerHTML = `
             <div class="tooltip-content">
                 <span class="character-name">${this.characterNames[index]}</span>
-                <span class="character-description">Un personaje muy especial ✨</span>
+                <span class="character-description">Imagen ${index + 1} de ${this.detectedImages.length} ✨</span>
             </div>
         `;
 
-        // Posicionar tooltip
         const rect = character.getBoundingClientRect();
         tooltip.style.position = 'fixed';
         tooltip.style.left = rect.left + rect.width / 2 + 'px';
@@ -139,17 +352,14 @@ export class CharacterFrameManager {
 
         document.body.appendChild(tooltip);
 
-        // Mostrar con animación
         requestAnimationFrame(() => {
             tooltip.style.opacity = '1';
         });
 
-        // Guardar referencia para limpieza
         character._tooltip = tooltip;
     }
 
     hideCharacterInfo() {
-        // Limpiar todos los tooltips
         document.querySelectorAll('.character-tooltip').forEach(tooltip => {
             tooltip.style.opacity = '0';
             setTimeout(() => {
@@ -161,7 +371,6 @@ export class CharacterFrameManager {
     }
 
     triggerCharacterEffect(character, index) {
-        // Efecto de pulso
         character.style.transform = 'scale(1.2) rotate(5deg)';
         character.style.boxShadow = '0 15px 40px rgba(255, 107, 107, 0.6)';
         
@@ -170,13 +379,8 @@ export class CharacterFrameManager {
             character.style.boxShadow = '';
         }, 300);
 
-        // Crear corazones desde el personaje
         this.createHeartsFromCharacter(character);
-
-        // Efecto de brillo
         this.addGlowEffect(character);
-
-        // Mensaje especial del personaje
         this.showCharacterMessage(index);
     }
 
@@ -191,7 +395,6 @@ export class CharacterFrameManager {
         
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
         
-        // Mostrar mensaje temporal
         const messageDiv = document.createElement('div');
         messageDiv.textContent = randomMessage;
         messageDiv.style.position = 'fixed';
@@ -245,7 +448,6 @@ export class CharacterFrameManager {
                 heart.style.zIndex = '1000';
                 heart.style.animation = 'heartBurst 2s ease-out forwards';
 
-                // Dirección aleatoria
                 const angle = (Math.random() * 360) * Math.PI / 180;
                 const distance = 50 + Math.random() * 50;
                 const endX = centerX + Math.cos(angle) * distance;
@@ -277,24 +479,22 @@ export class CharacterFrameManager {
     }
 
     startAnimations() {
-        // Animación de entrada escalonada
         this.characters.forEach((character, index) => {
             const timeout = setTimeout(() => {
                 character.style.opacity = '1';
                 character.style.transform = 'translateY(0) scale(1)';
-            }, index * 200);
+            }, index * 150);
             
             this.animationTimeouts.push(timeout);
         });
 
-        // Animación de flotación continua
         this.startFloatingAnimation();
     }
 
     startFloatingAnimation() {
         const floatInterval = setInterval(() => {
             this.characters.forEach((character, index) => {
-                if (Math.random() < 0.3) { // 30% de probabilidad
+                if (Math.random() < 0.3) {
                     const currentTransform = character.style.transform || '';
                     const randomY = (Math.random() - 0.5) * 10;
                     const randomRotate = (Math.random() - 0.5) * 4;
@@ -335,38 +535,29 @@ export class CharacterFrameManager {
 
     updateCharacterImages(imageUrls) {
         if (!Array.isArray(imageUrls)) return;
-
-        this.characters.forEach((character, index) => {
-            if (imageUrls[index]) {
-                const img = character.querySelector('img');
-                if (img) {
-                    img.src = imageUrls[index];
-                    img.alt = this.characterNames[index] || `Personaje ${index + 1}`;
-                }
-            }
-        });
+        this.detectedImages = imageUrls;
+        this.generateAdaptiveLayout();
+        this.createAdaptiveFrame();
+        this.setupInteractions();
+        console.log('✅ Imágenes actualizadas y marco regenerado');
     }
 
     setCharacterNames(names) {
         if (!Array.isArray(names)) return;
-
         this.characterNames = names;
-        this.characters.forEach((character, index) => {
-            if (names[index]) {
-                character.setAttribute('data-name', names[index]);
-            }
-        });
-        
         console.log('✅ Nombres de personajes actualizados:', names);
     }
 
-    // Método para recargar imágenes después de añadir nuevas
-    reloadImages() {
-        console.log('🔄 Recargando imágenes de personajes...');
-        this.loadCharacterImages();
+    async reloadImages() {
+        console.log('🔄 Recargando marco adaptativo...');
+        await this.detectAvailableImages();
+        this.generateAdaptiveLayout();
+        this.createAdaptiveFrame();
+        this.setupInteractions();
+        this.startAnimations();
+        console.log('✅ Marco recargado con layout adaptativo');
     }
 
-    // Método para actualizar la lista de imágenes disponibles
     updateAvailableImages(imageList) {
         this.availableImages = imageList;
         this.reloadImages();
@@ -374,26 +565,22 @@ export class CharacterFrameManager {
     }
 
     cleanup() {
-        // Limpiar timeouts y intervals
         this.animationTimeouts.forEach(timeout => {
             clearTimeout(timeout);
             clearInterval(timeout);
         });
         this.animationTimeouts = [];
-
-        // Limpiar tooltips
         this.hideCharacterInfo();
-
-        // Remover event listeners
+        
         this.characters.forEach(character => {
             character.replaceWith(character.cloneNode(true));
         });
     }
 }
 
-// Estilos adicionales para efectos
-const frameStyles = document.createElement('style');
-frameStyles.textContent = `
+// Estilos adicionales para el marco adaptativo
+const adaptiveFrameStyles = document.createElement('style');
+adaptiveFrameStyles.textContent = `
     @keyframes heartBurst {
         0% {
             opacity: 1;
@@ -433,7 +620,39 @@ frameStyles.textContent = `
         color: #ffc0cb;
     }
 
-    /* Efectos especiales para personajes */
+    /* Marco adaptativo - distribución inteligente */
+    .character-side.left-side,
+    .character-side.right-side {
+        gap: -25px; /* Mayor solapamiento vertical */
+    }
+
+    .character-side.top-side,
+    .character-side.bottom-side {
+        gap: -30px; /* Mayor solapamiento horizontal */
+    }
+
+    /* Ajustes para marcos con muchas imágenes */
+    .character-frame[data-image-count="high"] .character-corner {
+        width: 100px !important;
+        height: 130px !important;
+    }
+
+    .character-frame[data-image-count="high"] .character-item {
+        width: 70px !important;
+        height: 90px !important;
+        margin: -12px !important;
+    }
+
+    /* Distribución densa para muchas imágenes */
+    .character-side.dense {
+        gap: -35px;
+    }
+
+    .character-side.dense .character-item {
+        margin: -18px;
+    }
+
+    /* Efectos especiales para marco cerrado */
     .character-corner.special-effect,
     .character-item.special-effect {
         animation: specialGlow 1s ease-in-out;
@@ -448,13 +667,6 @@ frameStyles.textContent = `
                         0 0 20px rgba(255, 107, 107, 0.4);
         }
     }
-
-    /* Mejoras para imágenes PNG con transparencia */
-    .character-corner img,
-    .character-item img {
-        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-        backdrop-filter: blur(2px);
-    }
 `;
 
-document.head.appendChild(frameStyles);
+document.head.appendChild(adaptiveFrameStyles);
