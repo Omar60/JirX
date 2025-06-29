@@ -20,6 +20,190 @@ html {
     max-width: 100vw;
 }
 
+/* Marco de personajes */
+.character-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: frameAppear 2s ease-out 1s forwards;
+}
+
+@keyframes frameAppear {
+    from {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Esquinas del marco */
+.character-corner {
+    position: absolute;
+    width: 120px;
+    height: 160px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatGentle 4s ease-in-out infinite;
+}
+
+.character-corner:hover {
+    transform: scale(1.1) rotate(2deg);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+    border-color: rgba(255, 192, 203, 0.9);
+}
+
+.character-corner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.character-corner:hover img {
+    transform: scale(1.05);
+}
+
+/* Posicionamiento de esquinas */
+.top-left {
+    top: 20px;
+    left: 20px;
+    animation-delay: 0s;
+}
+
+.top-right {
+    top: 20px;
+    right: 20px;
+    animation-delay: 1s;
+}
+
+.bottom-left {
+    bottom: 20px;
+    left: 20px;
+    animation-delay: 2s;
+}
+
+.bottom-right {
+    bottom: 20px;
+    right: 20px;
+    animation-delay: 3s;
+}
+
+/* Lados del marco */
+.character-side {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+}
+
+.left-side {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    animation-delay: 0.5s;
+}
+
+.right-side {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    animation-delay: 1.5s;
+}
+
+.top-side {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    animation-delay: 2.5s;
+}
+
+.bottom-side {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    animation-delay: 3.5s;
+}
+
+/* Items individuales del marco */
+.character-item {
+    width: 80px;
+    height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(3px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatGentle 5s ease-in-out infinite;
+    opacity: 0;
+    animation: characterItemAppear 1s ease-out forwards;
+}
+
+.character-item:hover {
+    transform: scale(1.15) rotate(-2deg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    border-color: rgba(255, 192, 203, 0.8);
+    z-index: 10;
+}
+
+.character-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.character-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Animaciones escalonadas para items */
+.character-item:nth-child(1) { animation-delay: 0.2s; }
+.character-item:nth-child(2) { animation-delay: 0.4s; }
+.character-item:nth-child(3) { animation-delay: 0.6s; }
+.character-item:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes characterItemAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatGentle {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(1deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+}
+
 /* Contenedor principal */
 .container {
     max-width: 800px;
@@ -27,6 +211,11 @@ html {
     padding: 20px;
     position: relative;
     z-index: 10;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(1px);
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 /* Header */
@@ -124,7 +313,7 @@ html {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
 }
 
 .heart {
@@ -348,9 +537,78 @@ html {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .character-corner {
+        width: 100px;
+        height: 130px;
+    }
+    
+    .character-item {
+        width: 70px;
+        height: 90px;
+    }
+    
+    .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .character-corner {
+        width: 80px;
+        height: 100px;
+    }
+    
+    .character-item {
+        width: 60px;
+        height: 75px;
+    }
+    
+    .top-left, .top-right {
+        top: 10px;
+    }
+    
+    .bottom-left, .bottom-right {
+        bottom: 10px;
+    }
+    
+    .top-left, .bottom-left {
+        left: 10px;
+    }
+    
+    .top-right, .bottom-right {
+        right: 10px;
+    }
+    
+    .left-side, .right-side {
+        gap: 15px;
+    }
+    
+    .left-side {
+        left: 10px;
+    }
+    
+    .right-side {
+        right: 10px;
+    }
+    
+    .top-side, .bottom-side {
+        gap: 15px;
+    }
+    
+    .top-side {
+        top: 10px;
+    }
+    
+    .bottom-side {
+        bottom: 10px;
     }
     
     .dynamic-content {
@@ -392,6 +650,20 @@ html {
 }
 
 @media (max-width: 480px) {
+    .character-corner {
+        width: 60px;
+        height: 80px;
+    }
+    
+    .character-item {
+        width: 45px;
+        height: 60px;
+    }
+    
+    .character-frame {
+        opacity: 0.8; /* Menos opacidad en móviles pequeños */
+    }
+    
     .lottie-container {
         width: 100px;
         height: 100px;
@@ -416,6 +688,12 @@ html {
 
 /* Mejoras de accesibilidad */
 @media (prefers-reduced-motion: reduce) {
+    .character-frame,
+    .character-corner,
+    .character-item {
+        animation: none !important;
+    }
+    
     * {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
@@ -429,11 +707,22 @@ html {
     outline-offset: 3px;
 }
 
+.character-corner:focus,
+.character-item:focus {
+    outline: 2px solid #ff6b9d;
+    outline-offset: 2px;
+}
+
 /* Optimizaciones de rendimiento */
-.heart, .interactive-heart, .character-speech-bubble, .nav-button {
+.heart, .interactive-heart, .character-speech-bubble, .nav-button,
+.character-corner, .character-item {
     will-change: transform, opacity;
 }
 
 .dynamic-text {
     contain: layout style paint;
+}
+
+.character-frame {
+    contain: layout style;
 }

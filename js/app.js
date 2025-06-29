@@ -4,6 +4,7 @@ import { CharacterManager } from './character.js';
 import { EffectsManager } from './effects.js';
 import { ContentManager } from './content.js';
 import { NavigationManager } from './navigation.js';
+import { CharacterFrameManager } from './character-frame.js';
 
 class App {
     constructor() {
@@ -11,6 +12,7 @@ class App {
         this.characterManager = new CharacterManager();
         this.effectsManager = new EffectsManager();
         this.contentManager = new ContentManager();
+        this.characterFrameManager = new CharacterFrameManager();
         this.navigationManager = new NavigationManager(
             this.storyManager,
             this.characterManager,
@@ -28,6 +30,7 @@ class App {
             // Inicializar managers en orden
             this.effectsManager.init();
             this.contentManager.init();
+            this.characterFrameManager.init();
             
             // Esperar a que Lottie se cargue
             await this.waitForLottie();
@@ -40,6 +43,11 @@ class App {
 
             // Mostrar mensaje inicial
             this.showInitialMessage();
+
+            // Mostrar marco de personajes después de un delay
+            setTimeout(() => {
+                this.characterFrameManager.show();
+            }, 2000);
 
             this.isInitialized = true;
             console.log('Aplicación inicializada correctamente');
@@ -79,6 +87,13 @@ class App {
         document.addEventListener('touchstart', () => {
             this.effectsManager.vibrate();
         });
+
+        // Controles de teclado adicionales para el marco
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'f' || e.key === 'F') {
+                this.characterFrameManager.toggle();
+            }
+        });
     }
 
     showInitialMessage() {
@@ -110,9 +125,23 @@ class App {
         document.body.appendChild(errorDiv);
     }
 
+    // Métodos públicos para personalización
+    updateCharacterImages(imageUrls) {
+        this.characterFrameManager.updateCharacterImages(imageUrls);
+    }
+
+    setCharacterNames(names) {
+        this.characterFrameManager.setCharacterNames(names);
+    }
+
+    toggleCharacterFrame() {
+        this.characterFrameManager.toggle();
+    }
+
     cleanup() {
         this.characterManager.cleanup();
         this.effectsManager.cleanup();
+        this.characterFrameManager.cleanup();
     }
 }
 
@@ -126,6 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
         app.cleanup();
     });
 
-    // Exponer para debugging
+    // Exponer para debugging y personalización
     window.app = app;
+    
+    // Funciones de utilidad para personalización
+    window.updateCharacters = (imageUrls) => app.updateCharacterImages(imageUrls);
+    window.setCharacterNames = (names) => app.setCharacterNames(names);
+    window.toggleFrame = () => app.toggleCharacterFrame();
 });
