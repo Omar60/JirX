@@ -25,7 +25,7 @@ class App {
         if (this.isInitialized) return;
 
         try {
-            console.log('Inicializando aplicación...');
+            console.log('🚀 Inicializando aplicación...');
 
             // Inicializar managers en orden
             this.effectsManager.init();
@@ -47,13 +47,14 @@ class App {
             // Mostrar marco de personajes después de un delay
             setTimeout(() => {
                 this.characterFrameManager.show();
+                console.log('✨ Marco de personajes activado');
             }, 2000);
 
             this.isInitialized = true;
-            console.log('Aplicación inicializada correctamente');
+            console.log('✅ Aplicación inicializada correctamente');
 
         } catch (error) {
-            console.error('Error al inicializar la aplicación:', error);
+            console.error('❌ Error al inicializar la aplicación:', error);
             this.showErrorMessage();
         }
     }
@@ -92,6 +93,11 @@ class App {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'f' || e.key === 'F') {
                 this.characterFrameManager.toggle();
+                console.log('🔄 Marco de personajes alternado');
+            }
+            if (e.key === 'r' || e.key === 'R') {
+                this.characterFrameManager.reloadImages();
+                console.log('🔄 Recargando imágenes de personajes');
             }
         });
     }
@@ -138,6 +144,10 @@ class App {
         this.characterFrameManager.toggle();
     }
 
+    reloadCharacterImages() {
+        this.characterFrameManager.reloadImages();
+    }
+
     cleanup() {
         this.characterManager.cleanup();
         this.effectsManager.cleanup();
@@ -162,4 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateCharacters = (imageUrls) => app.updateCharacterImages(imageUrls);
     window.setCharacterNames = (names) => app.setCharacterNames(names);
     window.toggleFrame = () => app.toggleCharacterFrame();
+    window.reloadImages = () => app.reloadCharacterImages();
+    
+    // Mostrar instrucciones en consola
+    console.log(`
+🎭 MARCO DE PERSONAJES - INSTRUCCIONES
+=====================================
+
+📁 Coloca tus imágenes en: assets/characters/
+   • character-1.jpg hasta character-12.jpg
+
+⌨️  Controles de teclado:
+   • F: Mostrar/ocultar marco
+   • R: Recargar imágenes
+
+🎨 Personalización:
+   • setCharacterNames(['Nombre1', 'Nombre2', ...])
+   • updateCharacters(['url1', 'url2', ...])
+   • reloadImages() - después de añadir imágenes
+
+✨ ¡Disfruta creando tu página especial!
+    `);
 });
