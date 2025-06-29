@@ -10,65 +10,77 @@
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
-    <!-- Marco de personajes -->
+    <!-- Marco de personajes My Little Pony -->
     <div class="character-frame" id="characterFrame">
-        <!-- Esquinas -->
-        <div class="character-corner top-left" data-character="1">
-            <img src="https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Personaje 1" loading="lazy">
+        <!-- Esquinas principales - Rarity destacada -->
+        <div class="character-corner top-left rarity-special" data-character="rarity" data-name="Rarity">
+            <img src="https://images.pexels.com/photos/6985001/pexels-photo-6985001.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Rarity - Elegancia y Generosidad" loading="lazy">
+            <div class="character-sparkle">✨</div>
         </div>
-        <div class="character-corner top-right" data-character="2">
-            <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Personaje 2" loading="lazy">
+        <div class="character-corner top-right" data-character="twilight" data-name="Twilight Sparkle">
+            <img src="https://images.pexels.com/photos/6985095/pexels-photo-6985095.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Twilight Sparkle - Magia y Amistad" loading="lazy">
+            <div class="character-sparkle">⭐</div>
         </div>
-        <div class="character-corner bottom-left" data-character="3">
-            <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Personaje 3" loading="lazy">
+        <div class="character-corner bottom-left" data-character="fluttershy" data-name="Fluttershy">
+            <img src="https://images.pexels.com/photos/6985089/pexels-photo-6985089.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Fluttershy - Bondad y Naturaleza" loading="lazy">
+            <div class="character-sparkle">🦋</div>
         </div>
-        <div class="character-corner bottom-right" data-character="4">
-            <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Personaje 4" loading="lazy">
+        <div class="character-corner bottom-right" data-character="rainbow" data-name="Rainbow Dash">
+            <img src="https://images.pexels.com/photos/6985067/pexels-photo-6985067.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Rainbow Dash - Lealtad y Velocidad" loading="lazy">
+            <div class="character-sparkle">🌈</div>
         </div>
         
         <!-- Laterales -->
         <div class="character-side left-side">
-            <div class="character-item" data-character="5">
-                <img src="https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Personaje 5" loading="lazy">
+            <div class="character-item" data-character="pinkie" data-name="Pinkie Pie">
+                <img src="https://images.pexels.com/photos/6985034/pexels-photo-6985034.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Pinkie Pie - Risa y Diversión" loading="lazy">
+                <div class="character-sparkle">🎉</div>
             </div>
-            <div class="character-item" data-character="6">
-                <img src="https://images.pexels.com/photos/1239288/pexels-photo-1239288.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Personaje 6" loading="lazy">
+            <div class="character-item" data-character="applejack" data-name="Applejack">
+                <img src="https://images.pexels.com/photos/6985078/pexels-photo-6985078.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Applejack - Honestidad y Trabajo" loading="lazy">
+                <div class="character-sparkle">🍎</div>
             </div>
         </div>
         
         <div class="character-side right-side">
-            <div class="character-item" data-character="7">
-                <img src="https://images.pexels.com/photos/1181681/pexels-photo-1181681.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Personaje 7" loading="lazy">
+            <div class="character-item rarity-companion" data-character="sweetie-belle" data-name="Sweetie Belle">
+                <img src="https://images.pexels.com/photos/6985012/pexels-photo-6985012.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Sweetie Belle - Hermana de Rarity" loading="lazy">
+                <div class="character-sparkle">🎵</div>
             </div>
-            <div class="character-item" data-character="8">
-                <img src="https://images.pexels.com/photos/1181687/pexels-photo-1181687.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Personaje 8" loading="lazy">
+            <div class="character-item" data-character="spike" data-name="Spike">
+                <img src="https://images.pexels.com/photos/6985045/pexels-photo-6985045.jpeg?auto=compress&cs=tinysrgb&w=200&h=300&fit=crop" alt="Spike - Asistente Leal" loading="lazy">
+                <div class="character-sparkle">🔥</div>
             </div>
         </div>
         
         <!-- Superior e inferior -->
         <div class="character-side top-side">
-            <div class="character-item" data-character="9">
-                <img src="https://images.pexels.com/photos/1040882/pexels-photo-1040882.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Personaje 9" loading="lazy">
+            <div class="character-item" data-character="celestia" data-name="Princess Celestia">
+                <img src="https://images.pexels.com/photos/6985056/pexels-photo-6985056.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Princess Celestia - Sabiduría Solar" loading="lazy">
+                <div class="character-sparkle">☀️</div>
             </div>
-            <div class="character-item" data-character="10">
-                <img src="https://images.pexels.com/photos/1239289/pexels-photo-1239289.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Personaje 10" loading="lazy">
+            <div class="character-item" data-character="luna" data-name="Princess Luna">
+                <img src="https://images.pexels.com/photos/6985023/pexels-photo-6985023.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Princess Luna - Magia Lunar" loading="lazy">
+                <div class="character-sparkle">🌙</div>
             </div>
         </div>
         
         <div class="character-side bottom-side">
-            <div class="character-item" data-character="11">
-                <img src="https://images.pexels.com/photos/1181683/pexels-photo-1181683.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Personaje 11" loading="lazy">
+            <div class="character-item rarity-companion" data-character="opal" data-name="Opalescence">
+                <img src="https://images.pexels.com/photos/6985089/pexels-photo-6985089.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Opalescence - Gata de Rarity" loading="lazy">
+                <div class="character-sparkle">💎</div>
             </div>
-            <div class="character-item" data-character="12">
-                <img src="https://images.pexels.com/photos/1181688/pexels-photo-1181688.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Personaje 12" loading="lazy">
+            <div class="character-item" data-character="derpy" data-name="Derpy Hooves">
+                <img src="https://images.pexels.com/photos/6985067/pexels-photo-6985067.jpeg?auto=compress&cs=tinysrgb&w=250&h=200&fit=crop" alt="Derpy Hooves - Mensajera Especial" loading="lazy">
+                <div class="character-sparkle">📮</div>
             </div>
         </div>
     </div>
 
     <div class="container">
         <div class="header">
-            <h1 class="main-title">Para Ti</h1>
-            <div class="subtitle">Algo importante que quiero que sepas</div>
+            <h1 class="main-title">Para Ti ✨</h1>
+            <div class="subtitle">Con la magia de la amistad y el amor</div>
         </div>
         
         <div class="content">
@@ -105,12 +117,20 @@
             </div>
         </div>
         
-        <div class="floating-hearts">
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
-            <div class="heart"></div>
+        <!-- Efectos especiales MLP -->
+        <div class="mlp-magic-effects">
+            <div class="floating-gems">
+                <div class="gem gem-1">💎</div>
+                <div class="gem gem-2">💎</div>
+                <div class="gem gem-3">💎</div>
+            </div>
+            <div class="floating-hearts">
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+            </div>
         </div>
     </div>
 
