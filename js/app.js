@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
 🎭 MARCO DE PERSONAJES - INSTRUCCIONES
 =====================================
 
-📁 Coloca tus imágenes en: assets/characters/
-   • character-1.jpg hasta character-12.jpg
+📁 Imágenes detectadas en: assets/characters/
+   • ${app.characterFrameManager?.availableImages?.length || 18} imágenes PNG encontradas
 
 ⌨️  Controles de teclado:
    • F: Mostrar/ocultar marco

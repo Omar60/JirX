@@ -19,6 +19,27 @@ export class CharacterFrameManager {
             'Personaje Especial 11',
             'Personaje Especial 12'
         ];
+        // Mapeo de las imágenes disponibles
+        this.availableImages = [
+            'pngwing.com (12).png',
+            'pngwing.com (13).png',
+            'pngwing.com (14).png',
+            'pngwing.com (15).png',
+            'pngwing.com (16).png',
+            'pngwing.com (17).png',
+            'pngwing.com (18).png',
+            'pngwing.com (19).png',
+            'pngwing.com (20).png',
+            'pngwing.com (21).png',
+            'pngwing.com (22).png',
+            'pngwing.com (23).png',
+            'pngwing.com (24).png',
+            'pngwing.com (25).png',
+            'pngwing.com (26).png',
+            'pngwing.com (27).png',
+            'pngwing.com (28).png',
+            'pngwing.com (29).png'
+        ];
     }
 
     init() {
@@ -35,29 +56,36 @@ export class CharacterFrameManager {
     }
 
     loadCharacterImages() {
+        console.log('🎭 Cargando imágenes de personajes...');
+        
         this.characters.forEach((character, index) => {
             const img = character.querySelector('img');
-            if (img) {
+            if (img && this.availableImages[index]) {
                 const characterNumber = index + 1;
-                const localImagePath = `assets/characters/character-${characterNumber}.jpg`;
+                const imagePath = `assets/characters/${this.availableImages[index]}`;
                 const fallbackImagePath = img.src; // Mantener la imagen de Pexels como fallback
                 
                 // Intentar cargar la imagen local primero
                 const testImage = new Image();
                 testImage.onload = () => {
                     // Si la imagen local existe, usarla
-                    img.src = localImagePath;
+                    img.src = imagePath;
                     img.alt = this.characterNames[index] || `Personaje ${characterNumber}`;
-                    console.log(`✅ Imagen local cargada: character-${characterNumber}.jpg`);
+                    console.log(`✅ Imagen cargada: ${this.availableImages[index]}`);
                 };
                 
                 testImage.onerror = () => {
                     // Si no existe, mantener la imagen de Pexels
                     img.alt = `${this.characterNames[index]} (Placeholder)`;
-                    console.log(`⚠️ Usando imagen placeholder para character-${characterNumber}.jpg`);
+                    console.log(`⚠️ Error cargando: ${this.availableImages[index]}, usando placeholder`);
                 };
                 
-                testImage.src = localImagePath;
+                testImage.src = imagePath;
+            } else if (img) {
+                // Si no hay imagen disponible, usar placeholder
+                const characterNumber = index + 1;
+                img.alt = `${this.characterNames[index]} (Placeholder)`;
+                console.log(`⚠️ No hay imagen disponible para personaje ${characterNumber}`);
             }
         });
     }
@@ -328,12 +356,21 @@ export class CharacterFrameManager {
                 character.setAttribute('data-name', names[index]);
             }
         });
+        
+        console.log('✅ Nombres de personajes actualizados:', names);
     }
 
     // Método para recargar imágenes después de añadir nuevas
     reloadImages() {
         console.log('🔄 Recargando imágenes de personajes...');
         this.loadCharacterImages();
+    }
+
+    // Método para actualizar la lista de imágenes disponibles
+    updateAvailableImages(imageList) {
+        this.availableImages = imageList;
+        this.reloadImages();
+        console.log('✅ Lista de imágenes actualizada:', imageList);
     }
 
     cleanup() {
@@ -410,6 +447,13 @@ frameStyles.textContent = `
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6), 
                         0 0 20px rgba(255, 107, 107, 0.4);
         }
+    }
+
+    /* Mejoras para imágenes PNG con transparencia */
+    .character-corner img,
+    .character-item img {
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+        backdrop-filter: blur(2px);
     }
 `;
 
