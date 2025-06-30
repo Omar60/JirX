@@ -5,75 +5,75 @@ export class StoryManager {
         this.storyCompleted = false;
         this.storySequence = [
             {
-                message: "¡Hola! Mi nombre es... 🐱 Haz clic en mí para comenzar esta historia especial...",
+                message: "¡Hola! Soy tu guía en esta pequeña aventura... 🐱 Haz clic en mí para descubrir un mensaje muy especial.",
                 action: "welcome",
                 content: null,
                 useMysticName: true
             },
             {
-                message: "Esta página fue creada especialmente para ti... 💕",
+                message: "Cada palabra aquí ha sido pensada solo para ti... 💕",
                 action: "intro",
                 content: {
-                    title: "Para Ti",
-                    text: "Alguien que se preocupa por ti quiere compartir algo importante..."
+                    title: "Un Mensaje del Corazón",
+                    text: "Alguien que te valora profundamente desea compartir algo que ha estado en su mente y corazón."
                 }
             },
             {
-                message: "Hay algo muy importante que quiere decirte... 💭",
+                message: "Es un mensaje que viene de un lugar de profundo cariño y observación... 💭",
                 action: "buildup",
                 content: {
-                    title: "Una conversación necesaria",
-                    text: "Estas palabras vienen de alguien que te conoce y que ha notado algunos cambios..."
+                    title: "Reflexiones Sinceras",
+                    text: "Estas palabras son de alguien que te conoce bien y ha percibido sutiles, pero importantes, cambios en tu esencia."
                 }
             },
             {
-                message: "¿Estás lista para escuchar? ¡Haz clic para continuar! ✨",
+                message: "¿Estás preparada para abrir tu corazón a estas palabras? ¡Haz clic para seguir! ✨",
                 action: "ready",
                 content: null
             },
             {
-                message: "Aquí viene lo que realmente quiere decirte... 💖",
+                message: "Con todo el respeto y cariño, esto es lo que he sentido la necesidad de compartir... 💖",
                 action: "reveal",
                 content: {
-                    title: "Lo que he notado",
-                    text: "He estado observando y me he dado cuenta de que has cambiado. No eres la misma persona radiante que conocí, y eso me preocupa mucho..."
+                    title: "Mi Observación, con Amor",
+                    text: "He estado observando con atención y he notado que tu brillo, esa luz tan tuya, parece haberse atenuado. Esto me genera una genuina preocupación..."
                 }
             },
             {
-                message: "Sus observaciones sobre tu situación... 💭",
+                message: "Esto es lo que mis ojos han percibido en ti... 💭",
                 action: "confession1",
                 content: {
-                    title: "Lo que ve en ti",
-                    text: "Has perdido esa chispa en los ojos, esa risa genuina que te caracterizaba. Te veo más callada, más distante, como si estuvieras caminando sobre cáscaras de huevo constantemente."
+                    title: "Tu Esencia, Mi Preocupación",
+                    text: "Esa chispa en tus ojos, esa risa contagiosa que te definía, parecen haberse desvanecido. Te percibo más retraída, más cautelosa, como si cada paso fuera incierto."
                 }
             },
             {
-                message: "Su preocupación por lo que está pasando... 😔",
+                message: "Y esto es lo que mi corazón siente al verte... 😔",
                 action: "confession2",
                 content: {
-                    title: "Lo que le duele ver",
-                    text: "No quiere entrometerse, pero no puede quedarse callado viendo cómo tu luz se va apagando poco a poco. Una relación debería hacerte florecer, no marchitarte."
+                    title: "El Dolor de Verte Así",
+                    text: "No es mi intención inmiscuirme, pero me resulta imposible permanecer indiferente mientras veo cómo tu luz se apaga lentamente. Una relación verdadera debe nutrirte y hacerte crecer, no consumirte."
                 }
             },
             {
-                message: "Su mensaje de apoyo y esperanza... 🌟",
+                message: "Pero sobre todo, quiero que recuerdes esto... 🌟",
                 action: "respect",
                 content: {
-                    title: "Lo que quiere que sepas",
-                    text: "Mereces ser amada de manera sana, con respeto, con libertad para ser tú misma. Mereces a alguien que celebre tu esencia, no que la silencie. Y aunque no pueda cambiar tu situación, quiere que sepas que te valora exactamente como eres."
+                    title: "Tu Valor Inquebrantable",
+                    text: "Mereces un amor que te eleve, que te respete en cada fibra de tu ser, que te dé la libertad de ser auténticamente tú. Mereces a alguien que celebre tu individualidad, no que intente opacarla. Aunque no pueda cambiar tu realidad, quiero que sepas que te valoro y admiro tal como eres."
                 }
             },
             {
-                message: "Las palabras finales de apoyo... ✨",
+                message: "Y con esto, mi mensaje concluye, pero mi apoyo permanece... ✨",
                 action: "final",
                 content: {
-                    title: "Siempre aquí para ti",
-                    text: "Si algún día decides que mereces algo mejor, si algún día quieres recuperar esa persona increíble que eres, estaré aquí. No para aprovecharse, sino para recordarte lo valiosa que eres.",
-                    signature: "Con cariño y respeto, [Tu nombre]"
+                    title: "Mi Mano Extendida, Siempre",
+                    text: "Si en algún momento decides que es tiempo de buscar lo que realmente mereces, si anhelas reencontrarte con esa persona increíble que sé que eres, aquí estaré. No para juzgar, sino para recordarte, una y otra vez, lo infinitamente valiosa que eres.",
+                    signature: "Con todo mi cariño y respeto, [Tu nombre]"
                 }
             },
             {
-                message: "¿Qué te pareció? Soy tu confidente gatuno 😊 ¡Puedes hablar conmigo!",
+                message: "¿Cómo te sientes después de leer esto? Tu amigo gatuno está aquí para escucharte. 😊",
                 action: "end",
                 content: null
             }
