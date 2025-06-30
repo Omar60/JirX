@@ -314,20 +314,22 @@ html {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Cambiado de center a flex-start */
     position: relative;
-    min-height: 50vh;
+    min-height: 40vh; /* Reducido de 50vh a 40vh */
+    padding-top: 2rem; /* Añadido padding superior */
 }
 
 .dynamic-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Cambiado de center a flex-start */
     width: 100%;
     text-align: center;
     position: relative;
     z-index: 15;
+    margin-top: 1rem; /* Añadido margen superior */
 }
 
 /* MENSAJE CENTRAL - MÚLTIPLES OPCIONES DE POSICIONAMIENTO */
@@ -346,6 +348,7 @@ html {
     border: 2px solid rgba(255, 192, 203, 0.5);
     position: relative;
     z-index: 15;
+    margin-bottom: 3rem; /* Añadido margen inferior para separar de la mascota */
 }
 
 .dynamic-text.show {
@@ -357,7 +360,7 @@ html {
 .dynamic-text.smart-position {
     position: fixed;
     left: 50%;
-    top: 50%;
+    top: 30%; /* Cambiado de 50% a 30% para subir la posición */
     transform: translate(-50%, -50%);
     max-width: 500px;
     z-index: 15;
@@ -367,7 +370,7 @@ html {
 .dynamic-text.side-position {
     position: fixed;
     left: 50px;
-    top: 50%;
+    top: 25%; /* Cambiado de 50% a 25% para subir la posición */
     transform: translateY(-50%);
     max-width: 400px;
     z-index: 15;
@@ -377,7 +380,7 @@ html {
 .dynamic-text.top-position {
     position: fixed;
     left: 50%;
-    top: 100px;
+    top: 80px; /* Reducido de 100px a 80px */
     transform: translateX(-50%);
     max-width: 500px;
     z-index: 15;
@@ -387,7 +390,7 @@ html {
 .dynamic-text.modal-position {
     position: fixed;
     left: 50%;
-    top: 50%;
+    top: 35%; /* Cambiado de 50% a 35% para subir la posición */
     transform: translate(-50%, -50%);
     max-width: 600px;
     z-index: 1000;
@@ -410,7 +413,7 @@ html {
 /* OPCIÓN 5: Posicionamiento adaptativo según viewport */
 .dynamic-text.adaptive-position {
     position: relative;
-    margin: 2rem auto;
+    margin: 1rem auto 3rem auto; /* Añadido margen inferior de 3rem */
     max-width: min(90vw, 600px);
 }
 
@@ -769,6 +772,7 @@ html {
     .dynamic-text.side-position {
         left: 30px;
         max-width: 350px;
+        top: 20%; /* Subido también aquí */
     }
     
     .character-speech-bubble.smart-bubble {
@@ -806,7 +810,7 @@ html {
         left: auto;
         top: auto;
         transform: none;
-        margin: 2rem auto;
+        margin: 1rem auto 3rem auto; /* Añadido margen inferior */
     }
 }
 
@@ -867,7 +871,8 @@ html {
     
     .dynamic-content {
         padding: 1rem;
-        min-height: 40vh;
+        min-height: 30vh; /* Reducido de 40vh a 30vh */
+        margin-top: 0.5rem; /* Reducido el margen superior */
     }
     
     /* Todos los mensajes usan posicionamiento adaptativo en móvil */
@@ -880,7 +885,7 @@ html {
         left: auto;
         top: auto;
         transform: none;
-        margin: 1rem auto;
+        margin: 0.5rem auto 2rem auto; /* Reducido margen superior y inferior */
         padding: 1.5rem;
         max-width: 95%;
     }
@@ -970,6 +975,7 @@ html {
     
     .dynamic-text {
         padding: 1rem;
+        margin: 0.5rem auto 1.5rem auto; /* Reducido margen inferior */
     }
     
     .nav-button {

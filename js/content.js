@@ -207,20 +207,19 @@ Ctrl/Cmd + D: Activar/desactivar modo debug
             });
         }
         
-        // Zona superior
-        if (this.mascotPosition.y > minHeight + margin * 2) {
-            zones.push({
-                x: margin,
-                y: margin,
-                width: this.viewportSize.width - margin * 2,
-                height: this.mascotPosition.y - margin * 2,
-                type: 'top'
-            });
-        }
+        // Zona superior - AJUSTADA PARA POSICIÓN MÁS ALTA
+        const upperZoneHeight = Math.min(this.viewportSize.height * 0.4, 300); // Máximo 40% de la altura
+        zones.push({
+            x: margin,
+            y: margin,
+            width: this.viewportSize.width - margin * 2,
+            height: upperZoneHeight,
+            type: 'top'
+        });
         
-        // Zona central (si hay espacio)
+        // Zona central superior - NUEVA ZONA PARA EVITAR SUPERPOSICIÓN
         const centerX = this.viewportSize.width / 2;
-        const centerY = this.viewportSize.height / 2;
+        const centerY = this.viewportSize.height * 0.25; // 25% desde arriba
         
         if (!this.checkCollision(centerX - minWidth/2, centerY - minHeight/2, minWidth, minHeight)) {
             zones.push({
@@ -228,7 +227,7 @@ Ctrl/Cmd + D: Activar/desactivar modo debug
                 y: centerY - minHeight/2,
                 width: minWidth,
                 height: minHeight,
-                type: 'center'
+                type: 'center-upper'
             });
         }
         
@@ -236,7 +235,7 @@ Ctrl/Cmd + D: Activar/desactivar modo debug
     }
 
     checkCollision(x, y, width, height) {
-        const buffer = 20;
+        const buffer = 50; // Aumentado el buffer para más separación
         return !(x + width + buffer < this.mascotPosition.x ||
                 x - buffer > this.mascotPosition.right ||
                 y + height + buffer < this.mascotPosition.y ||
@@ -247,13 +246,13 @@ Ctrl/Cmd + D: Activar/desactivar modo debug
         this.detectMascotPosition();
         const safeZones = this.calculateSafeZones();
         
-        // Priorizar zonas según el modo actual
+        // Priorizar zonas según el modo actual - PRIORIZANDO ZONAS SUPERIORES
         const priorities = {
-            smart: ['center', 'left', 'top'],
-            side: ['left', 'center', 'top'],
-            top: ['top', 'center', 'left'],
-            adaptive: ['center', 'left', 'top'],
-            modal: ['center']
+            smart: ['center-upper', 'top', 'left'],
+            side: ['left', 'center-upper', 'top'],
+            top: ['top', 'center-upper', 'left'],
+            adaptive: ['center-upper', 'top', 'left'],
+            modal: ['center-upper', 'top']
         };
         
         const preferredTypes = priorities[this.currentPositionMode] || priorities.adaptive;
@@ -271,11 +270,11 @@ Ctrl/Cmd + D: Activar/desactivar modo debug
             }
         }
         
-        // Fallback: centro de pantalla
+        // Fallback: parte superior de la pantalla
         return {
             x: (this.viewportSize.width - contentWidth) / 2,
-            y: (this.viewportSize.height - contentHeight) / 2,
-            zone: 'fallback'
+            y: Math.min(80, this.viewportSize.height * 0.1), // Posición superior
+            zone: 'fallback-top'
         };
     }
 
