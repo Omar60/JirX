@@ -123,18 +123,18 @@ html {
     z-index: 13;
 }
 
-/* Lados del collage - POSICIONES CENTRADAS */
+/* Lados del collage - ESPACIADO MEJORADO */
 .character-side {
     position: absolute;
     display: flex;
-    gap: -20px; /* Solapamiento moderado */
+    gap: 15px; /* AUMENTADO DE -20px A 15px PARA MEJOR ESPACIADO */
     background: none !important; /* FORZAR SIN FONDO */
     backdrop-filter: none !important; /* ELIMINAR BACKDROP */
 }
 
 .left-side {
-    left: -20px; /* Más cerca del centro */
-    top: 30%;
+    left: -10px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
+    top: 25%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
     transform: translateY(-50%) rotate(-12deg);
     flex-direction: column;
     animation-delay: 0.4s;
@@ -142,8 +142,8 @@ html {
 }
 
 .right-side {
-    right: -20px; /* Más cerca del centro */
-    top: 35%;
+    right: -10px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
+    top: 30%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
     transform: translateY(-50%) rotate(15deg);
     flex-direction: column;
     animation-delay: 1.2s;
@@ -151,8 +151,8 @@ html {
 }
 
 .top-side {
-    top: -30px; /* Más visible */
-    left: 25%;
+    top: -20px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
+    left: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
     transform: translateX(-50%) rotate(6deg);
     flex-direction: row;
     animation-delay: 2.0s;
@@ -160,15 +160,15 @@ html {
 }
 
 .bottom-side {
-    bottom: -30px; /* Más visible */
-    right: 25%;
+    bottom: -20px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
+    right: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
     transform: translateX(50%) rotate(-8deg);
     flex-direction: row;
     animation-delay: 2.8s;
     z-index: 5;
 }
 
-/* Items individuales del collage - TAMAÑOS MODERADOS */
+/* Items individuales del collage - ESPACIADO MEJORADO */
 .character-item {
     border-radius: 0;
     overflow: visible !important; /* CAMBIAR DE HIDDEN A VISIBLE */
@@ -179,7 +179,7 @@ html {
     opacity: 0;
     animation: characterItemAppear 1.2s ease-out forwards;
     position: relative;
-    margin: -15px; /* Solapamiento moderado */
+    margin: 8px; /* CAMBIADO DE -15px A 8px PARA ESPACIADO POSITIVO */
     width: 80px;
     height: 100px;
     border: none !important;
@@ -764,7 +764,7 @@ html {
     }
 }
 
-/* Responsive Design - POSICIONAMIENTO INTELIGENTE */
+/* Responsive Design - ESPACIADO MEJORADO */
 @media (max-width: 1200px) {
     .character-corner {
         width: 110px !important;
@@ -774,11 +774,11 @@ html {
     .character-item {
         width: 75px !important;
         height: 95px !important;
-        margin: -12px !important;
+        margin: 6px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
     }
     
     .character-side {
-        gap: -18px !important;
+        gap: 12px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
     }
     
     /* Ajustar posición del mensaje en pantallas medianas */
@@ -803,11 +803,11 @@ html {
     .character-item {
         width: 70px !important;
         height: 90px !important;
-        margin: -10px !important;
+        margin: 5px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
     }
     
     .character-side {
-        gap: -15px !important;
+        gap: 10px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
     }
     
     .container {
@@ -842,11 +842,11 @@ html {
     .character-item {
         width: 65px !important;
         height: 80px !important;
-        margin: -8px !important;
+        margin: 4px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
     }
     
     .character-side {
-        gap: -12px !important;
+        gap: 8px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
     }
     
     /* Posiciones más centradas en móvil */
@@ -867,19 +867,19 @@ html {
     }
     
     .left-side {
-        left: -15px;
+        left: -5px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
     }
     
     .right-side {
-        right: -15px;
+        right: -5px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
     }
     
     .top-side {
-        top: -25px;
+        top: -15px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
     }
     
     .bottom-side {
-        bottom: -25px;
+        bottom: -15px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
     }
     
     .dynamic-content {
@@ -998,11 +998,11 @@ html {
     .character-item {
         width: 60px !important;
         height: 75px !important;
-        margin: -6px !important;
+        margin: 3px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
     }
     
     .character-side {
-        gap: -10px !important;
+        gap: 6px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
     }
     
     .character-frame {
