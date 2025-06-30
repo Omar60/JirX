@@ -64,11 +64,11 @@ export class StoryManager {
                 }
             },
             {
-                message: "Y con esto, mi mensaje concluye, pero mi apoyo permanece... ✨",
+                message: "Y con esto, mi mensaje concluye, pero mi esperanza y apoyo permanecen... ✨",
                 action: "final",
                 content: {
-                    title: "Mi Mano Extendida, Siempre",
-                    text: "Si en algún momento decides que es tiempo de buscar lo que realmente mereces, si anhelas reencontrarte con esa persona increíble que sé que eres, aquí estaré. No para juzgar, sino para recordarte, una y otra vez, lo infinitamente valiosa que eres.",
+                    title: "Una Puerta Abierta, Sin Presión",
+                    text: "Si en algún momento decides que es tiempo de buscar lo que realmente mereces, si anhelas reencontrarte con esa persona increíble que sé que eres, quiero que sepas que estoy aquí. No para aprovecharme, ni para presionar, sino para ofrecerte mi apoyo incondicional y, si tú lo sientes, la posibilidad de construir algo nuevo y hermoso juntos. Este mensaje es un reflejo puro de mi cariño y respeto, sin más pretensiones que tu bienestar y la esperanza de que, si hay una oportunidad, la consideres.",
                     signature: "Con todo mi cariño y respeto, [Tu nombre]"
                 }
             },
