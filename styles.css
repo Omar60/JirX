@@ -123,52 +123,71 @@ html {
     z-index: 13;
 }
 
-/* Lados del collage - ESPACIADO DRAMÁTICAMENTE MEJORADO */
+/* LATERALES ADAPTATIVOS - POSICIONAMIENTO INTELIGENTE EN CENTRO VERTICAL */
 .character-side {
     position: absolute;
     display: flex;
-    gap: 35px; /* AUMENTADO DRAMÁTICAMENTE DE 15px A 35px */
+    gap: 40px; /* ESPACIADO GENEROSO ENTRE ELEMENTOS */
     background: none !important; /* FORZAR SIN FONDO */
     backdrop-filter: none !important; /* ELIMINAR BACKDROP */
 }
 
+/* LADO IZQUIERDO - CENTRADO VERTICALMENTE Y ADAPTATIVO */
 .left-side {
-    left: 5px; /* MOVIDO MÁS HACIA EL CENTRO PARA MEJOR VISIBILIDAD */
-    top: 15%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN VERTICAL */
-    transform: translateY(-50%) rotate(-12deg);
+    left: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE */
+    top: 50%; /* CENTRADO VERTICALMENTE */
+    transform: translateY(-50%) rotate(-8deg); /* ROTACIÓN SUTIL */
     flex-direction: column;
     animation-delay: 0.4s;
     z-index: 8;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ALTURA DE VIEWPORT */
+    height: min(70vh, 600px); /* MÁXIMO 70% DE LA ALTURA DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
 }
 
+/* LADO DERECHO - CENTRADO VERTICALMENTE Y ADAPTATIVO */
 .right-side {
-    right: 5px; /* MOVIDO MÁS HACIA EL CENTRO PARA MEJOR VISIBILIDAD */
-    top: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN VERTICAL */
-    transform: translateY(-50%) rotate(15deg);
+    right: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE */
+    top: 50%; /* CENTRADO VERTICALMENTE */
+    transform: translateY(-50%) rotate(8deg); /* ROTACIÓN SUTIL OPUESTA */
     flex-direction: column;
     animation-delay: 1.2s;
     z-index: 7;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ALTURA DE VIEWPORT */
+    height: min(70vh, 600px); /* MÁXIMO 70% DE LA ALTURA DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
 }
 
+/* SUPERIOR E INFERIOR - CENTRADOS HORIZONTALMENTE Y ADAPTATIVOS */
 .top-side {
-    top: -10px; /* MÁS VISIBLE */
-    left: 15%; /* MEJOR DISTRIBUCIÓN HORIZONTAL */
-    transform: translateX(-50%) rotate(6deg);
+    top: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE SUPERIOR */
+    left: 50%; /* CENTRADO HORIZONTALMENTE */
+    transform: translateX(-50%) rotate(-4deg); /* ROTACIÓN SUTIL */
     flex-direction: row;
     animation-delay: 2.0s;
     z-index: 6;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ANCHO DE VIEWPORT */
+    width: min(80vw, 800px); /* MÁXIMO 80% DEL ANCHO DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
 }
 
 .bottom-side {
-    bottom: -10px; /* MÁS VISIBLE */
-    right: 15%; /* MEJOR DISTRIBUCIÓN HORIZONTAL */
-    transform: translateX(50%) rotate(-8deg);
+    bottom: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE INFERIOR */
+    left: 50%; /* CENTRADO HORIZONTALMENTE */
+    transform: translateX(-50%) rotate(4deg); /* ROTACIÓN SUTIL OPUESTA */
     flex-direction: row;
     animation-delay: 2.8s;
     z-index: 5;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ANCHO DE VIEWPORT */
+    width: min(80vw, 800px); /* MÁXIMO 80% DEL ANCHO DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
 }
 
-/* Items individuales del collage - ESPACIADO DRAMÁTICAMENTE MEJORADO */
+/* Items individuales del collage - ESPACIADO PERFECTO */
 .character-item {
     border-radius: 0;
     overflow: visible !important; /* CAMBIAR DE HIDDEN A VISIBLE */
@@ -179,13 +198,14 @@ html {
     opacity: 0;
     animation: characterItemAppear 1.2s ease-out forwards;
     position: relative;
-    margin: 20px; /* AUMENTADO DRAMÁTICAMENTE DE 8px A 20px */
-    width: 80px;
-    height: 100px;
+    margin: 0; /* SIN MARGEN NEGATIVO - ESPACIADO CONTROLADO POR GAP */
+    width: 85px; /* LIGERAMENTE MÁS GRANDE PARA MEJOR VISIBILIDAD */
+    height: 110px;
     border: none !important;
     outline: none !important;
     background: none !important; /* FORZAR SIN FONDO */
     background-color: transparent !important; /* FORZAR TRANSPARENTE */
+    flex-shrink: 0; /* EVITAR QUE SE COMPRIMAN */
 }
 
 .character-item:hover {
@@ -214,32 +234,32 @@ html {
     transform: scale(1.03) rotate(2deg);
 }
 
-/* Rotaciones variadas para efecto natural - MODERADAS */
-.left-side .character-item:nth-child(1) { transform: rotate(18deg); z-index: 18; }
-.left-side .character-item:nth-child(2) { transform: rotate(-22deg); z-index: 17; }
-.left-side .character-item:nth-child(3) { transform: rotate(15deg); z-index: 16; }
-.left-side .character-item:nth-child(4) { transform: rotate(-18deg); z-index: 15; }
-.left-side .character-item:nth-child(5) { transform: rotate(20deg); z-index: 14; }
+/* ROTACIONES VARIADAS PARA EFECTO NATURAL - SUAVES Y ELEGANTES */
+.left-side .character-item:nth-child(1) { transform: rotate(12deg); z-index: 18; }
+.left-side .character-item:nth-child(2) { transform: rotate(-15deg); z-index: 17; }
+.left-side .character-item:nth-child(3) { transform: rotate(8deg); z-index: 16; }
+.left-side .character-item:nth-child(4) { transform: rotate(-10deg); z-index: 15; }
+.left-side .character-item:nth-child(5) { transform: rotate(14deg); z-index: 14; }
 
-.right-side .character-item:nth-child(1) { transform: rotate(-20deg); z-index: 19; }
-.right-side .character-item:nth-child(2) { transform: rotate(24deg); z-index: 20; }
-.right-side .character-item:nth-child(3) { transform: rotate(-16deg); z-index: 21; }
-.right-side .character-item:nth-child(4) { transform: rotate(22deg); z-index: 22; }
-.right-side .character-item:nth-child(5) { transform: rotate(-18deg); z-index: 23; }
+.right-side .character-item:nth-child(1) { transform: rotate(-12deg); z-index: 19; }
+.right-side .character-item:nth-child(2) { transform: rotate(16deg); z-index: 20; }
+.right-side .character-item:nth-child(3) { transform: rotate(-9deg); z-index: 21; }
+.right-side .character-item:nth-child(4) { transform: rotate(13deg); z-index: 22; }
+.right-side .character-item:nth-child(5) { transform: rotate(-11deg); z-index: 23; }
 
-.top-side .character-item:nth-child(1) { transform: rotate(-12deg); z-index: 24; }
-.top-side .character-item:nth-child(2) { transform: rotate(16deg); z-index: 25; }
-.top-side .character-item:nth-child(3) { transform: rotate(-10deg); z-index: 26; }
-.top-side .character-item:nth-child(4) { transform: rotate(14deg); z-index: 27; }
-.top-side .character-item:nth-child(5) { transform: rotate(-8deg); z-index: 28; }
-.top-side .character-item:nth-child(6) { transform: rotate(12deg); z-index: 29; }
+.top-side .character-item:nth-child(1) { transform: rotate(-8deg); z-index: 24; }
+.top-side .character-item:nth-child(2) { transform: rotate(10deg); z-index: 25; }
+.top-side .character-item:nth-child(3) { transform: rotate(-6deg); z-index: 26; }
+.top-side .character-item:nth-child(4) { transform: rotate(9deg); z-index: 27; }
+.top-side .character-item:nth-child(5) { transform: rotate(-5deg); z-index: 28; }
+.top-side .character-item:nth-child(6) { transform: rotate(7deg); z-index: 29; }
 
-.bottom-side .character-item:nth-child(1) { transform: rotate(22deg); z-index: 30; }
-.bottom-side .character-item:nth-child(2) { transform: rotate(-16deg); z-index: 31; }
-.bottom-side .character-item:nth-child(3) { transform: rotate(18deg); z-index: 32; }
-.bottom-side .character-item:nth-child(4) { transform: rotate(-14deg); z-index: 33; }
-.bottom-side .character-item:nth-child(5) { transform: rotate(16deg); z-index: 34; }
-.bottom-side .character-item:nth-child(6) { transform: rotate(-12deg); z-index: 35; }
+.bottom-side .character-item:nth-child(1) { transform: rotate(15deg); z-index: 30; }
+.bottom-side .character-item:nth-child(2) { transform: rotate(-11deg); z-index: 31; }
+.bottom-side .character-item:nth-child(3) { transform: rotate(12deg); z-index: 32; }
+.bottom-side .character-item:nth-child(4) { transform: rotate(-8deg); z-index: 33; }
+.bottom-side .character-item:nth-child(5) { transform: rotate(10deg); z-index: 34; }
+.bottom-side .character-item:nth-child(6) { transform: rotate(-7deg); z-index: 35; }
 
 /* Animaciones escalonadas para items */
 .character-item:nth-child(1) { animation-delay: 0.1s; }
@@ -764,7 +784,7 @@ html {
     }
 }
 
-/* Responsive Design - ESPACIADO DRAMÁTICAMENTE MEJORADO */
+/* RESPONSIVE DESIGN - POSICIONAMIENTO ADAPTATIVO INTELIGENTE */
 @media (max-width: 1200px) {
     .character-corner {
         width: 110px !important;
@@ -772,13 +792,25 @@ html {
     }
     
     .character-item {
-        width: 75px !important;
-        height: 95px !important;
-        margin: 18px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+        width: 80px !important;
+        height: 105px !important;
     }
     
     .character-side {
-        gap: 30px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+        gap: 35px !important; /* MANTENER ESPACIADO GENEROSO */
+    }
+    
+    /* LATERALES ADAPTATIVOS EN PANTALLAS MEDIANAS */
+    .left-side {
+        height: min(65vh, 550px); /* REDUCIR LIGERAMENTE LA ALTURA */
+    }
+    
+    .right-side {
+        height: min(65vh, 550px); /* REDUCIR LIGERAMENTE LA ALTURA */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(75vw, 700px); /* REDUCIR LIGERAMENTE EL ANCHO */
     }
     
     /* Ajustar posición del mensaje en pantallas medianas */
@@ -801,13 +833,27 @@ html {
     }
     
     .character-item {
-        width: 70px !important;
-        height: 90px !important;
-        margin: 15px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+        width: 75px !important;
+        height: 95px !important;
     }
     
     .character-side {
-        gap: 25px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+        gap: 30px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+    }
+    
+    /* LATERALES ADAPTATIVOS EN TABLETS */
+    .left-side {
+        height: min(60vh, 500px); /* ALTURA ADAPTATIVA PARA TABLETS */
+        left: 10px; /* MÁS CERCA DEL BORDE */
+    }
+    
+    .right-side {
+        height: min(60vh, 500px); /* ALTURA ADAPTATIVA PARA TABLETS */
+        right: 10px; /* MÁS CERCA DEL BORDE */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(70vw, 600px); /* ANCHO ADAPTATIVO PARA TABLETS */
     }
     
     .container {
@@ -840,50 +886,38 @@ html {
     }
     
     .character-item {
-        width: 65px !important;
-        height: 80px !important;
-        margin: 12px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+        width: 70px !important;
+        height: 85px !important;
     }
     
     .character-side {
-        gap: 20px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+        gap: 25px !important; /* ESPACIADO ADAPTATIVO PARA MÓVIL */
     }
     
-    /* Posiciones más centradas en móvil */
-    .top-left, .top-right {
-        top: 5px;
-    }
-    
-    .bottom-left, .bottom-right {
-        bottom: 5px;
-    }
-    
-    .top-left, .bottom-left {
-        left: 5px;
-    }
-    
-    .top-right, .bottom-right {
-        right: 5px;
-    }
-    
+    /* LATERALES ADAPTATIVOS EN MÓVIL - CENTRADO VERTICAL INTELIGENTE */
     .left-side {
-        left: 10px; /* MÁS VISIBLE EN MÓVIL */
-        top: 10%; /* MEJOR DISTRIBUCIÓN */
+        left: 5px; /* POSICIÓN VISIBLE */
+        height: min(50vh, 400px); /* ALTURA ADAPTATIVA PARA MÓVIL */
+        transform: translateY(-50%) rotate(-5deg); /* ROTACIÓN MÁS SUTIL */
     }
     
     .right-side {
-        right: 10px; /* MÁS VISIBLE EN MÓVIL */
-        top: 15%; /* MEJOR DISTRIBUCIÓN */
+        right: 5px; /* POSICIÓN VISIBLE */
+        height: min(50vh, 400px); /* ALTURA ADAPTATIVA PARA MÓVIL */
+        transform: translateY(-50%) rotate(5deg); /* ROTACIÓN MÁS SUTIL */
     }
     
+    /* SUPERIOR E INFERIOR ADAPTATIVOS EN MÓVIL */
     .top-side {
-        top: -5px; /* MÁS VISIBLE */
-        left: 10%; /* MEJOR DISTRIBUCIÓN */
+        top: 10px; /* MÁS VISIBLE */
+        width: min(60vw, 400px); /* ANCHO ADAPTATIVO PARA MÓVIL */
+        transform: translateX(-50%) rotate(-2deg); /* ROTACIÓN MÁS SUTIL */
     }
     
     .bottom-side {
-        bottom: -5px; /* MÁS VISIBLE */
-        right: 10%; /* MEJOR DISTRIBUCIÓN */
+        bottom: 10px; /* MÁS VISIBLE */
+        width: min(60vw, 400px); /* ANCHO ADAPTATIVO PARA MÓVIL */
+        transform: translateX(-50%) rotate(2deg); /* ROTACIÓN MÁS SUTIL */
     }
     
     .dynamic-content {
@@ -1000,13 +1034,27 @@ html {
     }
     
     .character-item {
-        width: 60px !important;
-        height: 75px !important;
-        margin: 10px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+        width: 65px !important;
+        height: 80px !important;
     }
     
     .character-side {
-        gap: 15px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+        gap: 20px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+    }
+    
+    /* LATERALES ULTRA-ADAPTATIVOS EN MÓVIL PEQUEÑO */
+    .left-side {
+        height: min(40vh, 300px); /* ALTURA MÁS COMPACTA */
+        left: 2px; /* POSICIÓN MUY CERCANA AL BORDE */
+    }
+    
+    .right-side {
+        height: min(40vh, 300px); /* ALTURA MÁS COMPACTA */
+        right: 2px; /* POSICIÓN MUY CERCANA AL BORDE */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px); /* ANCHO MÁS COMPACTO */
     }
     
     .character-frame {
@@ -1084,7 +1132,7 @@ html {
     contain: layout style;
 }
 
-/* Estilos específicos para collage centrado y visible */
+/* ESTILOS ESPECÍFICOS PARA COLLAGE ADAPTATIVO CENTRADO */
 .character-frame[data-viewport="mobile"] {
     opacity: 0.9;
 }
@@ -1101,7 +1149,7 @@ html {
     opacity: 1;
 }
 
-/* Ajustes por cantidad de imágenes detectadas */
+/* AJUSTES ADAPTATIVOS POR CANTIDAD DE IMÁGENES DETECTADAS */
 .character-frame[data-image-count="4"] .character-corner {
     width: 140px !important;
     height: 180px !important;
@@ -1125,6 +1173,32 @@ html {
 .character-frame[data-image-count="20"] .character-corner {
     width: 100px !important;
     height: 130px !important;
+}
+
+/* AJUSTES ADAPTATIVOS PARA LATERALES SEGÚN CANTIDAD DE IMÁGENES */
+.character-frame[data-image-count="4"] .left-side,
+.character-frame[data-image-count="4"] .right-side {
+    height: min(40vh, 300px); /* MENOS ALTURA CON POCAS IMÁGENES */
+}
+
+.character-frame[data-image-count="8"] .left-side,
+.character-frame[data-image-count="8"] .right-side {
+    height: min(50vh, 400px); /* ALTURA MEDIA */
+}
+
+.character-frame[data-image-count="12"] .left-side,
+.character-frame[data-image-count="12"] .right-side {
+    height: min(60vh, 500px); /* ALTURA ESTÁNDAR */
+}
+
+.character-frame[data-image-count="16"] .left-side,
+.character-frame[data-image-count="16"] .right-side {
+    height: min(70vh, 600px); /* ALTURA AMPLIA */
+}
+
+.character-frame[data-image-count="20"] .left-side,
+.character-frame[data-image-count="20"] .right-side {
+    height: min(80vh, 700px); /* ALTURA MÁXIMA */
 }
 
 /* Efectos hover completamente sin bordes */
