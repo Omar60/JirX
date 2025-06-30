@@ -123,18 +123,18 @@ html {
     z-index: 13;
 }
 
-/* Lados del collage - ESPACIADO MEJORADO */
+/* Lados del collage - ESPACIADO DRAMÁTICAMENTE MEJORADO */
 .character-side {
     position: absolute;
     display: flex;
-    gap: 15px; /* AUMENTADO DE -20px A 15px PARA MEJOR ESPACIADO */
+    gap: 35px; /* AUMENTADO DRAMÁTICAMENTE DE 15px A 35px */
     background: none !important; /* FORZAR SIN FONDO */
     backdrop-filter: none !important; /* ELIMINAR BACKDROP */
 }
 
 .left-side {
-    left: -10px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
-    top: 25%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
+    left: 5px; /* MOVIDO MÁS HACIA EL CENTRO PARA MEJOR VISIBILIDAD */
+    top: 15%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN VERTICAL */
     transform: translateY(-50%) rotate(-12deg);
     flex-direction: column;
     animation-delay: 0.4s;
@@ -142,8 +142,8 @@ html {
 }
 
 .right-side {
-    right: -10px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
-    top: 30%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
+    right: 5px; /* MOVIDO MÁS HACIA EL CENTRO PARA MEJOR VISIBILIDAD */
+    top: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN VERTICAL */
     transform: translateY(-50%) rotate(15deg);
     flex-direction: column;
     animation-delay: 1.2s;
@@ -151,8 +151,8 @@ html {
 }
 
 .top-side {
-    top: -20px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
-    left: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
+    top: -10px; /* MÁS VISIBLE */
+    left: 15%; /* MEJOR DISTRIBUCIÓN HORIZONTAL */
     transform: translateX(-50%) rotate(6deg);
     flex-direction: row;
     animation-delay: 2.0s;
@@ -160,15 +160,15 @@ html {
 }
 
 .bottom-side {
-    bottom: -20px; /* AJUSTADO PARA MEJOR VISIBILIDAD */
-    right: 20%; /* AJUSTADO PARA MEJOR DISTRIBUCIÓN */
+    bottom: -10px; /* MÁS VISIBLE */
+    right: 15%; /* MEJOR DISTRIBUCIÓN HORIZONTAL */
     transform: translateX(50%) rotate(-8deg);
     flex-direction: row;
     animation-delay: 2.8s;
     z-index: 5;
 }
 
-/* Items individuales del collage - ESPACIADO MEJORADO */
+/* Items individuales del collage - ESPACIADO DRAMÁTICAMENTE MEJORADO */
 .character-item {
     border-radius: 0;
     overflow: visible !important; /* CAMBIAR DE HIDDEN A VISIBLE */
@@ -179,7 +179,7 @@ html {
     opacity: 0;
     animation: characterItemAppear 1.2s ease-out forwards;
     position: relative;
-    margin: 8px; /* CAMBIADO DE -15px A 8px PARA ESPACIADO POSITIVO */
+    margin: 20px; /* AUMENTADO DRAMÁTICAMENTE DE 8px A 20px */
     width: 80px;
     height: 100px;
     border: none !important;
@@ -764,7 +764,7 @@ html {
     }
 }
 
-/* Responsive Design - ESPACIADO MEJORADO */
+/* Responsive Design - ESPACIADO DRAMÁTICAMENTE MEJORADO */
 @media (max-width: 1200px) {
     .character-corner {
         width: 110px !important;
@@ -774,11 +774,11 @@ html {
     .character-item {
         width: 75px !important;
         height: 95px !important;
-        margin: 6px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
+        margin: 18px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
     }
     
     .character-side {
-        gap: 12px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
+        gap: 30px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
     }
     
     /* Ajustar posición del mensaje en pantallas medianas */
@@ -803,11 +803,11 @@ html {
     .character-item {
         width: 70px !important;
         height: 90px !important;
-        margin: 5px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
+        margin: 15px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
     }
     
     .character-side {
-        gap: 10px !important; /* ESPACIADO REDUCIDO PERO POSITIVO */
+        gap: 25px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
     }
     
     .container {
@@ -842,11 +842,11 @@ html {
     .character-item {
         width: 65px !important;
         height: 80px !important;
-        margin: 4px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
+        margin: 12px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
     }
     
     .character-side {
-        gap: 8px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
+        gap: 20px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
     }
     
     /* Posiciones más centradas en móvil */
@@ -867,19 +867,23 @@ html {
     }
     
     .left-side {
-        left: -5px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
+        left: 10px; /* MÁS VISIBLE EN MÓVIL */
+        top: 10%; /* MEJOR DISTRIBUCIÓN */
     }
     
     .right-side {
-        right: -5px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
+        right: 10px; /* MÁS VISIBLE EN MÓVIL */
+        top: 15%; /* MEJOR DISTRIBUCIÓN */
     }
     
     .top-side {
-        top: -15px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
+        top: -5px; /* MÁS VISIBLE */
+        left: 10%; /* MEJOR DISTRIBUCIÓN */
     }
     
     .bottom-side {
-        bottom: -15px; /* AJUSTADO PARA MEJOR VISIBILIDAD EN MÓVIL */
+        bottom: -5px; /* MÁS VISIBLE */
+        right: 10%; /* MEJOR DISTRIBUCIÓN */
     }
     
     .dynamic-content {
@@ -998,11 +1002,11 @@ html {
     .character-item {
         width: 60px !important;
         height: 75px !important;
-        margin: 3px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
+        margin: 10px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
     }
     
     .character-side {
-        gap: 6px !important; /* ESPACIADO MÍNIMO PERO POSITIVO */
+        gap: 15px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
     }
     
     .character-frame {
