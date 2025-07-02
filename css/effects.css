@@ -1,0 +1,1247 @@
+/* ==========================================================================
+   EFFECTS.CSS - Sistema de Efectos Visuales, Corazones y Partículas
+   ========================================================================== */
+
+/* ==========================================================================
+   CORAZONES FLOTANTES DE FONDO
+   ========================================================================== */
+
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-effects);
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    color: var(--heart-soft);
+    font-size: 20px;
+    animation: float 6s infinite ease-in-out;
+    will-change: transform, opacity;
+}
+
+.heart::before {
+    content: '💖';
+}
+
+/* Posiciones específicas de corazones de fondo */
+.heart:nth-child(1) { 
+    top: 10%; 
+    left: 10%; 
+    animation-delay: 0s; 
+    font-size: 18px;
+}
+
+.heart:nth-child(2) { 
+    top: 20%; 
+    right: 10%; 
+    animation-delay: 1s; 
+    font-size: 22px;
+}
+
+.heart:nth-child(3) { 
+    bottom: 20%; 
+    left: 20%; 
+    animation-delay: 2s; 
+    font-size: 16px;
+}
+
+.heart:nth-child(4) { 
+    bottom: 10%; 
+    right: 20%; 
+    animation-delay: 3s; 
+    font-size: 24px;
+}
+
+.heart:nth-child(5) { 
+    top: 50%; 
+    left: 5%; 
+    animation-delay: 4s; 
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE CORAZONES INTERACTIVOS
+   ========================================================================== */
+
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: var(--z-frame);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   CORAZONES INTERACTIVOS
+   ========================================================================== */
+
+.interactive-heart {
+    position: absolute;
+    color: var(--heart-color);
+    font-size: 24px;
+    animation: heartFloat 3s ease-out forwards;
+    pointer-events: none;
+    will-change: transform, opacity;
+    z-index: var(--z-frame);
+}
+
+/* Variaciones de corazones interactivos */
+.interactive-heart.small {
+    font-size: 18px;
+    animation-duration: 2.5s;
+}
+
+.interactive-heart.large {
+    font-size: 30px;
+    animation-duration: 3.5s;
+}
+
+.interactive-heart.rainbow {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: heartFloat 3s ease-out forwards, rainbowShift 2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   PARTÍCULAS DE ESTRELLAS
+   ========================================================================== */
+
+.star-particle {
+    position: fixed;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: var(--z-effects);
+    animation: fall 5s linear forwards;
+    will-change: transform, opacity;
+}
+
+.star-particle::before {
+    content: '✨';
+}
+
+/* Variaciones de estrellas */
+.star-particle.twinkle::before {
+    content: '⭐';
+    animation: twinkle 1s ease-in-out infinite alternate;
+}
+
+.star-particle.sparkle::before {
+    content: '✦';
+    font-size: 12px;
+}
+
+.star-particle.bright::before {
+    content: '🌟';
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   SPARKLES DE CURSOR
+   ========================================================================== */
+
+.cursor-sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: var(--z-tooltip);
+    animation: sparkle 0.6s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.cursor-sparkle::before {
+    content: '✨';
+}
+
+/* Variaciones de sparkles */
+.cursor-sparkle.gold::before {
+    content: '✨';
+    color: #ffd700;
+}
+
+.cursor-sparkle.silver::before {
+    content: '✦';
+    color: #c0c0c0;
+}
+
+.cursor-sparkle.rainbow {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: sparkle 0.6s ease-out forwards, rainbowShift 1s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   EFECTOS DE BURST/EXPLOSIÓN
+   ========================================================================== */
+
+.star-burst {
+    position: fixed;
+    pointer-events: none;
+    z-index: var(--z-tooltip);
+}
+
+.burst-particle {
+    position: absolute;
+    font-size: 20px;
+    color: var(--primary-color);
+    animation: burstParticle 1.2s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.burst-particle::before {
+    content: '⭐';
+}
+
+/* Variaciones de burst */
+.burst-particle.heart::before {
+    content: '💕';
+    color: var(--heart-color);
+}
+
+.burst-particle.star::before {
+    content: '✨';
+    color: #ffd700;
+}
+
+.burst-particle.magic::before {
+    content: '✦';
+    color: var(--accent-color);
+}
+
+/* ==========================================================================
+   EFECTOS DE PARTÍCULAS DESDE PERSONAJES
+   ========================================================================== */
+
+.character-particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 18px;
+    z-index: var(--z-tooltip);
+    animation: characterParticle 2s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.character-particle.love::before {
+    content: '💕';
+    color: var(--heart-color);
+}
+
+.character-particle.sparkle::before {
+    content: '✨';
+    color: #ffd700;
+}
+
+.character-particle.magic::before {
+    content: '🌟';
+    color: var(--primary-color);
+}
+
+.character-particle.celebration::before {
+    content: '🎉';
+    color: #ff6b9d;
+}
+
+/* ==========================================================================
+   EFECTOS DE TRAIL/RASTRO
+   ========================================================================== */
+
+.mouse-trail {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: var(--border-radius-round);
+    pointer-events: none;
+    z-index: var(--z-effects);
+    animation: trailFade 0.8s ease-out forwards;
+    will-change: transform, opacity;
+}
+
+.mouse-trail.heart {
+    width: auto;
+    height: auto;
+    background: none;
+    font-size: 12px;
+    color: var(--heart-color);
+}
+
+.mouse-trail.heart::before {
+    content: '💕';
+}
+
+/* ==========================================================================
+   EFECTOS DE ONDAS/RIPPLES
+   ========================================================================== */
+
+.ripple-effect {
+    position: absolute;
+    border-radius: var(--border-radius-round);
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple 0.6s ease-out forwards;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.ripple-effect.primary {
+    background: rgba(102, 126, 234, 0.3);
+}
+
+.ripple-effect.heart {
+    background: rgba(255, 107, 107, 0.3);
+}
+
+.ripple-effect.success {
+    background: rgba(76, 175, 80, 0.3);
+}
+
+/* ==========================================================================
+   EFECTOS DE GLOW/RESPLANDOR
+   ========================================================================== */
+
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+.glow-effect:hover::before,
+.glow-effect.active::before {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   EFECTOS DE CONFETTI
+   ========================================================================== */
+
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: var(--z-tooltip);
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    animation: confettiFall 3s ease-in forwards;
+    will-change: transform, opacity;
+}
+
+.confetti-piece.pink {
+    background: #ff6b9d;
+}
+
+.confetti-piece.blue {
+    background: var(--accent-color);
+}
+
+.confetti-piece.gold {
+    background: #ffd700;
+}
+
+.confetti-piece.heart {
+    width: auto;
+    height: auto;
+    background: none;
+    font-size: 12px;
+    color: var(--heart-color);
+}
+
+.confetti-piece.heart::before {
+    content: '💕';
+}
+
+/* ==========================================================================
+   EFECTOS DE TEXTO ANIMADO
+   ========================================================================== */
+
+.text-effect {
+    display: inline-block;
+}
+
+.text-effect.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--primary-color);
+    white-space: nowrap;
+    animation: typewriter 2s steps(40) forwards, blinkCursor 1s step-end infinite;
+}
+
+.text-effect.fade-in-words span {
+    opacity: 0;
+    animation: fadeInWord 0.5s ease-out forwards;
+}
+
+.text-effect.bounce-letters span {
+    display: inline-block;
+    animation: bounceLetters 0.6s ease-out forwards;
+}
+
+.text-effect.rainbow-text {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowShift 3s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   EFECTOS DE PARTÍCULAS MÁGICAS
+   ========================================================================== */
+
+.magic-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: var(--z-tooltip);
+    animation: magicFloat 4s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+.magic-particle.rune::before {
+    content: 'ᚦ';
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.magic-particle.symbol::before {
+    content: '✦';
+    font-size: 14px;
+    color: var(--accent-color);
+}
+
+.magic-particle.mystic::before {
+    content: '◊';
+    font-size: 12px;
+    color: #9c27b0;
+}
+
+/* ==========================================================================
+   EFECTOS DE VIBRACIÓN Y SHAKE
+   ========================================================================== */
+
+.shake-effect {
+    animation: shake 0.5s ease-in-out;
+}
+
+.vibrate-effect {
+    animation: vibrate 0.3s ease-in-out 3;
+}
+
+.pulse-effect {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.bounce-effect {
+    animation: bounce 0.6s ease-out;
+}
+
+/* ==========================================================================
+   EFECTOS DE TRANSICIÓN ESPECIALES
+   ========================================================================== */
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}
+
+.slide-in-top {
+    animation: slideInTop 0.6s ease-out;
+}
+
+.slide-in-bottom {
+    animation: slideInBottom 0.6s ease-out;
+}
+
+.zoom-in {
+    animation: zoomIn 0.5s ease-out;
+}
+
+.zoom-out {
+    animation: zoomOut 0.5s ease-out;
+}
+
+.rotate-in {
+    animation: rotateIn 0.6s ease-out;
+}
+
+.flip-in {
+    animation: flipIn 0.8s ease-out;
+}
+
+/* ==========================================================================
+   ANIMACIONES KEYFRAMES
+   ========================================================================== */
+
+/* Animaciones de corazones */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
+}
+
+/* Animaciones de partículas */
+@keyframes sparkle {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Animaciones de burst */
+@keyframes burstParticle {
+    0% {
+        opacity: 1;
+        transform: scale(0.5) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5) rotate(360deg) translateY(-50px);
+    }
+}
+
+@keyframes characterParticle {
+    0% {
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.4) translateY(-40px);
+    }
+}
+
+/* Animaciones de efectos especiales */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Animaciones de trail */
+@keyframes trailFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+/* Animaciones de texto */
+@keyframes typewriter {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes blinkCursor {
+    0%, 50% {
+        border-color: var(--primary-color);
+    }
+    51%, 100% {
+        border-color: transparent;
+    }
+}
+
+@keyframes fadeInWord {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceLetters {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rainbowShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animaciones de partículas mágicas */
+@keyframes magicFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    25% {
+        transform: translateY(-15px) rotate(90deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0) rotate(180deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(-10px) rotate(270deg);
+        opacity: 1;
+    }
+}
+
+/* Animaciones de movimiento */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes vibrate {
+    0%, 100% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Animaciones de transición */
+@keyframes slideInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+@keyframes rotateIn {
+    0% {
+        opacity: 0;
+        transform: rotate(-360deg) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+@keyframes flipIn {
+    0% {
+        opacity: 0;
+        transform: perspective(400px) rotateY(90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(400px) rotateY(0deg);
+    }
+}
+
+/* ==========================================================================
+   EFECTOS ESPECIALES COMBINADOS
+   ========================================================================== */
+
+.magical-entrance {
+    animation: magicalEntrance 1.2s ease-out;
+}
+
+@keyframes magicalEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-180deg);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1) rotate(0deg);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0px);
+    }
+}
+
+.celebration-burst {
+    animation: celebrationBurst 0.8s ease-out;
+}
+
+@keyframes celebrationBurst {
+    0% {
+        transform: scale(1);
+        filter: brightness(1) saturate(1);
+    }
+    25% {
+        transform: scale(1.2);
+        filter: brightness(1.5) saturate(1.5);
+    }
+    50% {
+        transform: scale(0.9);
+        filter: brightness(1.2) saturate(1.3);
+    }
+    100% {
+        transform: scale(1);
+        filter: brightness(1) saturate(1);
+    }
+}
+
+.mystic-glow {
+    animation: mysticGlow 2s ease-in-out infinite;
+}
+
+@keyframes mysticGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        filter: brightness(1);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+        filter: brightness(1.2);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA EFECTOS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .interactive-heart {
+        font-size: 20px;
+    }
+    
+    .star-particle {
+        font-size: 14px;
+    }
+    
+    .cursor-sparkle {
+        font-size: 10px;
+    }
+    
+    .burst-particle {
+        font-size: 16px;
+    }
+    
+    .character-particle {
+        font-size: 14px;
+    }
+    
+    /* Reducir cantidad de efectos en móvil */
+    .heart:nth-child(n+4) {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .interactive-heart {
+        font-size: 18px;
+        animation-duration: 2s;
+    }
+    
+    .star-particle {
+        font-size: 12px;
+        animation-duration: 4s;
+    }
+    
+    /* Efectos más sutiles en móviles pequeños */
+    .heart:nth-child(n+3) {
+        display: none;
+    }
+    
+    .floating-hearts {
+        opacity: 0.7;
+    }
+}
+
+/* ==========================================================================
+   MEJORAS DE ACCESIBILIDAD PARA EFECTOS
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .interactive-heart,
+    .star-particle,
+    .cursor-sparkle,
+    .burst-particle,
+    .character-particle,
+    .magic-particle,
+    .confetti-piece,
+    .mouse-trail {
+        animation: none !important;
+        opacity: 0 !important;
+    }
+    
+    .heart {
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    .glow-effect::before {
+        animation: none !important;
+    }
+    
+    .text-effect.typewriter {
+        animation: none !important;
+        border-right: none !important;
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+    
+    .shake-effect,
+    .vibrate-effect,
+    .pulse-effect,
+    .bounce-effect {
+        animation: none !important;
+    }
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDIMIENTO PARA EFECTOS
+   ========================================================================== */
+
+.interactive-heart,
+.star-particle,
+.cursor-sparkle,
+.burst-particle,
+.character-particle,
+.magic-particle,
+.confetti-piece,
+.mouse-trail {
+    contain: layout style;
+    will-change: transform, opacity;
+}
+
+.hearts-container,
+.confetti-container {
+    contain: layout style;
+}
+
+/* ==========================================================================
+   UTILIDADES DE EFECTOS
+   ========================================================================== */
+
+.no-effects {
+    animation: none !important;
+    transition: none !important;
+}
+
+.subtle-effects .interactive-heart,
+.subtle-effects .star-particle {
+    opacity: 0.5;
+    animation-duration: 2s;
+}
+
+.intense-effects .interactive-heart {
+    font-size: 32px;
+    animation-duration: 4s;
+}
+
+.intense-effects .star-particle {
+    font-size: 20px;
+}
+
+/* ==========================================================================
+   EFECTOS DE TEMPORADA/TEMA
+   ========================================================================== */
+
+.theme-romantic .interactive-heart::before {
+    content: '💕';
+}
+
+.theme-celebration .interactive-heart::before {
+    content: '🎉';
+}
+
+.theme-magic .interactive-heart::before {
+    content: '✨';
+}
+
+.theme-nature .interactive-heart::before {
+    content: '🌸';
+}
+
+/* ==========================================================================
+   EFECTOS DE SONIDO VISUAL
+   ========================================================================== */
+
+.sound-wave {
+    position: relative;
+}
+
+.sound-wave::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius-round);
+    transform: translate(-50%, -50%);
+    animation: soundWave 1.5s ease-out infinite;
+}
+
+@keyframes soundWave {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(3);
+    }
+}
+
+/* ==========================================================================
+   EFECTOS DE CARGA Y LOADING
+   ========================================================================== */
+
+.loading-sparkles {
+    position: relative;
+}
+
+.loading-sparkles::after {
+    content: '✨';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: loadingSparkles 1s ease-in-out infinite;
+}
+
+@keyframes loadingSparkles {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+.loading-hearts {
+    position: relative;
+}
+
+.loading-hearts::after {
+    content: '💕';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: loadingHearts 1.2s ease-in-out infinite;
+}
+
+@keyframes loadingHearts {
+    0% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(180deg);
+    }
+    100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   EFECTOS DE INTERACCIÓN AVANZADOS
+   ========================================================================== */
+
+.hover-sparkle:hover {
+    position: relative;
+}
+
+.hover-sparkle:hover::after {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    animation: hoverSparkle 0.6s ease-out;
+}
+
+@keyframes hoverSparkle {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) rotate(360deg);
+    }
+}
+
+.click-burst {
+    position: relative;
+}
+
+.click-burst:active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+    border-radius: var(--border-radius-round);
+    transform: translate(-50%, -50%);
+    animation: clickBurst 0.4s ease-out;
+}
+
+@keyframes clickBurst {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 100px;
+        height: 100px;
+        opacity: 0;
+    }
+}
