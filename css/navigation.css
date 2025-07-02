@@ -1,0 +1,753 @@
+/* ==========================================================================
+   NAVIGATION.CSS - Sistema de Navegación y Controles
+   ========================================================================== */
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL DE NAVEGACIÓN
+   ========================================================================== */
+
+.navigation-controls {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    z-index: var(--z-navigation);
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation-controls.show {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   BOTONES DE NAVEGACIÓN
+   ========================================================================== */
+
+.nav-button {
+    background: var(--bg-white-95);
+    border: 3px solid var(--primary-color);
+    border-radius: var(--border-radius-round);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-cubic);
+    font-size: 18px;
+    color: var(--primary-color);
+    box-shadow: var(--shadow-button);
+    font-weight: bold;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-button:hover:not(:disabled) {
+    background: var(--primary-color);
+    color: var(--text-white);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-button-hover);
+}
+
+.nav-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.nav-button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   ESTADOS DE LOS BOTONES
+   ========================================================================== */
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
+    border-color: #ccc;
+    transform: none;
+    box-shadow: none;
+}
+
+.nav-button:disabled:hover {
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   ICONOS DE NAVEGACIÓN
+   ========================================================================== */
+
+.nav-button span {
+    display: inline-block;
+    transition: transform var(--transition-fast);
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.nav-button:hover:not(:disabled) span {
+    transform: scale(1.1);
+}
+
+/* Botón anterior */
+.prev-button span::before {
+    content: '◀';
+}
+
+/* Botón siguiente */
+.next-button span::before {
+    content: '▶';
+}
+
+/* ==========================================================================
+   EFECTOS DE HOVER AVANZADOS
+   ========================================================================== */
+
+.nav-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-round);
+    transform: translate(-50%, -50%);
+    transition: all var(--transition-fast);
+    z-index: -1;
+}
+
+.nav-button:hover:not(:disabled)::before {
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================================================
+   ANIMACIONES DE ENTRADA
+   ========================================================================== */
+
+.navigation-controls.show .nav-button {
+    animation: navButtonAppear 0.5s ease-out forwards;
+}
+
+.navigation-controls.show .prev-button {
+    animation-delay: 0.1s;
+}
+
+.navigation-controls.show .next-button {
+    animation-delay: 0.2s;
+}
+
+@keyframes navButtonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================================================
+   INDICADORES DE PROGRESO
+   ========================================================================== */
+
+.navigation-progress {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.navigation-progress.show {
+    opacity: 1;
+}
+
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--border-radius-round);
+    background: rgba(255, 255, 255, 0.4);
+    transition: all var(--transition-fast);
+}
+
+.progress-dot.active {
+    background: var(--text-white);
+    transform: scale(1.3);
+}
+
+.progress-dot.completed {
+    background: var(--primary-color);
+}
+
+/* ==========================================================================
+   CONTADOR DE PASOS
+   ========================================================================== */
+
+.step-counter {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-white-95);
+    padding: 6px 12px;
+    border-radius: var(--border-radius-md);
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    white-space: nowrap;
+}
+
+.step-counter.show {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   NAVEGACIÓN POR TECLADO
+   ========================================================================== */
+
+.keyboard-hint {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    white-space: nowrap;
+}
+
+.keyboard-hint.show {
+    opacity: 1;
+}
+
+.keyboard-hint kbd {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 10px;
+    margin: 0 2px;
+}
+
+/* ==========================================================================
+   BOTONES ESPECIALES
+   ========================================================================== */
+
+.nav-button.special-action {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    border-color: #ff9a9e;
+    color: var(--text-white);
+}
+
+.nav-button.special-action:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c2185b 100%);
+    border-color: #ff6b9d;
+    transform: scale(1.15);
+}
+
+.nav-button.completion-action {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border-color: #a8edea;
+    color: var(--text-dark);
+}
+
+.nav-button.completion-action:hover:not(:disabled) {
+    background: linear-gradient(135deg, #81c784 0%, #4caf50 100%);
+    border-color: #81c784;
+    color: var(--text-white);
+}
+
+/* ==========================================================================
+   ANIMACIONES DE FEEDBACK
+   ========================================================================== */
+
+.nav-button.clicked {
+    animation: buttonClick 0.3s ease-out;
+}
+
+@keyframes buttonClick {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.nav-button.success-feedback {
+    animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        background: var(--bg-white-95);
+        border-color: var(--primary-color);
+    }
+    50% {
+        background: #4caf50;
+        border-color: #4caf50;
+        transform: scale(1.1);
+    }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN CONTEXTUAL
+   ========================================================================== */
+
+.context-navigation {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.context-navigation.show {
+    opacity: 1;
+}
+
+.context-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--border-radius-md);
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(10px);
+}
+
+.context-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA NAVEGACIÓN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .navigation-controls {
+        bottom: -45px;
+        gap: 10px;
+        z-index: var(--z-navigation);
+    }
+    
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .step-counter {
+        top: -50px;
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+    
+    .keyboard-hint {
+        bottom: -70px;
+        font-size: 10px;
+    }
+    
+    .context-navigation {
+        top: -80px;
+        gap: 8px;
+    }
+    
+    .context-button {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigation-controls {
+        bottom: -40px;
+        gap: 8px;
+    }
+    
+    .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+        z-index: calc(var(--z-navigation) + 10);
+    }
+    
+    .step-counter {
+        top: -45px;
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    
+    .keyboard-hint {
+        display: none; /* Ocultar en móviles muy pequeños */
+    }
+    
+    .context-navigation {
+        top: -70px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 200px;
+    }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN TÁCTIL MEJORADA
+   ========================================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    .nav-button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .nav-button:hover {
+        transform: none;
+    }
+    
+    .nav-button:active:not(:disabled) {
+        background: var(--primary-color);
+        color: var(--text-white);
+        transform: scale(0.95);
+    }
+}
+
+/* ==========================================================================
+   ESTADOS DE CARGA EN NAVEGACIÓN
+   ========================================================================== */
+
+.navigation-controls.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.navigation-controls.loading .nav-button {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN AVANZADA CON GESTOS
+   ========================================================================== */
+
+.gesture-indicator {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.gesture-indicator.show {
+    opacity: 1;
+}
+
+.gesture-icon {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+/* ==========================================================================
+   MEJORAS DE ACCESIBILIDAD PARA NAVEGACIÓN
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .navigation-controls,
+    .nav-button,
+    .progress-dot,
+    .step-counter {
+        animation: none !important;
+        transition: opacity 0.3s ease;
+    }
+    
+    .nav-button:hover:not(:disabled) {
+        transform: none;
+    }
+    
+    .nav-button:active:not(:disabled) {
+        transform: none;
+    }
+}
+
+/* Estados de focus mejorados para navegación */
+.nav-button:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.2);
+}
+
+/* ==========================================================================
+   NAVEGACIÓN CON BREADCRUMBS
+   ========================================================================== */
+
+.navigation-breadcrumb {
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.navigation-breadcrumb.show {
+    opacity: 1;
+}
+
+.breadcrumb-item {
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.breadcrumb-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.breadcrumb-item.active {
+    background: var(--primary-color);
+    color: var(--text-white);
+}
+
+.breadcrumb-separator {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDIMIENTO PARA NAVEGACIÓN
+   ========================================================================== */
+
+.navigation-controls,
+.nav-button,
+.progress-dot {
+    will-change: transform, opacity;
+}
+
+.navigation-controls {
+    contain: layout style;
+}
+
+/* ==========================================================================
+   UTILIDADES DE NAVEGACIÓN
+   ========================================================================== */
+
+.nav-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.nav-disabled {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+}
+
+.nav-highlight {
+    animation: navHighlight 1s ease-in-out 3;
+}
+
+@keyframes navHighlight {
+    0%, 100% {
+        box-shadow: var(--shadow-button);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+    }
+}
+
+/* ==========================================================================
+   NAVEGACIÓN FLOTANTE ALTERNATIVA
+   ========================================================================== */
+
+.floating-navigation {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: var(--z-navigation);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.floating-navigation.show {
+    opacity: 1;
+}
+
+.floating-nav-button {
+    width: 45px;
+    height: 45px;
+    border-radius: var(--border-radius-round);
+    background: var(--bg-white-95);
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-soft);
+    font-size: 16px;
+}
+
+.floating-nav-button:hover:not(:disabled) {
+    background: var(--primary-color);
+    color: var(--text-white);
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   NAVEGACIÓN CON TIMELINE
+   ========================================================================== */
+
+.navigation-timeline {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.navigation-timeline.show {
+    opacity: 1;
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--border-radius-round);
+    background: rgba(255, 255, 255, 0.3);
+    transition: all var(--transition-fast);
+}
+
+.timeline-step.active .timeline-dot {
+    background: var(--text-white);
+    transform: scale(1.3);
+}
+
+.timeline-step.completed .timeline-dot {
+    background: var(--primary-color);
+}
+
+.timeline-label {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    max-width: 60px;
+    line-height: 1.2;
+}
+
+.timeline-step.active .timeline-label {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.timeline-connector {
+    width: 20px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 -10px;
+}
+
+.timeline-connector.completed {
+    background: var(--primary-color);
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA TIMELINE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .navigation-timeline {
+        top: -120px;
+        gap: 15px;
+    }
+    
+    .timeline-connector {
+        width: 15px;
+        margin: 0 -7px;
+    }
+    
+    .timeline-label {
+        font-size: 8px;
+        max-width: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navigation-timeline {
+        display: none; /* Ocultar timeline en móviles pequeños */
+    }
+}
