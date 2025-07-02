@@ -41,11 +41,11 @@
     --font-primary: 'Poppins', sans-serif;
     --font-decorative: 'Dancing Script', cursive;
     
-    /* Tamaños de fuente responsivos */
-    --font-title: clamp(2.5rem, 8vw, 4rem);
-    --font-subtitle: clamp(1rem, 3vw, 1.2rem);
-    --font-content-title: clamp(1.8rem, 5vw, 2.2rem);
-    --font-content-text: clamp(1rem, 2.5vw, 1.1rem);
+    /* Tamaños de fuente responsivos - AUMENTADOS */
+    --font-title: clamp(3.5rem, 10vw, 5.5rem);
+    --font-subtitle: clamp(1.3rem, 4vw, 1.6rem);
+    --font-content-title: clamp(2.2rem, 6vw, 2.8rem);
+    --font-content-text: clamp(1.1rem, 3vw, 1.3rem);
     
     /* Espaciado */
     --spacing-xs: 0.5rem;
@@ -80,17 +80,17 @@
     --z-modal: 1000;
     --z-tooltip: 2000;
     
-    /* Dimensiones de personajes */
-    --character-corner-width: 120px;
-    --character-corner-height: 150px;
-    --character-item-width: 85px;
-    --character-item-height: 110px;
-    --character-gap: 40px;
+    /* Dimensiones de personajes - AUMENTADAS */
+    --character-corner-width: 140px;
+    --character-corner-height: 180px;
+    --character-item-width: 100px;
+    --character-item-height: 130px;
+    --character-gap: 50px;
     
-    /* Dimensiones de mascota */
-    --mascot-size: 150px;
-    --mascot-size-tablet: 120px;
-    --mascot-size-mobile: 100px;
+    /* Dimensiones de mascota - AUMENTADAS */
+    --mascot-size: 200px;
+    --mascot-size-tablet: 180px;
+    --mascot-size-mobile: 140px;
 }
 
 /* Reset CSS Mejorado */

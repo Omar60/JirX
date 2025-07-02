@@ -9,16 +9,16 @@
 .dynamic-text {
     background: var(--bg-white-95);
     border-radius: var(--border-radius-lg);
-    padding: var(--spacing-lg);
-    margin: var(--spacing-sm) 0;
-    box-shadow: var(--shadow-medium);
-    backdrop-filter: blur(10px);
-    max-width: 600px;
+    padding: 32px 40px;
+    margin: var(--spacing-lg) 0;
+    box-shadow: var(--shadow-strong);
+    backdrop-filter: blur(15px);
+    max-width: 700px;
     width: 100%;
     opacity: 0;
     transform: translateY(30px);
     transition: all var(--transition-cubic-slow);
-    border: 2px solid var(--pink-border);
+    border: 3px solid var(--pink-border-strong);
     position: relative;
     z-index: var(--z-content);
     margin-bottom: var(--spacing-xl);
@@ -37,19 +37,19 @@
 .dynamic-text.smart-position {
     position: fixed;
     left: 50%;
-    top: 30%;
+    top: 25%;
     transform: translate(-50%, -50%);
-    max-width: 500px;
+    max-width: 600px;
     z-index: var(--z-content);
 }
 
 /* OPCIÓN 2: Posicionamiento lateral */
 .dynamic-text.side-position {
     position: fixed;
-    left: 50px;
-    top: 25%;
+    left: 60px;
+    top: 20%;
     transform: translateY(-50%);
-    max-width: 400px;
+    max-width: 500px;
     z-index: var(--z-content);
 }
 
@@ -57,9 +57,9 @@
 .dynamic-text.top-position {
     position: fixed;
     left: 50%;
-    top: 80px;
+    top: 100px;
     transform: translateX(-50%);
-    max-width: 500px;
+    max-width: 600px;
     z-index: var(--z-content);
 }
 
@@ -67,12 +67,12 @@
 .dynamic-text.modal-position {
     position: fixed;
     left: 50%;
-    top: 35%;
+    top: 30%;
     transform: translate(-50%, -50%);
-    max-width: 600px;
+    max-width: 700px;
     z-index: var(--z-modal);
     box-shadow: var(--shadow-modal);
-    border: 3px solid var(--pink-border-strong);
+    border: 4px solid var(--pink-border-strong);
 }
 
 .dynamic-text.modal-position::before {
@@ -84,14 +84,14 @@
     height: 100vh;
     background: var(--bg-black-overlay);
     z-index: -1;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
 }
 
 /* OPCIÓN 5: Posicionamiento adaptativo según viewport */
 .dynamic-text.adaptive-position {
     position: relative;
-    margin: var(--spacing-sm) auto var(--spacing-xl) auto;
-    max-width: min(90vw, 600px);
+    margin: var(--spacing-lg) auto var(--spacing-xl) auto;
+    max-width: min(90vw, 700px);
 }
 
 /* ==========================================================================
@@ -102,24 +102,27 @@
     color: var(--primary-color);
     font-family: var(--font-decorative);
     font-size: var(--font-content-title);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
 }
 
 .dynamic-text p {
     color: var(--text-dark);
     font-size: var(--font-content-text);
-    line-height: 1.6;
-    margin-bottom: var(--spacing-sm);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+    font-weight: 400;
 }
 
 .dynamic-text .signature {
     font-style: italic;
     color: var(--primary-color);
     font-weight: 600;
-    margin-top: var(--spacing-md);
-    border-top: 1px solid rgba(102, 126, 234, 0.3);
-    padding-top: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    border-top: 2px solid rgba(102, 126, 234, 0.3);
+    padding-top: var(--spacing-md);
+    font-size: 1.1em;
 }
 
 /* ==========================================================================
@@ -128,15 +131,15 @@
 
 .dynamic-text.modal-position .close-button {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 20px;
+    right: 25px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     color: var(--primary-color);
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,10 +158,10 @@
 
 .mascot-position-indicator {
     position: fixed;
-    bottom: 80px;
-    right: 50px;
-    width: 20px;
-    height: 20px;
+    bottom: 100px;
+    right: 60px;
+    width: 24px;
+    height: 24px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: var(--border-radius-round);
     z-index: var(--z-frame);
@@ -180,8 +183,8 @@
 /* Indicadores visuales de posición */
 .position-indicator {
     position: fixed;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     background: rgba(102, 126, 234, 0.6);
     border-radius: var(--border-radius-round);
     z-index: var(--z-frame);
@@ -191,14 +194,14 @@
 
 .position-indicator.mascot-indicator {
     background: rgba(255, 107, 107, 0.8);
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
 }
 
 .position-indicator.safe-zone-indicator {
     background: rgba(34, 197, 94, 0.6);
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 
 /* ==========================================================================
@@ -206,15 +209,15 @@
    ========================================================================== */
 
 .debug-positioning .dynamic-text {
-    border: 2px dashed var(--heart-color);
+    border: 3px dashed var(--heart-color);
 }
 
 .debug-positioning .lottie-container {
-    border: 2px dashed var(--primary-color);
+    border: 3px dashed var(--primary-color);
 }
 
 .debug-positioning .character-speech-bubble {
-    border: 2px dashed #ffa500;
+    border: 3px dashed #ffa500;
 }
 
 /* ==========================================================================
@@ -223,8 +226,8 @@
 
 .collision-detected .dynamic-text {
     background: var(--bg-white-98);
-    border: 3px solid var(--pink-border-strong);
-    box-shadow: var(--shadow-strong);
+    border: 4px solid var(--pink-border-strong);
+    box-shadow: var(--shadow-modal);
     animation: collisionAlert 0.5s ease-in-out 3;
 }
 
@@ -242,14 +245,24 @@
    ========================================================================== */
 
 @media (max-width: 1200px) {
+    .dynamic-text {
+        padding: 28px 36px;
+        max-width: 650px;
+    }
+    
     .dynamic-text.side-position {
-        left: 30px;
-        max-width: 350px;
-        top: 20%;
+        left: 40px;
+        max-width: 450px;
+        top: 18%;
     }
 }
 
 @media (max-width: 1024px) {
+    .dynamic-text {
+        padding: 24px 32px;
+        max-width: 600px;
+    }
+    
     /* Cambiar a posicionamiento adaptativo en tablets */
     .dynamic-text.smart-position,
     .dynamic-text.side-position,
@@ -258,15 +271,15 @@
         left: auto;
         top: auto;
         transform: none;
-        margin: var(--spacing-sm) auto var(--spacing-xl) auto;
+        margin: var(--spacing-lg) auto var(--spacing-xl) auto;
     }
 }
 
 @media (max-width: 768px) {
     .dynamic-content {
-        padding: var(--spacing-sm);
-        min-height: 30vh;
-        margin-top: var(--spacing-xs);
+        padding: var(--spacing-md);
+        min-height: 40vh;
+        margin-top: var(--spacing-md);
     }
     
     /* MÓVIL: Z-INDEX ALTO PARA TEXTO PRINCIPAL */
@@ -279,8 +292,8 @@
         left: auto !important;
         top: auto !important;
         transform: none !important;
-        margin: var(--spacing-xs) auto var(--spacing-lg) auto !important;
-        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto var(--spacing-xl) auto !important;
+        padding: 24px 28px;
         max-width: 95%;
         z-index: var(--z-content-mobile) !important;
     }
@@ -292,9 +305,20 @@
 
 @media (max-width: 480px) {
     .dynamic-text {
-        padding: var(--spacing-sm);
-        margin: var(--spacing-xs) auto var(--spacing-md) auto !important;
+        padding: 20px 24px;
+        margin: var(--spacing-md) auto var(--spacing-lg) auto !important;
         z-index: calc(var(--z-content-mobile) + 10) !important;
+        max-width: 98%;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .dynamic-text p {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 }
 
@@ -399,11 +423,11 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid var(--primary-color);
-    border-top: 2px solid transparent;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--primary-color);
+    border-top: 3px solid transparent;
     border-radius: var(--border-radius-round);
     animation: spin 1s linear infinite;
 }

@@ -41,11 +41,12 @@
     width: var(--character-corner-width);
     height: var(--character-corner-height);
     --base-rotation: 0deg;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .character-corner:hover {
-    transform: scale(1.05) rotate(2deg);
-    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.08) rotate(2deg);
+    filter: brightness(1.1) saturate(1.2) drop-shadow(0 6px 15px rgba(0, 0, 0, 0.3));
     z-index: 25;
 }
 
@@ -65,8 +66,8 @@
 
 /* Posiciones específicas de las esquinas */
 .top-left {
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    left: 15px;
     transform: rotate(-8deg);
     animation-delay: 0s;
     z-index: 12;
@@ -74,8 +75,8 @@
 }
 
 .top-right {
-    top: 15px;
-    right: 10px;
+    top: 20px;
+    right: 15px;
     transform: rotate(10deg);
     animation-delay: 0.8s;
     z-index: 11;
@@ -83,8 +84,8 @@
 }
 
 .bottom-left {
-    bottom: 10px;
-    left: 15px;
+    bottom: 15px;
+    left: 20px;
     transform: rotate(6deg);
     animation-delay: 1.6s;
     z-index: 10;
@@ -92,8 +93,8 @@
 }
 
 .bottom-right {
-    bottom: 15px;
-    right: 10px;
+    bottom: 20px;
+    right: 15px;
     transform: rotate(-9deg);
     animation-delay: 2.4s;
     z-index: 13;
@@ -112,52 +113,52 @@
 
 /* Lado izquierdo */
 .left-side {
-    left: 15px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%) rotate(-8deg);
     flex-direction: column;
     animation-delay: 0.4s;
     z-index: 8;
-    height: min(70vh, 600px);
+    height: min(75vh, 650px);
     justify-content: center;
     align-items: center;
 }
 
 /* Lado derecho */
 .right-side {
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%) rotate(8deg);
     flex-direction: column;
     animation-delay: 1.2s;
     z-index: 7;
-    height: min(70vh, 600px);
+    height: min(75vh, 650px);
     justify-content: center;
     align-items: center;
 }
 
 /* Parte superior */
 .top-side {
-    top: 15px;
+    top: 20px;
     left: 50%;
     transform: translateX(-50%) rotate(-4deg);
     flex-direction: row;
     animation-delay: 2.0s;
     z-index: 6;
-    width: min(80vw, 800px);
+    width: min(85vw, 900px);
     justify-content: center;
     align-items: center;
 }
 
 /* Parte inferior */
 .bottom-side {
-    bottom: 15px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%) rotate(4deg);
     flex-direction: row;
     animation-delay: 2.8s;
     z-index: 5;
-    width: min(80vw, 800px);
+    width: min(85vw, 900px);
     justify-content: center;
     align-items: center;
 }
@@ -177,11 +178,12 @@
     width: var(--character-item-width);
     height: var(--character-item-height);
     flex-shrink: 0;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
 .character-item:hover {
-    transform: scale(1.08) rotate(-3deg);
-    filter: brightness(1.1) saturate(1.2);
+    transform: scale(1.1) rotate(-3deg);
+    filter: brightness(1.1) saturate(1.2) drop-shadow(0 5px 12px rgba(0, 0, 0, 0.25));
     z-index: 30;
 }
 
@@ -261,13 +263,13 @@
         transform: translateY(0) rotate(var(--base-rotation, 0deg));
     }
     25% {
-        transform: translateY(-8px) rotate(calc(var(--base-rotation, 0deg) + 3deg));
+        transform: translateY(-10px) rotate(calc(var(--base-rotation, 0deg) + 3deg));
     }
     50% {
         transform: translateY(0) rotate(var(--base-rotation, 0deg));
     }
     75% {
-        transform: translateY(8px) rotate(calc(var(--base-rotation, 0deg) - 2deg));
+        transform: translateY(10px) rotate(calc(var(--base-rotation, 0deg) - 2deg));
     }
 }
 
@@ -276,19 +278,19 @@
    ========================================================================== */
 
 .mobile-layout {
-    gap: calc(var(--character-gap) - 15px);
-}
-
-.tablet-layout {
     gap: calc(var(--character-gap) - 20px);
 }
 
-.laptop-layout {
+.tablet-layout {
     gap: calc(var(--character-gap) - 25px);
 }
 
-.desktop-layout {
+.laptop-layout {
     gap: calc(var(--character-gap) - 30px);
+}
+
+.desktop-layout {
+    gap: calc(var(--character-gap) - 35px);
 }
 
 /* ==========================================================================
@@ -296,13 +298,13 @@
    ========================================================================== */
 
 .character-frame[data-image-count="4"] .character-corner {
-    width: 140px !important;
-    height: 180px !important;
+    width: 160px !important;
+    height: 200px !important;
 }
 
 .character-frame[data-image-count="8"] .character-corner {
-    width: 130px !important;
-    height: 165px !important;
+    width: 150px !important;
+    height: 190px !important;
 }
 
 .character-frame[data-image-count="12"] .character-corner {
@@ -311,39 +313,39 @@
 }
 
 .character-frame[data-image-count="16"] .character-corner {
-    width: 110px !important;
-    height: 140px !important;
+    width: 130px !important;
+    height: 170px !important;
 }
 
 .character-frame[data-image-count="20"] .character-corner {
-    width: 100px !important;
-    height: 130px !important;
+    width: 120px !important;
+    height: 160px !important;
 }
 
 /* Ajustes para laterales según cantidad de imágenes */
 .character-frame[data-image-count="4"] .left-side,
 .character-frame[data-image-count="4"] .right-side {
-    height: min(40vh, 300px);
+    height: min(50vh, 400px);
 }
 
 .character-frame[data-image-count="8"] .left-side,
 .character-frame[data-image-count="8"] .right-side {
-    height: min(50vh, 400px);
+    height: min(60vh, 500px);
 }
 
 .character-frame[data-image-count="12"] .left-side,
 .character-frame[data-image-count="12"] .right-side {
-    height: min(60vh, 500px);
+    height: min(70vh, 600px);
 }
 
 .character-frame[data-image-count="16"] .left-side,
 .character-frame[data-image-count="16"] .right-side {
-    height: min(70vh, 600px);
+    height: min(80vh, 700px);
 }
 
 .character-frame[data-image-count="20"] .left-side,
 .character-frame[data-image-count="20"] .right-side {
-    height: min(80vh, 700px);
+    height: min(85vh, 750px);
 }
 
 /* ==========================================================================
@@ -377,10 +379,10 @@
 
 @keyframes specialGlow {
     0%, 100% {
-        filter: brightness(1) saturate(1);
+        filter: brightness(1) saturate(1) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
     }
     50% {
-        filter: brightness(1.3) saturate(1.4);
+        filter: brightness(1.3) saturate(1.4) drop-shadow(0 6px 15px rgba(102, 126, 234, 0.4));
     }
 }
 
@@ -417,15 +419,35 @@
 
 @media (max-width: 1200px) {
     :root {
-        --character-corner-width: 110px;
-        --character-corner-height: 140px;
-        --character-item-width: 80px;
-        --character-item-height: 105px;
-        --character-gap: 35px;
+        --character-corner-width: 130px;
+        --character-corner-height: 170px;
+        --character-item-width: 95px;
+        --character-item-height: 125px;
+        --character-gap: 45px;
+    }
+    
+    .left-side, .right-side {
+        height: min(70vh, 600px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(80vw, 800px);
+    }
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --character-corner-width: 120px;
+        --character-corner-height: 155px;
+        --character-item-width: 90px;
+        --character-item-height: 115px;
+        --character-gap: 40px;
     }
     
     .left-side, .right-side {
         height: min(65vh, 550px);
+        left: 15px;
+        right: 15px;
     }
     
     .top-side, .bottom-side {
@@ -433,83 +455,63 @@
     }
 }
 
-@media (max-width: 1024px) {
-    :root {
-        --character-corner-width: 100px;
-        --character-corner-height: 130px;
-        --character-item-width: 75px;
-        --character-item-height: 95px;
-        --character-gap: 30px;
-    }
-    
-    .left-side, .right-side {
-        height: min(60vh, 500px);
-        left: 10px;
-        right: 10px;
-    }
-    
-    .top-side, .bottom-side {
-        width: min(70vw, 600px);
-    }
-}
-
 @media (max-width: 768px) {
     :root {
-        --character-corner-width: 90px;
-        --character-corner-height: 115px;
-        --character-item-width: 70px;
-        --character-item-height: 85px;
-        --character-gap: 25px;
+        --character-corner-width: 110px;
+        --character-corner-height: 140px;
+        --character-item-width: 85px;
+        --character-item-height: 105px;
+        --character-gap: 35px;
     }
     
     .left-side {
-        left: 5px;
-        height: min(50vh, 400px);
-        transform: translateY(-50%) rotate(-5deg);
+        left: 10px;
+        height: min(55vh, 450px);
+        transform: translateY(-50%) rotate(-4deg);
     }
     
     .right-side {
-        right: 5px;
-        height: min(50vh, 400px);
-        transform: translateY(-50%) rotate(5deg);
+        right: 10px;
+        height: min(55vh, 450px);
+        transform: translateY(-50%) rotate(4deg);
     }
     
     .top-side {
-        top: 10px;
-        width: min(60vw, 400px);
+        top: 15px;
+        width: min(65vw, 500px);
         transform: translateX(-50%) rotate(-2deg);
     }
     
     .bottom-side {
-        bottom: 10px;
-        width: min(60vw, 400px);
+        bottom: 15px;
+        width: min(65vw, 500px);
         transform: translateX(-50%) rotate(2deg);
     }
 }
 
 @media (max-width: 480px) {
     :root {
-        --character-corner-width: 80px;
-        --character-corner-height: 100px;
-        --character-item-width: 65px;
-        --character-item-height: 80px;
-        --character-gap: 20px;
+        --character-corner-width: 100px;
+        --character-corner-height: 125px;
+        --character-item-width: 80px;
+        --character-item-height: 95px;
+        --character-gap: 30px;
     }
     
     .left-side, .right-side {
-        height: min(40vh, 300px);
+        height: min(45vh, 350px);
     }
     
     .left-side {
-        left: 2px;
+        left: 8px;
     }
     
     .right-side {
-        right: 2px;
+        right: 8px;
     }
     
     .top-side, .bottom-side {
-        width: min(50vw, 300px);
+        width: min(55vw, 400px);
     }
     
     .character-frame {

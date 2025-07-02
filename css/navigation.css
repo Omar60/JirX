@@ -8,11 +8,11 @@
 
 .navigation-controls {
     position: absolute;
-    bottom: -50px;
+    bottom: -70px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 15px;
+    gap: 20px;
     opacity: 0;
     transition: opacity var(--transition-fast);
     z-index: var(--z-navigation);
@@ -32,14 +32,14 @@
     background: var(--bg-white-95);
     border: 3px solid var(--primary-color);
     border-radius: var(--border-radius-round);
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all var(--transition-cubic);
-    font-size: 18px;
+    font-size: 20px;
     color: var(--primary-color);
     box-shadow: var(--shadow-button);
     font-weight: bold;
@@ -94,6 +94,7 @@
     transition: transform var(--transition-fast);
     font-family: monospace;
     font-weight: bold;
+    font-size: 22px;
 }
 
 .nav-button:hover:not(:disabled) span {
@@ -166,11 +167,11 @@
 
 .navigation-progress {
     position: absolute;
-    top: -30px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
     opacity: 0;
     transition: opacity var(--transition-fast);
@@ -181,8 +182,8 @@
 }
 
 .progress-dot {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: var(--border-radius-round);
     background: rgba(255, 255, 255, 0.4);
     transition: all var(--transition-fast);
@@ -203,13 +204,13 @@
 
 .step-counter {
     position: absolute;
-    top: -60px;
+    top: -80px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--bg-white-95);
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: var(--border-radius-md);
-    font-size: 12px;
+    font-size: 14px;
     color: var(--primary-color);
     font-weight: 600;
     box-shadow: var(--shadow-soft);
@@ -228,10 +229,10 @@
 
 .keyboard-hint {
     position: absolute;
-    bottom: -80px;
+    bottom: -100px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
     opacity: 0;
@@ -245,11 +246,11 @@
 
 .keyboard-hint kbd {
     background: rgba(255, 255, 255, 0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 5px;
     font-family: monospace;
-    font-size: 10px;
-    margin: 0 2px;
+    font-size: 11px;
+    margin: 0 3px;
 }
 
 /* ==========================================================================
@@ -322,11 +323,11 @@
 
 .context-navigation {
     position: absolute;
-    top: -100px;
+    top: -120px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    gap: 12px;
     opacity: 0;
     transition: opacity var(--transition-fast);
 }
@@ -339,8 +340,8 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--border-radius-md);
-    padding: 6px 12px;
-    font-size: 11px;
+    padding: 8px 16px;
+    font-size: 12px;
     color: var(--text-white);
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -359,56 +360,64 @@
 
 @media (max-width: 768px) {
     .navigation-controls {
-        bottom: -45px;
-        gap: 10px;
+        bottom: -60px;
+        gap: 15px;
         z-index: var(--z-navigation);
     }
     
     .nav-button {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    .nav-button span {
+        font-size: 20px;
     }
     
     .step-counter {
-        top: -50px;
-        font-size: 11px;
-        padding: 4px 8px;
+        top: -70px;
+        font-size: 12px;
+        padding: 6px 12px;
     }
     
     .keyboard-hint {
-        bottom: -70px;
-        font-size: 10px;
+        bottom: -90px;
+        font-size: 11px;
     }
     
     .context-navigation {
-        top: -80px;
-        gap: 8px;
+        top: -100px;
+        gap: 10px;
     }
     
     .context-button {
-        padding: 4px 8px;
-        font-size: 10px;
+        padding: 6px 12px;
+        font-size: 11px;
     }
 }
 
 @media (max-width: 480px) {
     .navigation-controls {
-        bottom: -40px;
-        gap: 8px;
+        bottom: -50px;
+        gap: 12px;
     }
     
     .nav-button {
-        width: 35px;
-        height: 35px;
-        font-size: 12px;
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
         z-index: calc(var(--z-navigation) + 10);
     }
     
+    .nav-button span {
+        font-size: 18px;
+    }
+    
     .step-counter {
-        top: -45px;
-        font-size: 10px;
-        padding: 3px 6px;
+        top: -60px;
+        font-size: 11px;
+        padding: 5px 10px;
     }
     
     .keyboard-hint {
@@ -416,10 +425,10 @@
     }
     
     .context-navigation {
-        top: -70px;
+        top: -80px;
         flex-wrap: wrap;
         justify-content: center;
-        max-width: 200px;
+        max-width: 250px;
     }
 }
 
@@ -429,8 +438,8 @@
 
 @media (hover: none) and (pointer: coarse) {
     .nav-button {
-        min-height: 44px;
-        min-width: 44px;
+        min-height: 50px;
+        min-width: 50px;
     }
     
     .nav-button:hover {
@@ -472,15 +481,15 @@
 
 .gesture-indicator {
     position: absolute;
-    bottom: -100px;
+    bottom: -120px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     opacity: 0;
     transition: opacity var(--transition-fast);
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -489,14 +498,14 @@
 }
 
 .gesture-icon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 /* ==========================================================================
@@ -534,15 +543,15 @@
 
 .navigation-breadcrumb {
     position: absolute;
-    top: -120px;
+    top: -140px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     opacity: 0;
     transition: opacity var(--transition-fast);
-    font-size: 11px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -551,7 +560,7 @@
 }
 
 .breadcrumb-item {
-    padding: 4px 8px;
+    padding: 6px 12px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius-sm);
     cursor: pointer;
@@ -569,7 +578,7 @@
 
 .breadcrumb-separator {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 10px;
+    font-size: 11px;
 }
 
 /* ==========================================================================
@@ -609,7 +618,7 @@
         box-shadow: var(--shadow-button);
     }
     50% {
-        box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+        box-shadow: 0 0 25px rgba(102, 126, 234, 0.6);
     }
 }
 
@@ -619,11 +628,11 @@
 
 .floating-navigation {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     z-index: var(--z-navigation);
     opacity: 0;
     transition: opacity var(--transition-fast);
@@ -634,19 +643,19 @@
 }
 
 .floating-nav-button {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     border-radius: var(--border-radius-round);
     background: var(--bg-white-95);
-    border: 2px solid var(--primary-color);
+    border: 3px solid var(--primary-color);
     color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all var(--transition-fast);
-    box-shadow: var(--shadow-soft);
-    font-size: 16px;
+    box-shadow: var(--shadow-medium);
+    font-size: 18px;
 }
 
 .floating-nav-button:hover:not(:disabled) {
@@ -661,12 +670,12 @@
 
 .navigation-timeline {
     position: absolute;
-    top: -150px;
+    top: -180px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
     opacity: 0;
     transition: opacity var(--transition-fast);
 }
@@ -679,14 +688,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
     cursor: pointer;
     transition: all var(--transition-fast);
 }
 
 .timeline-dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: var(--border-radius-round);
     background: rgba(255, 255, 255, 0.3);
     transition: all var(--transition-fast);
@@ -702,10 +711,10 @@
 }
 
 .timeline-label {
-    font-size: 9px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
-    max-width: 60px;
+    max-width: 70px;
     line-height: 1.2;
 }
 
@@ -715,10 +724,10 @@
 }
 
 .timeline-connector {
-    width: 20px;
+    width: 25px;
     height: 2px;
     background: rgba(255, 255, 255, 0.2);
-    margin: 0 -10px;
+    margin: 0 -12px;
 }
 
 .timeline-connector.completed {
@@ -731,18 +740,18 @@
 
 @media (max-width: 768px) {
     .navigation-timeline {
-        top: -120px;
-        gap: 15px;
+        top: -150px;
+        gap: 20px;
     }
     
     .timeline-connector {
-        width: 15px;
-        margin: 0 -7px;
+        width: 20px;
+        margin: 0 -10px;
     }
     
     .timeline-label {
-        font-size: 8px;
-        max-width: 50px;
+        font-size: 9px;
+        max-width: 60px;
     }
 }
 
