@@ -1,0 +1,518 @@
+/* ==========================================================================
+   CHARACTER-FRAME.CSS - Marco de Personajes y Collage Adaptativo
+   ========================================================================== */
+
+/* Marco principal del collage */
+.character-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: var(--z-background);
+    opacity: 0;
+    animation: frameAppear 2s ease-out 1s forwards;
+}
+
+@keyframes frameAppear {
+    from {
+        opacity: 0;
+        transform: scale(1.01);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   ESQUINAS DEL COLLAGE
+   ========================================================================== */
+
+.character-corner {
+    position: absolute;
+    border-radius: 0;
+    overflow: visible !important;
+    transition: all var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatCollage 8s ease-in-out infinite;
+    transform-origin: center;
+    z-index: var(--z-frame);
+    width: var(--character-corner-width);
+    height: var(--character-corner-height);
+    --base-rotation: 0deg;
+}
+
+.character-corner:hover {
+    transform: scale(1.05) rotate(2deg);
+    filter: brightness(1.1) saturate(1.2);
+    z-index: 25;
+}
+
+.character-corner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform var(--transition-medium);
+    filter: brightness(1.05) saturate(1.1);
+    border-radius: 0;
+}
+
+.character-corner:hover img {
+    transform: scale(1.02) rotate(-1deg);
+}
+
+/* Posiciones específicas de las esquinas */
+.top-left {
+    top: 10px;
+    left: 10px;
+    transform: rotate(-8deg);
+    animation-delay: 0s;
+    z-index: 12;
+    --base-rotation: -8deg;
+}
+
+.top-right {
+    top: 15px;
+    right: 10px;
+    transform: rotate(10deg);
+    animation-delay: 0.8s;
+    z-index: 11;
+    --base-rotation: 10deg;
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 15px;
+    transform: rotate(6deg);
+    animation-delay: 1.6s;
+    z-index: 10;
+    --base-rotation: 6deg;
+}
+
+.bottom-right {
+    bottom: 15px;
+    right: 10px;
+    transform: rotate(-9deg);
+    animation-delay: 2.4s;
+    z-index: 13;
+    --base-rotation: -9deg;
+}
+
+/* ==========================================================================
+   LATERALES DEL COLLAGE
+   ========================================================================== */
+
+.character-side {
+    position: absolute;
+    display: flex;
+    gap: var(--character-gap);
+}
+
+/* Lado izquierdo */
+.left-side {
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-8deg);
+    flex-direction: column;
+    animation-delay: 0.4s;
+    z-index: 8;
+    height: min(70vh, 600px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Lado derecho */
+.right-side {
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%) rotate(8deg);
+    flex-direction: column;
+    animation-delay: 1.2s;
+    z-index: 7;
+    height: min(70vh, 600px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Parte superior */
+.top-side {
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    flex-direction: row;
+    animation-delay: 2.0s;
+    z-index: 6;
+    width: min(80vw, 800px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Parte inferior */
+.bottom-side {
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(4deg);
+    flex-direction: row;
+    animation-delay: 2.8s;
+    z-index: 5;
+    width: min(80vw, 800px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================================================
+   ITEMS INDIVIDUALES DEL COLLAGE
+   ========================================================================== */
+
+.character-item {
+    border-radius: 0;
+    overflow: visible !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: characterItemAppear 1.2s ease-out forwards;
+    opacity: 0;
+    position: relative;
+    margin: 0;
+    width: var(--character-item-width);
+    height: var(--character-item-height);
+    flex-shrink: 0;
+}
+
+.character-item:hover {
+    transform: scale(1.08) rotate(-3deg);
+    filter: brightness(1.1) saturate(1.2);
+    z-index: 30;
+}
+
+.character-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease;
+    filter: brightness(1.02) saturate(1.05);
+    border-radius: 0;
+}
+
+.character-item:hover img {
+    transform: scale(1.03) rotate(2deg);
+}
+
+/* ==========================================================================
+   ROTACIONES VARIADAS PARA EFECTO NATURAL
+   ========================================================================== */
+
+/* Lado izquierdo */
+.left-side .character-item:nth-child(1) { transform: rotate(12deg); z-index: 18; }
+.left-side .character-item:nth-child(2) { transform: rotate(-15deg); z-index: 17; }
+.left-side .character-item:nth-child(3) { transform: rotate(8deg); z-index: 16; }
+.left-side .character-item:nth-child(4) { transform: rotate(-10deg); z-index: 15; }
+.left-side .character-item:nth-child(5) { transform: rotate(14deg); z-index: 14; }
+
+/* Lado derecho */
+.right-side .character-item:nth-child(1) { transform: rotate(-12deg); z-index: 19; }
+.right-side .character-item:nth-child(2) { transform: rotate(16deg); z-index: 20; }
+.right-side .character-item:nth-child(3) { transform: rotate(-9deg); z-index: 21; }
+.right-side .character-item:nth-child(4) { transform: rotate(13deg); z-index: 22; }
+.right-side .character-item:nth-child(5) { transform: rotate(-11deg); z-index: 23; }
+
+/* Parte superior */
+.top-side .character-item:nth-child(1) { transform: rotate(-8deg); z-index: 24; }
+.top-side .character-item:nth-child(2) { transform: rotate(10deg); z-index: 25; }
+.top-side .character-item:nth-child(3) { transform: rotate(-6deg); z-index: 26; }
+.top-side .character-item:nth-child(4) { transform: rotate(9deg); z-index: 27; }
+.top-side .character-item:nth-child(5) { transform: rotate(-5deg); z-index: 28; }
+.top-side .character-item:nth-child(6) { transform: rotate(7deg); z-index: 29; }
+
+/* Parte inferior */
+.bottom-side .character-item:nth-child(1) { transform: rotate(15deg); z-index: 30; }
+.bottom-side .character-item:nth-child(2) { transform: rotate(-11deg); z-index: 31; }
+.bottom-side .character-item:nth-child(3) { transform: rotate(12deg); z-index: 32; }
+.bottom-side .character-item:nth-child(4) { transform: rotate(-8deg); z-index: 33; }
+.bottom-side .character-item:nth-child(5) { transform: rotate(10deg); z-index: 34; }
+.bottom-side .character-item:nth-child(6) { transform: rotate(-7deg); z-index: 35; }
+
+/* ==========================================================================
+   ANIMACIONES DEL COLLAGE
+   ========================================================================== */
+
+/* Animaciones escalonadas para items */
+.character-item:nth-child(1) { animation-delay: 0.1s; }
+.character-item:nth-child(2) { animation-delay: 0.2s; }
+.character-item:nth-child(3) { animation-delay: 0.3s; }
+.character-item:nth-child(4) { animation-delay: 0.4s; }
+.character-item:nth-child(5) { animation-delay: 0.5s; }
+.character-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes characterItemAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.7) rotate(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatCollage {
+    0%, 100% {
+        transform: translateY(0) rotate(var(--base-rotation, 0deg));
+    }
+    25% {
+        transform: translateY(-8px) rotate(calc(var(--base-rotation, 0deg) + 3deg));
+    }
+    50% {
+        transform: translateY(0) rotate(var(--base-rotation, 0deg));
+    }
+    75% {
+        transform: translateY(8px) rotate(calc(var(--base-rotation, 0deg) - 2deg));
+    }
+}
+
+/* ==========================================================================
+   LAYOUTS ESPECÍFICOS POR VIEWPORT
+   ========================================================================== */
+
+.mobile-layout {
+    gap: calc(var(--character-gap) - 15px);
+}
+
+.tablet-layout {
+    gap: calc(var(--character-gap) - 20px);
+}
+
+.laptop-layout {
+    gap: calc(var(--character-gap) - 25px);
+}
+
+.desktop-layout {
+    gap: calc(var(--character-gap) - 30px);
+}
+
+/* ==========================================================================
+   AJUSTES POR CANTIDAD DE IMÁGENES
+   ========================================================================== */
+
+.character-frame[data-image-count="4"] .character-corner {
+    width: 140px !important;
+    height: 180px !important;
+}
+
+.character-frame[data-image-count="8"] .character-corner {
+    width: 130px !important;
+    height: 165px !important;
+}
+
+.character-frame[data-image-count="12"] .character-corner {
+    width: var(--character-corner-width) !important;
+    height: var(--character-corner-height) !important;
+}
+
+.character-frame[data-image-count="16"] .character-corner {
+    width: 110px !important;
+    height: 140px !important;
+}
+
+.character-frame[data-image-count="20"] .character-corner {
+    width: 100px !important;
+    height: 130px !important;
+}
+
+/* Ajustes para laterales según cantidad de imágenes */
+.character-frame[data-image-count="4"] .left-side,
+.character-frame[data-image-count="4"] .right-side {
+    height: min(40vh, 300px);
+}
+
+.character-frame[data-image-count="8"] .left-side,
+.character-frame[data-image-count="8"] .right-side {
+    height: min(50vh, 400px);
+}
+
+.character-frame[data-image-count="12"] .left-side,
+.character-frame[data-image-count="12"] .right-side {
+    height: min(60vh, 500px);
+}
+
+.character-frame[data-image-count="16"] .left-side,
+.character-frame[data-image-count="16"] .right-side {
+    height: min(70vh, 600px);
+}
+
+.character-frame[data-image-count="20"] .left-side,
+.character-frame[data-image-count="20"] .right-side {
+    height: min(80vh, 700px);
+}
+
+/* ==========================================================================
+   AJUSTES POR VIEWPORT
+   ========================================================================== */
+
+.character-frame[data-viewport="mobile"] {
+    opacity: 0.9;
+}
+
+.character-frame[data-viewport="tablet"] {
+    opacity: 0.95;
+}
+
+.character-frame[data-viewport="laptop"] {
+    opacity: 1;
+}
+
+.character-frame[data-viewport="desktop"] {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   EFECTOS ESPECIALES
+   ========================================================================== */
+
+.character-corner.special-effect,
+.character-item.special-effect {
+    animation: specialGlow 1s ease-in-out;
+}
+
+@keyframes specialGlow {
+    0%, 100% {
+        filter: brightness(1) saturate(1);
+    }
+    50% {
+        filter: brightness(1.3) saturate(1.4);
+    }
+}
+
+/* ==========================================================================
+   FORZAR TRANSPARENCIA TOTAL
+   ========================================================================== */
+
+.character-corner,
+.character-corner *,
+.character-item,
+.character-item *,
+.character-side,
+.character-side * {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Eliminar pseudo-elementos con fondo */
+.character-corner::before,
+.character-corner::after,
+.character-item::before,
+.character-item::after {
+    display: none !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA CHARACTER FRAME
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    :root {
+        --character-corner-width: 110px;
+        --character-corner-height: 140px;
+        --character-item-width: 80px;
+        --character-item-height: 105px;
+        --character-gap: 35px;
+    }
+    
+    .left-side, .right-side {
+        height: min(65vh, 550px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(75vw, 700px);
+    }
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --character-corner-width: 100px;
+        --character-corner-height: 130px;
+        --character-item-width: 75px;
+        --character-item-height: 95px;
+        --character-gap: 30px;
+    }
+    
+    .left-side, .right-side {
+        height: min(60vh, 500px);
+        left: 10px;
+        right: 10px;
+    }
+    
+    .top-side, .bottom-side {
+        width: min(70vw, 600px);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --character-corner-width: 90px;
+        --character-corner-height: 115px;
+        --character-item-width: 70px;
+        --character-item-height: 85px;
+        --character-gap: 25px;
+    }
+    
+    .left-side {
+        left: 5px;
+        height: min(50vh, 400px);
+        transform: translateY(-50%) rotate(-5deg);
+    }
+    
+    .right-side {
+        right: 5px;
+        height: min(50vh, 400px);
+        transform: translateY(-50%) rotate(5deg);
+    }
+    
+    .top-side {
+        top: 10px;
+        width: min(60vw, 400px);
+        transform: translateX(-50%) rotate(-2deg);
+    }
+    
+    .bottom-side {
+        bottom: 10px;
+        width: min(60vw, 400px);
+        transform: translateX(-50%) rotate(2deg);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --character-corner-width: 80px;
+        --character-corner-height: 100px;
+        --character-item-width: 65px;
+        --character-item-height: 80px;
+        --character-gap: 20px;
+    }
+    
+    .left-side, .right-side {
+        height: min(40vh, 300px);
+    }
+    
+    .left-side {
+        left: 2px;
+    }
+    
+    .right-side {
+        right: 2px;
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px);
+    }
+    
+    .character-frame {
+        opacity: 0.95;
+    }
+}
