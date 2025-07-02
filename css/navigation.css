@@ -3,12 +3,12 @@
    ========================================================================== */
 
 /* ==========================================================================
-   CONTENEDOR PRINCIPAL DE NAVEGACIÓN
+   CONTENEDOR PRINCIPAL DE NAVEGACIÓN - CENTRADO
    ========================================================================== */
 
 .navigation-controls {
     position: absolute;
-    bottom: -70px;
+    bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -421,7 +421,7 @@
     }
     
     .keyboard-hint {
-        display: none; /* Ocultar en móviles muy pequeños */
+        display: none;
     }
     
     .context-navigation {
