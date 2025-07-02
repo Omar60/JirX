@@ -1,0 +1,101 @@
+/* ==========================================================================
+   LAYOUT.CSS - Estructura Principal y Contenedores
+   ========================================================================== */
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: var(--z-content);
+    background: var(--bg-white-02);
+    backdrop-filter: blur(1px);
+    border-radius: var(--border-radius-lg);
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    flex-shrink: 0;
+}
+
+.main-title {
+    font-family: var(--font-decorative);
+    font-size: var(--font-title);
+    color: var(--text-white);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-bottom: var(--spacing-xs);
+    animation: fadeInUp 1s ease-out;
+}
+
+.subtitle {
+    font-size: var(--font-subtitle);
+    color: var(--text-white-soft);
+    font-weight: 300;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* Área de contenido principal */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    min-height: 40vh;
+    padding-top: var(--spacing-lg);
+}
+
+.dynamic-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: var(--z-content);
+    margin-top: var(--spacing-sm);
+}
+
+/* Animaciones base */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive para layout */
+@media (max-width: 1024px) {
+    .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .dynamic-content {
+        padding: var(--spacing-sm);
+        min-height: 30vh;
+        margin-top: var(--spacing-xs);
+    }
+}

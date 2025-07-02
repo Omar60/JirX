@@ -1,0 +1,176 @@
+/* ==========================================================================
+   BASE.CSS - Variables, Reset y Estilos Fundamentales
+   ========================================================================== */
+
+/* Variables CSS Globales */
+:root {
+    /* Colores principales */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b94d4 100%);
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --accent-color: #8b94d4;
+    
+    /* Colores de texto */
+    --text-white: #ffffff;
+    --text-white-soft: rgba(255, 255, 255, 0.9);
+    --text-dark: #444444;
+    --text-primary: #667eea;
+    
+    /* Colores de efectos */
+    --heart-color: #ff6b6b;
+    --heart-soft: rgba(255, 107, 107, 0.6);
+    --pink-border: rgba(255, 192, 203, 0.5);
+    --pink-border-strong: rgba(255, 192, 203, 0.8);
+    
+    /* Fondos y overlays */
+    --bg-white-95: rgba(255, 255, 255, 0.95);
+    --bg-white-98: rgba(255, 255, 255, 0.98);
+    --bg-white-02: rgba(255, 255, 255, 0.02);
+    --bg-black-overlay: rgba(0, 0, 0, 0.4);
+    --bg-black-tooltip: rgba(0, 0, 0, 0.85);
+    
+    /* Sombras */
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.15);
+    --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.15);
+    --shadow-strong: 0 15px 40px rgba(0, 0, 0, 0.25);
+    --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);
+    --shadow-button: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --shadow-button-hover: 0 6px 20px rgba(102, 126, 234, 0.4);
+    
+    /* Tipografías */
+    --font-primary: 'Poppins', sans-serif;
+    --font-decorative: 'Dancing Script', cursive;
+    
+    /* Tamaños de fuente responsivos */
+    --font-title: clamp(2.5rem, 8vw, 4rem);
+    --font-subtitle: clamp(1rem, 3vw, 1.2rem);
+    --font-content-title: clamp(1.8rem, 5vw, 2.2rem);
+    --font-content-text: clamp(1rem, 2.5vw, 1.1rem);
+    
+    /* Espaciado */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Bordes y radios */
+    --border-radius-sm: 10px;
+    --border-radius-md: 15px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 25px;
+    --border-radius-round: 50%;
+    
+    /* Transiciones */
+    --transition-fast: 0.3s ease;
+    --transition-medium: 0.5s ease;
+    --transition-slow: 0.8s ease;
+    --transition-cubic: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-cubic-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Z-index layers */
+    --z-background: 1;
+    --z-effects: 2;
+    --z-frame: 5;
+    --z-content: 10;
+    --z-character: 100;
+    --z-speech: 101;
+    --z-navigation: 140;
+    --z-content-mobile: 150;
+    --z-modal: 1000;
+    --z-tooltip: 2000;
+    
+    /* Dimensiones de personajes */
+    --character-corner-width: 120px;
+    --character-corner-height: 150px;
+    --character-item-width: 85px;
+    --character-item-height: 110px;
+    --character-gap: 40px;
+    
+    /* Dimensiones de mascota */
+    --mascot-size: 150px;
+    --mascot-size-tablet: 120px;
+    --mascot-size-mobile: 100px;
+}
+
+/* Reset CSS Mejorado */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Elementos base */
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--primary-gradient);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    max-width: 100vw;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Estados de focus mejorados */
+*:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Optimizaciones de rendimiento */
+.performance-optimized {
+    will-change: transform, opacity;
+    contain: layout style paint;
+}
+
+/* Utilidades de transparencia forzada */
+.force-transparent,
+.force-transparent * {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* Utilidades de eliminación de bordes */
+.no-borders,
+.no-borders * {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Clases de utilidad para z-index */
+.z-background { z-index: var(--z-background); }
+.z-effects { z-index: var(--z-effects); }
+.z-frame { z-index: var(--z-frame); }
+.z-content { z-index: var(--z-content); }
+.z-character { z-index: var(--z-character); }
+.z-speech { z-index: var(--z-speech); }
+.z-navigation { z-index: var(--z-navigation); }
+.z-content-mobile { z-index: var(--z-content-mobile); }
+.z-modal { z-index: var(--z-modal); }
+.z-tooltip { z-index: var(--z-tooltip); }
