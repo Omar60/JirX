@@ -1,0 +1,453 @@
+/* ==========================================================================
+   CONTENT.CSS - Sistema de Contenido Dinámico y Posicionamiento Inteligente
+   ========================================================================== */
+
+/* ==========================================================================
+   MENSAJE CENTRAL - BASE
+   ========================================================================== */
+
+.dynamic-text {
+    background: var(--bg-white-95);
+    border-radius: var(--border-radius-lg);
+    padding: 32px 40px;
+    margin: var(--spacing-lg) 0;
+    box-shadow: var(--shadow-strong);
+    backdrop-filter: blur(15px);
+    max-width: 700px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all var(--transition-cubic-slow);
+    border: 3px solid var(--pink-border-strong);
+    position: relative;
+    z-index: var(--z-content);
+    margin-bottom: var(--spacing-xl);
+}
+
+.dynamic-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   SISTEMA DE POSICIONAMIENTO MÚLTIPLE
+   ========================================================================== */
+
+/* OPCIÓN 1: Posicionamiento inteligente según mascota */
+.dynamic-text.smart-position {
+    position: fixed;
+    left: 25%;
+    top: 25%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    z-index: var(--z-content);
+}
+
+/* OPCIÓN 2: Posicionamiento lateral */
+.dynamic-text.side-position {
+    position: fixed;
+    left: 60px;
+    top: 20%;
+    transform: translateY(-50%);
+    max-width: 500px;
+    z-index: var(--z-content);
+}
+
+/* OPCIÓN 3: Posicionamiento superior */
+.dynamic-text.top-position {
+    position: fixed;
+    left: 50%;
+    top: 100px;
+    transform: translateX(-50%);
+    max-width: 600px;
+    z-index: var(--z-content);
+}
+
+/* OPCIÓN 4: Posicionamiento modal/overlay */
+.dynamic-text.modal-position {
+    position: fixed;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    max-width: 700px;
+    z-index: var(--z-modal);
+    box-shadow: var(--shadow-modal);
+    border: 4px solid var(--pink-border-strong);
+}
+
+.dynamic-text.modal-position::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg-black-overlay);
+    z-index: -1;
+    backdrop-filter: blur(5px);
+}
+
+/* OPCIÓN 5: Posicionamiento adaptativo según viewport */
+.dynamic-text.adaptive-position {
+    position: relative;
+    margin: var(--spacing-lg) auto var(--spacing-xl) auto;
+    max-width: min(90vw, 700px);
+}
+
+/* ==========================================================================
+   ESTILOS DEL CONTENIDO DEL MENSAJE
+   ========================================================================== */
+
+.dynamic-text h2 {
+    color: var(--primary-color);
+    font-family: var(--font-decorative);
+    font-size: var(--font-content-title);
+    margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
+.dynamic-text p {
+    color: var(--text-dark);
+    font-size: var(--font-content-text);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+    font-weight: 400;
+}
+
+.dynamic-text .signature {
+    font-style: italic;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: var(--spacing-lg);
+    border-top: 2px solid rgba(102, 126, 234, 0.3);
+    padding-top: var(--spacing-md);
+    font-size: 1.1em;
+}
+
+/* ==========================================================================
+   BOTÓN DE CIERRE PARA MODAL
+   ========================================================================== */
+
+.dynamic-text.modal-position .close-button {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--primary-color);
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-round);
+    transition: all var(--transition-fast);
+}
+
+.dynamic-text.modal-position .close-button:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   INDICADORES DE POSICIÓN Y DEBUG
+   ========================================================================== */
+
+.mascot-position-indicator {
+    position: fixed;
+    bottom: 100px;
+    right: 60px;
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: var(--border-radius-round);
+    z-index: var(--z-frame);
+    animation: positionPulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes positionPulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Indicadores visuales de posición */
+.position-indicator {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: rgba(102, 126, 234, 0.6);
+    border-radius: var(--border-radius-round);
+    z-index: var(--z-frame);
+    animation: positionPulse 1.5s infinite;
+    pointer-events: none;
+}
+
+.position-indicator.mascot-indicator {
+    background: rgba(255, 107, 107, 0.8);
+    width: 16px;
+    height: 16px;
+}
+
+.position-indicator.safe-zone-indicator {
+    background: rgba(34, 197, 94, 0.6);
+    width: 8px;
+    height: 8px;
+}
+
+/* ==========================================================================
+   MODO DE DEPURACIÓN
+   ========================================================================== */
+
+.debug-positioning .dynamic-text {
+    border: 3px dashed var(--heart-color);
+}
+
+.debug-positioning .lottie-container {
+    border: 3px dashed var(--primary-color);
+}
+
+.debug-positioning .character-speech-bubble {
+    border: 3px dashed #ffa500;
+}
+
+/* ==========================================================================
+   DETECCIÓN DE COLISIONES
+   ========================================================================== */
+
+.collision-detected .dynamic-text {
+    background: var(--bg-white-98);
+    border: 4px solid var(--pink-border-strong);
+    box-shadow: var(--shadow-modal);
+    animation: collisionAlert 0.5s ease-in-out 3;
+}
+
+@keyframes collisionAlert {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA CONTENIDO
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    .dynamic-text {
+        padding: 28px 36px;
+        max-width: 650px;
+    }
+    
+    .dynamic-text.side-position {
+        left: 40px;
+        max-width: 450px;
+        top: 18%;
+    }
+    
+    .dynamic-text.smart-position {
+        left: 30%;
+        top: 25%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .dynamic-text {
+        padding: 24px 32px;
+        max-width: 600px;
+    }
+    
+    /* Cambiar a posicionamiento adaptativo en tablets */
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin: var(--spacing-lg) auto var(--spacing-xl) auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .dynamic-content {
+        padding: var(--spacing-md);
+        min-height: 40vh;
+        margin-top: var(--spacing-md);
+    }
+    
+    /* MÓVIL: Z-INDEX ALTO PARA TEXTO PRINCIPAL */
+    .dynamic-text,
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position,
+    .dynamic-text.modal-position {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: var(--spacing-md) auto var(--spacing-xl) auto !important;
+        padding: 24px 28px;
+        max-width: 95%;
+        z-index: var(--z-content-mobile) !important;
+    }
+    
+    .dynamic-text.modal-position::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .dynamic-text {
+        padding: 20px 24px;
+        margin: var(--spacing-md) auto var(--spacing-lg) auto !important;
+        z-index: calc(var(--z-content-mobile) + 10) !important;
+        max-width: 98%;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .dynamic-text p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDIMIENTO
+   ========================================================================== */
+
+.dynamic-text {
+    contain: layout style paint;
+    will-change: transform, opacity;
+}
+
+.dynamic-text.modal-position {
+    contain: layout style;
+}
+
+/* ==========================================================================
+   ESTADOS DE FOCUS MEJORADOS
+   ========================================================================== */
+
+.dynamic-text.modal-position .close-button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   UTILIDADES DE CONTENIDO
+   ========================================================================== */
+
+.content-fade-in {
+    animation: contentFadeIn 0.8s ease-out;
+}
+
+.content-slide-up {
+    animation: contentSlideUp 0.6s ease-out;
+}
+
+.content-scale-in {
+    animation: contentScaleIn 0.5s ease-out;
+}
+
+@keyframes contentFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes contentSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes contentScaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   MEJORAS DE ACCESIBILIDAD PARA CONTENIDO
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .dynamic-text {
+        transition: opacity 0.3s ease;
+    }
+    
+    .dynamic-text.show {
+        transform: none;
+    }
+    
+    .collision-detected .dynamic-text {
+        animation: none;
+    }
+}
+
+/* ==========================================================================
+   ESTADOS DE CARGA Y TRANSICIÓN
+   ========================================================================== */
+
+.dynamic-text.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.dynamic-text.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--primary-color);
+    border-top: 3px solid transparent;
+    border-radius: var(--border-radius-round);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.dynamic-text.transitioning {
+    opacity: 0.5;
+    transform: scale(0.98);
+    transition: all 0.3s ease;
+}

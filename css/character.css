@@ -1,0 +1,702 @@
+/* ==========================================================================
+   CHARACTER.CSS - Sistema de Mascota y Globo de Diálogo Inteligente
+   ========================================================================== */
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL DE LA MASCOTA - POSICIÓN CENTRADA VERTICAL Y HORIZONTAL
+   ========================================================================== */
+
+.lottie-container {
+    position: fixed;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    z-index: var(--z-character);
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    transition: all var(--transition-cubic);
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
+}
+
+.lottie-container:hover {
+    transform: translate(50%, 50%) scale(1.1);
+}
+
+.lottie-container:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+/* ==========================================================================
+   REPRODUCTOR LOTTIE
+   ========================================================================== */
+
+#lottiePlayer {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: var(--border-radius-md);
+    transition: transform var(--transition-cubic);
+    background: transparent;
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   GLOBO DE DIÁLOGO - POSICIÓN INTELIGENTE SEGÚN MASCOTA CENTRADA
+   ========================================================================== */
+
+.character-speech-bubble {
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-white);
+    padding: 20px 26px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-medium);
+    opacity: 0;
+    transition: all var(--transition-cubic);
+    font-size: 17px;
+    text-align: center;
+    min-width: 220px;
+    max-width: 450px;
+    white-space: normal;
+    border: 3px solid var(--pink-border);
+    z-index: var(--z-speech);
+    word-wrap: break-word;
+    line-height: 1.5;
+    font-family: var(--font-primary);
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.character-speech-bubble.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+/* ==========================================================================
+   FLECHA DEL GLOBO - CENTRADA ABAJO
+   ========================================================================== */
+
+.character-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--text-white);
+}
+
+/* ==========================================================================
+   POSICIONAMIENTO INTELIGENTE DEL GLOBO
+   ========================================================================== */
+
+/* Posición izquierda (smart bubble) */
+.character-speech-bubble.smart-bubble {
+    bottom: auto;
+    left: -380px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 380px;
+}
+
+.character-speech-bubble.smart-bubble.show {
+    opacity: 1;
+    transform: translateY(-50%);
+}
+
+/* Flecha para posición izquierda */
+.character-speech-bubble.smart-bubble::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid var(--text-white);
+    border-right: none;
+}
+
+/* Posición derecha */
+.character-speech-bubble.position-right {
+    bottom: 50%;
+    left: auto;
+    right: -380px;
+    top: auto;
+    transform: translateY(50%);
+    max-width: 380px;
+}
+
+.character-speech-bubble.position-right::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    right: auto;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid var(--text-white);
+    border-left: none;
+}
+
+/* Posición superior */
+.character-speech-bubble.position-top {
+    bottom: 240px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    max-width: 450px;
+}
+
+.character-speech-bubble.position-top::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    right: auto;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--text-white);
+    border-bottom: none;
+}
+
+/* Posición inferior */
+.character-speech-bubble.position-bottom {
+    bottom: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    max-width: 450px;
+}
+
+.character-speech-bubble.position-bottom::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: auto;
+    right: auto;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid var(--text-white);
+    border-top: none;
+}
+
+/* ==========================================================================
+   CONTENIDO DEL GLOBO
+   ========================================================================== */
+
+#characterMessage {
+    margin: 0;
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   EFECTOS DE HOVER Y INTERACCIÓN
+   ========================================================================== */
+
+.character-speech-bubble:hover {
+    transform: translateX(-50%) translateY(-15px);
+    box-shadow: var(--shadow-strong);
+}
+
+.character-speech-bubble.smart-bubble:hover {
+    transform: translateY(-50%) translateX(-5px);
+}
+
+.character-speech-bubble.position-right:hover {
+    transform: translateY(50%) translateX(5px);
+}
+
+/* ==========================================================================
+   ANIMACIONES DE LA MASCOTA
+   ========================================================================== */
+
+.lottie-container.click-animation {
+    animation: mascotClick 0.6s ease-out;
+}
+
+.lottie-container.hover-animation {
+    animation: mascotHover 0.4s ease-out;
+}
+
+@keyframes mascotClick {
+    0% {
+        transform: translate(50%, 50%) scale(1);
+    }
+    50% {
+        transform: translate(50%, 50%) scale(1.2) rotate(5deg);
+    }
+    100% {
+        transform: translate(50%, 50%) scale(1);
+    }
+}
+
+@keyframes mascotHover {
+    0% {
+        transform: translate(50%, 50%) scale(1);
+    }
+    100% {
+        transform: translate(50%, 50%) scale(1.05);
+    }
+}
+
+/* ==========================================================================
+   ESTADOS ESPECIALES DEL GLOBO
+   ========================================================================== */
+
+.character-speech-bubble.mystic-mode {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--text-white);
+    border-color: rgba(255, 255, 255, 0.3);
+    animation: mysticGlow 2s ease-in-out infinite alternate;
+}
+
+.character-speech-bubble.mystic-mode::after {
+    border-top-color: #667eea;
+}
+
+.character-speech-bubble.smart-bubble.mystic-mode::after {
+    border-left-color: #667eea;
+}
+
+@keyframes mysticGlow {
+    0% {
+        box-shadow: var(--shadow-medium);
+    }
+    100% {
+        box-shadow: 0 4px 25px rgba(102, 126, 234, 0.5);
+    }
+}
+
+/* ==========================================================================
+   INDICADORES DE ESCRITURA
+   ========================================================================== */
+
+.character-speech-bubble.typing::after {
+    content: '';
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: var(--border-radius-round);
+    animation: typingIndicator 1.5s ease-in-out infinite;
+}
+
+@keyframes typingIndicator {
+    0%, 60%, 100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN PARA MASCOTA Y GLOBO
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    .lottie-container {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .character-speech-bubble {
+        font-size: 16px;
+        padding: 18px 22px;
+        max-width: 400px;
+        bottom: 200px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -350px;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .lottie-container {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .character-speech-bubble {
+        font-size: 15px;
+        padding: 16px 20px;
+        max-width: 350px;
+        bottom: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .lottie-container {
+        bottom: 30px;
+        right: 30px;
+        transform: none;
+        width: 140px;
+        height: 140px;
+        z-index: var(--z-character);
+    }
+    
+    .lottie-container:hover {
+        transform: scale(1.05);
+    }
+    
+    /* GLOBO ARRIBA DE LA MASCOTA EN MÓVIL */
+    .character-speech-bubble {
+        position: absolute !important;
+        bottom: 160px !important;
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        transform: translateX(-50%) !important;
+        max-width: 300px !important;
+        font-size: 14px;
+        padding: 16px 20px;
+        z-index: calc(var(--z-character) + 5) !important;
+    }
+    
+    .character-speech-bubble.show {
+        transform: translateX(-50%) translateY(-10px) !important;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        position: absolute !important;
+        bottom: 160px !important;
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        transform: translateX(-50%) !important;
+        max-width: 300px !important;
+        font-size: 14px;
+        padding: 16px 20px;
+        z-index: calc(var(--z-character) + 5) !important;
+    }
+    
+    .character-speech-bubble.smart-bubble.show {
+        transform: translateX(-50%) translateY(-10px) !important;
+    }
+    
+    /* FLECHA CENTRADA ABAJO EN MÓVIL */
+    .character-speech-bubble::after,
+    .character-speech-bubble.smart-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        bottom: -12px !important;
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        transform: translateX(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-left: 12px solid transparent !important;
+        border-right: 12px solid transparent !important;
+        border-top: 12px solid var(--text-white) !important;
+        border-bottom: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .lottie-container {
+        width: 120px;
+        height: 120px;
+        bottom: 20px;
+        right: 20px;
+        z-index: calc(var(--z-character) - 10);
+    }
+    
+    /* GLOBO MÁS COMPACTO EN MÓVIL PEQUEÑO */
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        bottom: 140px !important;
+        max-width: 280px !important;
+        font-size: 13px !important;
+        padding: 14px 18px !important;
+        z-index: calc(var(--z-character) - 5) !important;
+    }
+}
+
+/* ==========================================================================
+   TOOLTIPS PARA PERSONAJES DEL MARCO
+   ========================================================================== */
+
+.character-tooltip {
+    pointer-events: none;
+    font-family: var(--font-primary);
+    position: fixed;
+    background: var(--bg-black-tooltip);
+    color: var(--text-white);
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    box-shadow: var(--shadow-medium);
+    z-index: var(--z-tooltip);
+}
+
+.tooltip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.character-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-white);
+}
+
+.character-description {
+    font-size: 11px;
+    opacity: 0.8;
+    color: #ffc0cb;
+}
+
+/* ==========================================================================
+   EFECTOS ESPECIALES DE PERSONAJES
+   ========================================================================== */
+
+.character-corner:focus,
+.character-item:focus {
+    outline: 2px solid #ff6b9d;
+    outline-offset: 2px;
+}
+
+.character-corner.special-interaction,
+.character-item.special-interaction {
+    animation: characterPulse 1s ease-in-out;
+}
+
+@keyframes characterPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1) saturate(1);
+    }
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.2) saturate(1.3);
+    }
+}
+
+/* ==========================================================================
+   MENSAJES TEMPORALES DE PERSONAJES
+   ========================================================================== */
+
+.character-message-popup {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-white-95);
+    padding: 16px 24px;
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-medium);
+    z-index: calc(var(--z-tooltip) + 1);
+    font-size: 16px;
+    color: var(--primary-color);
+    font-weight: 600;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    border: 3px solid var(--pink-border);
+}
+
+.character-message-popup.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(10px);
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDIMIENTO PARA MASCOTA
+   ========================================================================== */
+
+.lottie-container,
+.character-speech-bubble {
+    will-change: transform, opacity;
+}
+
+#lottiePlayer {
+    contain: layout style;
+}
+
+/* ==========================================================================
+   MEJORAS DE ACCESIBILIDAD PARA MASCOTA
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .lottie-container,
+    .character-speech-bubble {
+        animation: none !important;
+        transition: opacity 0.3s ease;
+    }
+    
+    .character-speech-bubble.show {
+        transform: translateX(-50%);
+    }
+    
+    .character-speech-bubble.smart-bubble.show {
+        transform: translateY(-50%);
+    }
+}
+
+/* ==========================================================================
+   ESTADOS DE CARGA PARA MASCOTA
+   ========================================================================== */
+
+.lottie-container.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.lottie-container.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid var(--primary-color);
+    border-top: 3px solid transparent;
+    border-radius: var(--border-radius-round);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   VARIACIONES DE GLOBO SEGÚN CONTEXTO
+   ========================================================================== */
+
+.character-speech-bubble.welcome-mode {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    color: var(--text-dark);
+    border-color: rgba(255, 154, 158, 0.5);
+}
+
+.character-speech-bubble.success-mode {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: var(--text-dark);
+    border-color: rgba(168, 237, 234, 0.5);
+}
+
+.character-speech-bubble.error-mode {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: var(--text-dark);
+    border-color: rgba(252, 182, 159, 0.5);
+}
+
+/* ==========================================================================
+   INTERACCIONES AVANZADAS
+   ========================================================================== */
+
+.lottie-container.interactive-mode {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lottie-container.interactive-mode:hover {
+    transform: translate(50%, 50%) scale(1.08) rotate(2deg);
+}
+
+.lottie-container.interactive-mode:active {
+    transform: translate(50%, 50%) scale(0.95);
+}
+
+/* ==========================================================================
+   EFECTOS DE PARTÍCULAS DESDE MASCOTA
+   ========================================================================== */
+
+.mascot-particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 20px;
+    z-index: var(--z-tooltip);
+    animation: mascotParticle 2s ease-out forwards;
+}
+
+@keyframes mascotParticle {
+    0% {
+        opacity: 1;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.4) translateY(-40px);
+    }
+}
+
+/* ==========================================================================
+   MODOS ESPECIALES DE GLOBO
+   ========================================================================== */
+
+.character-speech-bubble.celebration-mode {
+    animation: celebrationBounce 0.6s ease-in-out 3;
+}
+
+@keyframes celebrationBounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-10px) scale(1.05);
+    }
+}
+
+.character-speech-bubble.attention-mode {
+    animation: attentionShake 0.5s ease-in-out 2;
+}
+
+@keyframes attentionShake {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    25% {
+        transform: translateX(-50%) translateY(0) translateX(-5px);
+    }
+    75% {
+        transform: translateX(-50%) translateY(0) translateX(5px);
+    }
+}

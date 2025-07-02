@@ -1,0 +1,1554 @@
+/* ==========================================================================
+   RESPONSIVE.CSS - Sistema Responsive Avanzado y Adaptaciones por Dispositivo
+   ========================================================================== */
+
+/* ==========================================================================
+   BREAKPOINTS Y VARIABLES RESPONSIVE
+   ========================================================================== */
+
+:root {
+    /* Breakpoints principales */
+    --breakpoint-xs: 320px;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1440px;
+    
+    /* Variables responsive para espaciado */
+    --spacing-responsive-xs: clamp(0.25rem, 1vw, 0.5rem);
+    --spacing-responsive-sm: clamp(0.5rem, 2vw, 1rem);
+    --spacing-responsive-md: clamp(1rem, 3vw, 1.5rem);
+    --spacing-responsive-lg: clamp(1.5rem, 4vw, 2rem);
+    --spacing-responsive-xl: clamp(2rem, 5vw, 3rem);
+    
+    /* Variables responsive para tamaños */
+    --size-responsive-sm: clamp(20px, 4vw, 40px);
+    --size-responsive-md: clamp(40px, 6vw, 80px);
+    --size-responsive-lg: clamp(80px, 8vw, 120px);
+    --size-responsive-xl: clamp(120px, 10vw, 200px);
+}
+
+/* ==========================================================================
+   SISTEMA DE GRID RESPONSIVE
+   ========================================================================== */
+
+.responsive-grid {
+    display: grid;
+    gap: var(--spacing-responsive-md);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    width: 100%;
+}
+
+.responsive-grid.dense {
+    grid-auto-flow: dense;
+}
+
+.responsive-grid.center {
+    place-items: center;
+}
+
+/* Variaciones de grid por breakpoint */
+@media (min-width: 320px) {
+    .responsive-grid.xs-1 { grid-template-columns: 1fr; }
+    .responsive-grid.xs-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 480px) {
+    .responsive-grid.sm-1 { grid-template-columns: 1fr; }
+    .responsive-grid.sm-2 { grid-template-columns: repeat(2, 1fr); }
+    .responsive-grid.sm-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 768px) {
+    .responsive-grid.md-2 { grid-template-columns: repeat(2, 1fr); }
+    .responsive-grid.md-3 { grid-template-columns: repeat(3, 1fr); }
+    .responsive-grid.md-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 1024px) {
+    .responsive-grid.lg-3 { grid-template-columns: repeat(3, 1fr); }
+    .responsive-grid.lg-4 { grid-template-columns: repeat(4, 1fr); }
+    .responsive-grid.lg-5 { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (min-width: 1200px) {
+    .responsive-grid.xl-4 { grid-template-columns: repeat(4, 1fr); }
+    .responsive-grid.xl-5 { grid-template-columns: repeat(5, 1fr); }
+    .responsive-grid.xl-6 { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* ==========================================================================
+   CONTENEDORES RESPONSIVE
+   ========================================================================== */
+
+.container-responsive {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: var(--spacing-responsive-md);
+}
+
+@media (min-width: 480px) {
+    .container-responsive {
+        max-width: 460px;
+        padding: var(--spacing-responsive-lg);
+    }
+}
+
+@media (min-width: 768px) {
+    .container-responsive {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-responsive {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-responsive {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container-responsive {
+        max-width: 1320px;
+    }
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA RESPONSIVE AVANZADA
+   ========================================================================== */
+
+.text-responsive {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: clamp(1.4, 1.5vw + 1.2, 1.6);
+}
+
+.text-responsive.small {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.text-responsive.large {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.text-responsive.xl {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.text-responsive.xxl {
+    font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.text-responsive.display {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    line-height: clamp(1.1, 1.2vw + 1, 1.3);
+}
+
+/* ==========================================================================
+   ESPACIADO RESPONSIVE INTELIGENTE
+   ========================================================================== */
+
+.spacing-responsive {
+    margin: var(--spacing-responsive-md);
+    padding: var(--spacing-responsive-md);
+}
+
+.spacing-responsive.tight {
+    margin: var(--spacing-responsive-sm);
+    padding: var(--spacing-responsive-sm);
+}
+
+.spacing-responsive.loose {
+    margin: var(--spacing-responsive-lg);
+    padding: var(--spacing-responsive-lg);
+}
+
+.spacing-responsive.xl {
+    margin: var(--spacing-responsive-xl);
+    padding: var(--spacing-responsive-xl);
+}
+
+/* Utilidades de espaciado direccional */
+.mt-responsive { margin-top: var(--spacing-responsive-md); }
+.mb-responsive { margin-bottom: var(--spacing-responsive-md); }
+.ml-responsive { margin-left: var(--spacing-responsive-md); }
+.mr-responsive { margin-right: var(--spacing-responsive-md); }
+.mx-responsive { margin-left: var(--spacing-responsive-md); margin-right: var(--spacing-responsive-md); }
+.my-responsive { margin-top: var(--spacing-responsive-md); margin-bottom: var(--spacing-responsive-md); }
+
+.pt-responsive { padding-top: var(--spacing-responsive-md); }
+.pb-responsive { padding-bottom: var(--spacing-responsive-md); }
+.pl-responsive { padding-left: var(--spacing-responsive-md); }
+.pr-responsive { padding-right: var(--spacing-responsive-md); }
+.px-responsive { padding-left: var(--spacing-responsive-md); padding-right: var(--spacing-responsive-md); }
+.py-responsive { padding-top: var(--spacing-responsive-md); padding-bottom: var(--spacing-responsive-md); }
+
+/* ==========================================================================
+   RESPONSIVE PARA MARCO DE PERSONAJES
+   ========================================================================== */
+
+/* Ajustes ultra-wide (1440px+) */
+@media (min-width: 1440px) {
+    :root {
+        --character-corner-width: 140px;
+        --character-corner-height: 180px;
+        --character-item-width: 95px;
+        --character-item-height: 120px;
+        --character-gap: 50px;
+    }
+    
+    .character-frame[data-viewport="desktop"] {
+        opacity: 1;
+    }
+    
+    .left-side, .right-side {
+        height: min(85vh, 800px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(85vw, 1000px);
+    }
+}
+
+/* Ajustes desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    :root {
+        --character-corner-width: 130px;
+        --character-corner-height: 165px;
+        --character-item-width: 90px;
+        --character-item-height: 115px;
+        --character-gap: 45px;
+    }
+    
+    .left-side, .right-side {
+        height: min(75vh, 700px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(80vw, 900px);
+    }
+}
+
+/* Ajustes laptop (1024px - 1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    :root {
+        --character-corner-width: 120px;
+        --character-corner-height: 150px;
+        --character-item-width: 85px;
+        --character-item-height: 110px;
+        --character-gap: 40px;
+    }
+    
+    .left-side, .right-side {
+        height: min(70vh, 600px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(75vw, 800px);
+    }
+}
+
+/* Ajustes tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+        --character-corner-width: 100px;
+        --character-corner-height: 130px;
+        --character-item-width: 75px;
+        --character-item-height: 95px;
+        --character-gap: 30px;
+    }
+    
+    .left-side {
+        left: 10px;
+        height: min(60vh, 500px);
+        transform: translateY(-50%) rotate(-6deg);
+    }
+    
+    .right-side {
+        right: 10px;
+        height: min(60vh, 500px);
+        transform: translateY(-50%) rotate(6deg);
+    }
+    
+    .top-side {
+        top: 10px;
+        width: min(70vw, 600px);
+        transform: translateX(-50%) rotate(-3deg);
+    }
+    
+    .bottom-side {
+        bottom: 10px;
+        width: min(70vw, 600px);
+        transform: translateX(-50%) rotate(3deg);
+    }
+}
+
+/* Ajustes móvil grande (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    :root {
+        --character-corner-width: 90px;
+        --character-corner-height: 115px;
+        --character-item-width: 70px;
+        --character-item-height: 85px;
+        --character-gap: 25px;
+    }
+    
+    .left-side {
+        left: 8px;
+        height: min(55vh, 450px);
+        transform: translateY(-50%) rotate(-4deg);
+    }
+    
+    .right-side {
+        right: 8px;
+        height: min(55vh, 450px);
+        transform: translateY(-50%) rotate(4deg);
+    }
+    
+    .top-side {
+        top: 8px;
+        width: min(65vw, 450px);
+        transform: translateX(-50%) rotate(-2deg);
+    }
+    
+    .bottom-side {
+        bottom: 8px;
+        width: min(65vw, 450px);
+        transform: translateX(-50%) rotate(2deg);
+    }
+}
+
+/* Ajustes móvil estándar (320px - 479px) */
+@media (min-width: 320px) and (max-width: 479px) {
+    :root {
+        --character-corner-width: 80px;
+        --character-corner-height: 100px;
+        --character-item-width: 65px;
+        --character-item-height: 80px;
+        --character-gap: 20px;
+    }
+    
+    .left-side {
+        left: 5px;
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(-3deg);
+    }
+    
+    .right-side {
+        right: 5px;
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(3deg);
+    }
+    
+    .top-side {
+        top: 5px;
+        width: min(55vw, 350px);
+        transform: translateX(-50%) rotate(-1deg);
+    }
+    
+    .bottom-side {
+        bottom: 5px;
+        width: min(55vw, 350px);
+        transform: translateX(-50%) rotate(1deg);
+    }
+    
+    .character-frame {
+        opacity: 0.9;
+    }
+}
+
+/* Ajustes móvil muy pequeño (menos de 320px) */
+@media (max-width: 319px) {
+    :root {
+        --character-corner-width: 70px;
+        --character-corner-height: 90px;
+        --character-item-width: 60px;
+        --character-item-height: 75px;
+        --character-gap: 15px;
+    }
+    
+    .left-side, .right-side {
+        height: min(40vh, 300px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px);
+    }
+    
+    .character-frame {
+        opacity: 0.85;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA CONTENIDO DINÁMICO
+   ========================================================================== */
+
+/* Ultra-wide screens */
+@media (min-width: 1440px) {
+    .dynamic-text {
+        max-width: 700px;
+        padding: var(--spacing-xl);
+        font-size: 1.2rem;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 2.5rem;
+    }
+    
+    .dynamic-text.smart-position {
+        max-width: 600px;
+        top: 25%;
+    }
+    
+    .dynamic-text.side-position {
+        left: 80px;
+        max-width: 500px;
+        top: 20%;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .dynamic-text {
+        max-width: 650px;
+        padding: calc(var(--spacing-lg) + 0.5rem);
+    }
+    
+    .dynamic-text.smart-position {
+        max-width: 550px;
+        top: 28%;
+    }
+    
+    .dynamic-text.side-position {
+        left: 60px;
+        max-width: 450px;
+        top: 22%;
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .dynamic-text {
+        max-width: 600px;
+        padding: var(--spacing-lg);
+    }
+    
+    .dynamic-text.smart-position {
+        max-width: 500px;
+        top: 30%;
+    }
+    
+    .dynamic-text.side-position {
+        left: 40px;
+        max-width: 400px;
+        top: 25%;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .dynamic-text {
+        max-width: 550px;
+        padding: var(--spacing-md);
+    }
+    
+    /* Forzar posicionamiento adaptativo en tablet */
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: var(--spacing-sm) auto var(--spacing-xl) auto !important;
+    }
+    
+    .dynamic-text.modal-position {
+        position: fixed;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -50%);
+        max-width: 90vw;
+    }
+}
+
+/* Móvil grande */
+@media (min-width: 480px) and (max-width: 767px) {
+    .dynamic-content {
+        padding: var(--spacing-sm);
+        min-height: 35vh;
+        margin-top: var(--spacing-xs);
+    }
+    
+    .dynamic-text {
+        padding: var(--spacing-md);
+        margin: var(--spacing-xs) auto var(--spacing-lg) auto !important;
+        max-width: 95%;
+        z-index: var(--z-content-mobile) !important;
+    }
+    
+    /* Forzar posicionamiento relativo en móvil */
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position,
+    .dynamic-text.modal-position {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: var(--spacing-xs) auto var(--spacing-lg) auto !important;
+    }
+    
+    .dynamic-text.modal-position::before {
+        display: none;
+    }
+}
+
+/* Móvil estándar */
+@media (min-width: 320px) and (max-width: 479px) {
+    .dynamic-content {
+        padding: var(--spacing-xs);
+        min-height: 30vh;
+        margin-top: 0;
+    }
+    
+    .dynamic-text {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-xs) auto var(--spacing-md) auto !important;
+        max-width: 98%;
+        z-index: calc(var(--z-content-mobile) + 10) !important;
+        font-size: 0.9rem;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.6rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .dynamic-text p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: var(--spacing-xs);
+    }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 319px) {
+    .dynamic-content {
+        padding: var(--spacing-xs);
+        min-height: 25vh;
+    }
+    
+    .dynamic-text {
+        padding: var(--spacing-xs);
+        margin: var(--spacing-xs) auto var(--spacing-sm) auto !important;
+        max-width: 99%;
+        font-size: 0.85rem;
+    }
+    
+    .dynamic-text h2 {
+        font-size: 1.4rem;
+    }
+    
+    .dynamic-text p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA MASCOTA Y GLOBO
+   ========================================================================== */
+
+/* Ultra-wide */
+@media (min-width: 1440px) {
+    :root {
+        --mascot-size: 180px;
+    }
+    
+    .lottie-container {
+        bottom: 80px;
+        right: 50px;
+    }
+    
+    .character-speech-bubble {
+        max-width: 300px;
+        font-size: 15px;
+        padding: 14px 18px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -320px;
+        max-width: 320px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    :root {
+        --mascot-size: 160px;
+    }
+    
+    .lottie-container {
+        bottom: 70px;
+        right: 40px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -280px;
+        max-width: 280px;
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    :root {
+        --mascot-size: 150px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -260px;
+        max-width: 260px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+        --mascot-size: 130px;
+    }
+    
+    .lottie-container {
+        bottom: 50px;
+        right: 25px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -240px;
+        max-width: 220px;
+        font-size: 13px;
+        padding: 11px 15px;
+    }
+}
+
+/* Móvil grande */
+@media (min-width: 480px) and (max-width: 767px) {
+    :root {
+        --mascot-size: 110px;
+    }
+    
+    .lottie-container {
+        bottom: 35px;
+        right: 15px;
+        z-index: calc(var(--z-character) - 5);
+    }
+    
+    /* Globo forzado a la izquierda */
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        position: absolute !important;
+        left: -200px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        max-width: 170px !important;
+        font-size: 12px !important;
+        padding: 9px 13px !important;
+        z-index: calc(var(--z-character) - 15) !important;
+    }
+}
+
+/* Móvil estándar */
+@media (min-width: 320px) and (max-width: 479px) {
+    :root {
+        --mascot-size: 100px;
+    }
+    
+    .lottie-container {
+        bottom: 30px;
+        right: 15px;
+        z-index: calc(var(--z-character) - 10);
+    }
+    
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        left: -180px !important;
+        max-width: 160px !important;
+        font-size: 11px !important;
+        padding: 8px 12px !important;
+        z-index: calc(var(--z-character) - 20) !important;
+    }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 319px) {
+    :root {
+        --mascot-size: 90px;
+    }
+    
+    .lottie-container {
+        bottom: 25px;
+        right: 10px;
+        z-index: calc(var(--z-character) - 15);
+    }
+    
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        left: -160px !important;
+        max-width: 140px !important;
+        font-size: 10px !important;
+        padding: 7px 10px !important;
+        z-index: calc(var(--z-character) - 25) !important;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA NAVEGACIÓN
+   ========================================================================== */
+
+/* Ultra-wide */
+@media (min-width: 1440px) {
+    .navigation-controls {
+        bottom: -60px;
+        gap: 20px;
+    }
+    
+    .nav-button {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+    
+    .step-counter {
+        top: -70px;
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    
+    .keyboard-hint {
+        bottom: -100px;
+        font-size: 12px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .navigation-controls {
+        bottom: -55px;
+        gap: 18px;
+    }
+    
+    .nav-button {
+        width: 55px;
+        height: 55px;
+        font-size: 19px;
+    }
+    
+    .step-counter {
+        top: -65px;
+        font-size: 13px;
+        padding: 7px 14px;
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .navigation-controls {
+        bottom: -50px;
+        gap: 15px;
+    }
+    
+    .nav-button {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .navigation-controls {
+        bottom: -45px;
+        gap: 12px;
+        z-index: var(--z-navigation);
+    }
+    
+    .nav-button {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+    
+    .step-counter {
+        top: -55px;
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+    
+    .keyboard-hint {
+        bottom: -75px;
+        font-size: 10px;
+    }
+}
+
+/* Móvil grande */
+@media (min-width: 480px) and (max-width: 767px) {
+    .navigation-controls {
+        bottom: -40px;
+        gap: 10px;
+        z-index: calc(var(--z-navigation) + 5);
+    }
+    
+    .nav-button {
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
+    }
+    
+    .step-counter {
+        top: -50px;
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .keyboard-hint {
+        bottom: -70px;
+        font-size: 9px;
+    }
+}
+
+/* Móvil estándar */
+@media (min-width: 320px) and (max-width: 479px) {
+    .navigation-controls {
+        bottom: -35px;
+        gap: 8px;
+        z-index: calc(var(--z-navigation) + 10);
+    }
+    
+    .nav-button {
+        width: 38px;
+        height: 38px;
+        font-size: 14px;
+    }
+    
+    .step-counter {
+        top: -45px;
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+    
+    .keyboard-hint {
+        display: none;
+    }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 319px) {
+    .navigation-controls {
+        bottom: -30px;
+        gap: 6px;
+        z-index: calc(var(--z-navigation) + 15);
+    }
+    
+    .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+    
+    .step-counter {
+        top: -40px;
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA EFECTOS
+   ========================================================================== */
+
+/* Reducir efectos en pantallas pequeñas */
+@media (max-width: 1023px) {
+    .interactive-heart {
+        font-size: 20px;
+        animation-duration: 2.5s;
+    }
+    
+    .star-particle {
+        font-size: 14px;
+        animation-duration: 4s;
+    }
+    
+    .cursor-sparkle {
+        font-size: 10px;
+    }
+    
+    .burst-particle {
+        font-size: 16px;
+    }
+    
+    .character-particle {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Reducir cantidad de corazones de fondo */
+    .heart:nth-child(n+4) {
+        display: none;
+    }
+    
+    .interactive-heart {
+        font-size: 18px;
+        animation-duration: 2s;
+    }
+    
+    .star-particle {
+        font-size: 12px;
+        animation-duration: 3.5s;
+    }
+}
+
+@media (max-width: 479px) {
+    /* Efectos muy sutiles en móvil pequeño */
+    .heart:nth-child(n+3) {
+        display: none;
+    }
+    
+    .floating-hearts {
+        opacity: 0.6;
+    }
+    
+    .interactive-heart {
+        font-size: 16px;
+        animation-duration: 1.8s;
+    }
+    
+    .star-particle {
+        font-size: 10px;
+        animation-duration: 3s;
+    }
+    
+    .cursor-sparkle {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 319px) {
+    /* Efectos mínimos en pantallas muy pequeñas */
+    .heart:nth-child(n+2) {
+        display: none;
+    }
+    
+    .floating-hearts {
+        opacity: 0.4;
+    }
+    
+    .interactive-heart {
+        font-size: 14px;
+        animation-duration: 1.5s;
+    }
+    
+    .star-particle {
+        display: none; /* Eliminar partículas de estrellas */
+    }
+    
+    .cursor-sparkle {
+        display: none; /* Eliminar sparkles de cursor */
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA LAYOUT PRINCIPAL
+   ========================================================================== */
+
+/* Ultra-wide */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 900px;
+        padding: 30px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+    
+    .header {
+        padding: var(--spacing-xl) 0;
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    .content {
+        min-height: 50vh;
+        padding-top: var(--spacing-xl);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .container {
+        max-width: 850px;
+        padding: 25px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    
+    .header {
+        padding: calc(var(--spacing-lg) + 0.5rem) 0;
+        margin-bottom: calc(var(--spacing-lg) + 0.5rem);
+    }
+    
+    .content {
+        min-height: 45vh;
+        padding-top: calc(var(--spacing-lg) + 0.5rem);
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .container {
+        max-width: 800px;
+        padding: 20px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+    
+    .content {
+        min-height: 40vh;
+        padding-top: var(--spacing-lg);
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .header {
+        padding: var(--spacing-md) 0;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .content {
+        min-height: 35vh;
+        padding-top: var(--spacing-md);
+    }
+}
+
+/* Móvil grande */
+@media (min-width: 480px) and (max-width: 767px) {
+    .container {
+        padding: 12px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .header {
+        padding: var(--spacing-sm) 0;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .content {
+        min-height: 30vh;
+        padding-top: var(--spacing-sm);
+    }
+}
+
+/* Móvil estándar */
+@media (min-width: 320px) and (max-width: 479px) {
+    .container {
+        padding: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .header {
+        padding: var(--spacing-xs) 0;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .content {
+        min-height: 25vh;
+        padding-top: var(--spacing-xs);
+    }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 319px) {
+    .container {
+        padding: 8px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .header {
+        padding: var(--spacing-xs) 0;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .content {
+        min-height: 20vh;
+        padding-top: var(--spacing-xs);
+    }
+}
+
+/* ==========================================================================
+   UTILIDADES RESPONSIVE
+   ========================================================================== */
+
+/* Visibilidad por breakpoint */
+.hidden-xs { display: none; }
+@media (min-width: 480px) { .hidden-xs { display: initial; } }
+
+.hidden-sm { display: initial; }
+@media (min-width: 480px) and (max-width: 767px) { .hidden-sm { display: none; } }
+
+.hidden-md { display: initial; }
+@media (min-width: 768px) and (max-width: 1023px) { .hidden-md { display: none; } }
+
+.hidden-lg { display: initial; }
+@media (min-width: 1024px) and (max-width: 1199px) { .hidden-lg { display: none; } }
+
+.hidden-xl { display: initial; }
+@media (min-width: 1200px) { .hidden-xl { display: none; } }
+
+/* Mostrar solo en breakpoints específicos */
+.visible-xs { display: none; }
+@media (max-width: 479px) { .visible-xs { display: initial; } }
+
+.visible-sm { display: none; }
+@media (min-width: 480px) and (max-width: 767px) { .visible-sm { display: initial; } }
+
+.visible-md { display: none; }
+@media (min-width: 768px) and (max-width: 1023px) { .visible-md { display: initial; } }
+
+.visible-lg { display: none; }
+@media (min-width: 1024px) and (max-width: 1199px) { .visible-lg { display: initial; } }
+
+.visible-xl { display: none; }
+@media (min-width: 1200px) { .visible-xl { display: initial; } }
+
+/* ==========================================================================
+   RESPONSIVE PARA ORIENTACIÓN
+   ========================================================================== */
+
+/* Landscape en móvil */
+@media (max-width: 767px) and (orientation: landscape) {
+    .container {
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .header {
+        padding: var(--spacing-xs) 0;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .content {
+        min-height: 20vh;
+        padding-top: var(--spacing-xs);
+    }
+    
+    .lottie-container {
+        bottom: 20px;
+        right: 10px;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        left: -150px !important;
+        max-width: 130px !important;
+        font-size: 10px !important;
+        padding: 6px 10px !important;
+    }
+    
+    .navigation-controls {
+        bottom: -25px;
+        gap: 6px;
+    }
+    
+    .nav-button {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+    
+    /* Reducir marco de personajes en landscape */
+    :root {
+        --character-corner-width: 60px;
+        --character-corner-height: 75px;
+        --character-item-width: 50px;
+        --character-item-height: 60px;
+        --character-gap: 15px;
+    }
+    
+    .left-side, .right-side {
+        height: min(35vh, 250px);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(45vw, 250px);
+    }
+    
+    .character-frame {
+        opacity: 0.7;
+    }
+}
+
+/* Portrait en tablet */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .dynamic-text {
+        max-width: 85%;
+    }
+    
+    .left-side, .right-side {
+        height: min(65vh, 550px);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA DENSIDAD DE PÍXELES
+   ========================================================================== */
+
+/* Pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .character-corner img,
+    .character-item img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .interactive-heart,
+    .star-particle,
+    .cursor-sparkle {
+        font-size: 1.1em;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA PREFERENCIAS DEL USUARIO
+   ========================================================================== */
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-white-95: rgba(30, 30, 30, 0.95);
+        --bg-white-98: rgba(25, 25, 25, 0.98);
+        --text-dark: #e0e0e0;
+        --bg-black-tooltip: rgba(255, 255, 255, 0.9);
+    }
+    
+    .character-speech-bubble {
+        background: rgba(40, 40, 40, 0.95);
+        color: #e0e0e0;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .character-speech-bubble::after {
+        border-top-color: rgba(40, 40, 40, 0.95);
+    }
+    
+    .character-speech-bubble.smart-bubble::after {
+        border-left-color: rgba(40, 40, 40, 0.95);
+    }
+}
+
+/* Contraste alto */
+@media (prefers-contrast: high) {
+    .dynamic-text {
+        border: 3px solid var(--primary-color);
+        background: var(--text-white);
+    }
+    
+    .character-speech-bubble {
+        border: 2px solid var(--primary-color);
+        background: var(--text-white);
+    }
+    
+    .nav-button {
+        border: 3px solid var(--primary-color);
+    }
+}
+
+/* Transparencia reducida */
+@media (prefers-reduced-transparency) {
+    .dynamic-text,
+    .character-speech-bubble,
+    .nav-button {
+        backdrop-filter: none;
+        background: var(--text-white);
+    }
+    
+    .container {
+        backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA DISPOSITIVOS TÁCTILES
+   ========================================================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Aumentar áreas táctiles */
+    .nav-button {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px;
+    }
+    
+    .character-corner,
+    .character-item {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .lottie-container {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Eliminar efectos hover */
+    .nav-button:hover,
+    .character-corner:hover,
+    .character-item:hover,
+    .lottie-container:hover {
+        transform: none;
+        filter: none;
+    }
+    
+    /* Mejorar feedback táctil */
+    .nav-button:active:not(:disabled) {
+        background: var(--primary-color);
+        color: var(--text-white);
+        transform: scale(0.95);
+    }
+    
+    .character-corner:active,
+    .character-item:active {
+        transform: scale(0.95);
+        filter: brightness(1.1);
+    }
+    
+    .lottie-container:active {
+        transform: scale(0.95);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA CONEXIÓN LENTA
+   ========================================================================== */
+
+@media (prefers-reduced-data) {
+    /* Reducir efectos costosos */
+    .interactive-heart,
+    .star-particle,
+    .cursor-sparkle,
+    .burst-particle,
+    .character-particle,
+    .magic-particle {
+        display: none;
+    }
+    
+    /* Simplificar animaciones */
+    .character-corner,
+    .character-item {
+        animation: none;
+    }
+    
+    .floating-hearts {
+        display: none;
+    }
+    
+    /* Reducir calidad de efectos */
+    .glow-effect::before,
+    .mystic-glow {
+        animation: none;
+        opacity: 0.3;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA IMPRESIÓN
+   ========================================================================== */
+
+@media print {
+    /* Ocultar elementos interactivos */
+    .navigation-controls,
+    .lottie-container,
+    .character-speech-bubble,
+    .floating-hearts,
+    .hearts-container,
+    .character-frame {
+        display: none !important;
+    }
+    
+    /* Optimizar para impresión */
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+        box-shadow: none;
+    }
+    
+    .dynamic-text {
+        background: white;
+        border: 1px solid #000;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+    
+    .main-title,
+    .subtitle {
+        color: #000;
+        text-shadow: none;
+    }
+    
+    .dynamic-text h2,
+    .dynamic-text p {
+        color: #000;
+    }
+    
+    /* Añadir URLs para enlaces */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDIMIENTO RESPONSIVE
+   ========================================================================== */
+
+/* Contenedores con contain para mejor rendimiento */
+@media (max-width: 767px) {
+    .container,
+    .dynamic-content,
+    .character-frame {
+        contain: layout style;
+    }
+    
+    .navigation-controls {
+        contain: layout;
+    }
+}
+
+/* Will-change para elementos que se animan frecuentemente */
+@media (max-width: 1023px) {
+    .character-corner,
+    .character-item,
+    .lottie-container,
+    .character-speech-bubble,
+    .nav-button {
+        will-change: transform;
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA ACCESIBILIDAD MEJORADA
+   ========================================================================== */
+
+/* Tamaños de fuente mínimos para legibilidad */
+@media (max-width: 479px) {
+    .dynamic-text p {
+        font-size: max(0.9rem, 16px); /* Mínimo 16px para legibilidad */
+    }
+    
+    .character-speech-bubble {
+        font-size: max(11px, 0.7rem);
+    }
+    
+    .nav-button {
+        font-size: max(12px, 0.75rem);
+    }
+}
+
+/* Espaciado mejorado para elementos interactivos */
+@media (max-width: 767px) {
+    .navigation-controls {
+        gap: max(8px, 2vw);
+    }
+    
+    .character-side {
+        gap: max(20px, 5vw);
+    }
+}
+
+/* ==========================================================================
+   RESPONSIVE PARA DISPOSITIVOS ESPECÍFICOS
+   ========================================================================== */
+
+/* iPhone SE y similares (375px) */
+@media (width: 375px) {
+    .container {
+        padding: 12px;
+    }
+    
+    .dynamic-text {
+        padding: 16px;
+        margin: 8px auto 20px auto !important;
+    }
+    
+    .lottie-container {
+        width: 90px;
+        height: 90px;
+        bottom: 25px;
+        right: 12px;
+    }
+}
+
+/* iPad y tablets similares */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+        padding: 20px;
+    }
+    
+    .dynamic-text {
+        max-width: 80%;
+        padding: 24px;
+    }
+    
+    .lottie-container {
+        width: 140px;
+        height: 140px;
+        bottom: 60px;
+        right: 30px;
+    }
+}
+
+/* Pantallas muy anchas (ultra-wide) */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1000px;
+    }
+    
+    .character-frame {
+        max-width: 1920px;
+        margin: 0 auto;
+    }
+    
+    .left-side {
+        left: max(15px, calc((100vw - 1920px) / 2 + 15px));
+    }
+    
+    .right-side {
+        right: max(15px, calc((100vw - 1920px) / 2 + 15px));
+    }
+}
