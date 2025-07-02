@@ -3,24 +3,24 @@
    ========================================================================== */
 
 /* ==========================================================================
-   CONTENEDOR PRINCIPAL DE LA MASCOTA - POSICIÓN CENTRADA
+   CONTENEDOR PRINCIPAL DE LA MASCOTA - POSICIÓN CENTRADA VERTICAL Y HORIZONTAL
    ========================================================================== */
 
 .lottie-container {
     position: fixed;
-    bottom: 30px;
+    bottom: 50%;
     right: 50%;
-    transform: translateX(50%);
+    transform: translate(50%, 50%);
     z-index: var(--z-character);
     cursor: pointer;
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     transition: all var(--transition-cubic);
     filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.2));
 }
 
 .lottie-container:hover {
-    transform: translateX(50%) scale(1.1);
+    transform: translate(50%, 50%) scale(1.1);
 }
 
 .lottie-container:focus {
@@ -42,24 +42,24 @@
 }
 
 /* ==========================================================================
-   GLOBO DE DIÁLOGO - POSICIÓN CENTRADA ARRIBA
+   GLOBO DE DIÁLOGO - POSICIÓN INTELIGENTE SEGÚN MASCOTA CENTRADA
    ========================================================================== */
 
 .character-speech-bubble {
     position: absolute;
-    bottom: 200px;
+    bottom: 220px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--text-white);
-    padding: 18px 24px;
+    padding: 20px 26px;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-medium);
     opacity: 0;
     transition: all var(--transition-cubic);
-    font-size: 16px;
+    font-size: 17px;
     text-align: center;
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 220px;
+    max-width: 450px;
     white-space: normal;
     border: 3px solid var(--pink-border);
     z-index: var(--z-speech);
@@ -82,14 +82,14 @@
 .character-speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--text-white);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--text-white);
 }
 
 /* ==========================================================================
@@ -99,10 +99,10 @@
 /* Posición izquierda (smart bubble) */
 .character-speech-bubble.smart-bubble {
     bottom: auto;
-    left: -350px;
+    left: -380px;
     top: 50%;
     transform: translateY(-50%);
-    max-width: 350px;
+    max-width: 380px;
 }
 
 .character-speech-bubble.smart-bubble.show {
@@ -115,15 +115,15 @@
     content: '';
     position: absolute;
     top: 50%;
-    right: -10px;
+    right: -12px;
     bottom: auto;
     left: auto;
     transform: translateY(-50%);
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid var(--text-white);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid var(--text-white);
     border-right: none;
 }
 
@@ -131,75 +131,75 @@
 .character-speech-bubble.position-right {
     bottom: 50%;
     left: auto;
-    right: -350px;
+    right: -380px;
     top: auto;
     transform: translateY(50%);
-    max-width: 350px;
+    max-width: 380px;
 }
 
 .character-speech-bubble.position-right::after {
     content: '';
     position: absolute;
     top: 50%;
-    left: -10px;
+    left: -12px;
     right: auto;
     bottom: auto;
     transform: translateY(-50%);
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid var(--text-white);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid var(--text-white);
     border-left: none;
 }
 
 /* Posición superior */
 .character-speech-bubble.position-top {
-    bottom: 220px;
+    bottom: 240px;
     left: 50%;
     transform: translateX(-50%);
     top: auto;
-    max-width: 400px;
+    max-width: 450px;
 }
 
 .character-speech-bubble.position-top::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
     top: auto;
     right: auto;
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid var(--text-white);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--text-white);
     border-bottom: none;
 }
 
 /* Posición inferior */
 .character-speech-bubble.position-bottom {
-    bottom: -120px;
+    bottom: -140px;
     left: 50%;
     transform: translateX(-50%);
     top: auto;
-    max-width: 400px;
+    max-width: 450px;
 }
 
 .character-speech-bubble.position-bottom::after {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
     bottom: auto;
     right: auto;
     width: 0;
     height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid var(--text-white);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid var(--text-white);
     border-top: none;
 }
 
@@ -211,7 +211,7 @@
     margin: 0;
     font-weight: 500;
     color: var(--text-dark);
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.5;
 }
 
@@ -246,22 +246,22 @@
 
 @keyframes mascotClick {
     0% {
-        transform: translateX(50%) scale(1);
+        transform: translate(50%, 50%) scale(1);
     }
     50% {
-        transform: translateX(50%) scale(1.2) rotate(5deg);
+        transform: translate(50%, 50%) scale(1.2) rotate(5deg);
     }
     100% {
-        transform: translateX(50%) scale(1);
+        transform: translate(50%, 50%) scale(1);
     }
 }
 
 @keyframes mascotHover {
     0% {
-        transform: translateX(50%) scale(1);
+        transform: translate(50%, 50%) scale(1);
     }
     100% {
-        transform: translateX(50%) scale(1.05);
+        transform: translate(50%, 50%) scale(1.05);
     }
 }
 
@@ -300,10 +300,10 @@
 .character-speech-bubble.typing::after {
     content: '';
     position: absolute;
-    bottom: 12px;
-    right: 16px;
-    width: 10px;
-    height: 10px;
+    bottom: 14px;
+    right: 18px;
+    width: 12px;
+    height: 12px;
     background: var(--primary-color);
     border-radius: var(--border-radius-round);
     animation: typingIndicator 1.5s ease-in-out infinite;
@@ -326,9 +326,27 @@
 
 @media (max-width: 1200px) {
     .lottie-container {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .character-speech-bubble {
+        font-size: 16px;
+        padding: 18px 22px;
+        max-width: 400px;
+        bottom: 200px;
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -350px;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .lottie-container {
         width: 160px;
         height: 160px;
-        bottom: 25px;
     }
     
     .character-speech-bubble {
@@ -337,53 +355,33 @@
         max-width: 350px;
         bottom: 180px;
     }
-    
-    .character-speech-bubble.smart-bubble {
-        left: -320px;
-        max-width: 320px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .lottie-container {
-        width: 140px;
-        height: 140px;
-        bottom: 20px;
-    }
-    
-    .character-speech-bubble {
-        font-size: 14px;
-        padding: 14px 18px;
-        max-width: 320px;
-        bottom: 160px;
-    }
 }
 
 @media (max-width: 768px) {
     .lottie-container {
-        bottom: 15px;
-        right: 50%;
-        transform: translateX(50%);
-        width: 120px;
-        height: 120px;
+        bottom: 30px;
+        right: 30px;
+        transform: none;
+        width: 140px;
+        height: 140px;
         z-index: var(--z-character);
     }
     
     .lottie-container:hover {
-        transform: translateX(50%) scale(1.05);
+        transform: scale(1.05);
     }
     
-    /* GLOBO CENTRADO ARRIBA EN MÓVIL */
+    /* GLOBO ARRIBA DE LA MASCOTA EN MÓVIL */
     .character-speech-bubble {
         position: absolute !important;
-        bottom: 140px !important;
+        bottom: 160px !important;
         left: 50% !important;
         right: auto !important;
         top: auto !important;
         transform: translateX(-50%) !important;
-        max-width: 280px !important;
+        max-width: 300px !important;
         font-size: 14px;
-        padding: 14px 18px;
+        padding: 16px 20px;
         z-index: calc(var(--z-character) + 5) !important;
     }
     
@@ -393,14 +391,14 @@
     
     .character-speech-bubble.smart-bubble {
         position: absolute !important;
-        bottom: 140px !important;
+        bottom: 160px !important;
         left: 50% !important;
         right: auto !important;
         top: auto !important;
         transform: translateX(-50%) !important;
-        max-width: 280px !important;
+        max-width: 300px !important;
         font-size: 14px;
-        padding: 14px 18px;
+        padding: 16px 20px;
         z-index: calc(var(--z-character) + 5) !important;
     }
     
@@ -413,35 +411,36 @@
     .character-speech-bubble.smart-bubble::after {
         content: '' !important;
         position: absolute !important;
-        bottom: -10px !important;
+        bottom: -12px !important;
         left: 50% !important;
         right: auto !important;
         top: auto !important;
         transform: translateX(-50%) !important;
         width: 0 !important;
         height: 0 !important;
-        border-left: 10px solid transparent !important;
-        border-right: 10px solid transparent !important;
-        border-top: 10px solid var(--text-white) !important;
+        border-left: 12px solid transparent !important;
+        border-right: 12px solid transparent !important;
+        border-top: 12px solid var(--text-white) !important;
         border-bottom: none !important;
     }
 }
 
 @media (max-width: 480px) {
     .lottie-container {
-        width: 100px;
-        height: 100px;
-        bottom: 10px;
+        width: 120px;
+        height: 120px;
+        bottom: 20px;
+        right: 20px;
         z-index: calc(var(--z-character) - 10);
     }
     
     /* GLOBO MÁS COMPACTO EN MÓVIL PEQUEÑO */
     .character-speech-bubble,
     .character-speech-bubble.smart-bubble {
-        bottom: 120px !important;
-        max-width: 250px !important;
+        bottom: 140px !important;
+        max-width: 280px !important;
         font-size: 13px !important;
-        padding: 12px 16px !important;
+        padding: 14px 18px !important;
         z-index: calc(var(--z-character) - 5) !important;
     }
 }
@@ -635,11 +634,11 @@
 }
 
 .lottie-container.interactive-mode:hover {
-    transform: translateX(50%) scale(1.08) rotate(2deg);
+    transform: translate(50%, 50%) scale(1.08) rotate(2deg);
 }
 
 .lottie-container.interactive-mode:active {
-    transform: translateX(50%) scale(0.95);
+    transform: translate(50%, 50%) scale(0.95);
 }
 
 /* ==========================================================================

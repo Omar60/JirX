@@ -36,7 +36,7 @@
 /* OPCIÓN 1: Posicionamiento inteligente según mascota */
 .dynamic-text.smart-position {
     position: fixed;
-    left: 50%;
+    left: 25%;
     top: 25%;
     transform: translate(-50%, -50%);
     max-width: 600px;
@@ -254,6 +254,11 @@
         left: 40px;
         max-width: 450px;
         top: 18%;
+    }
+    
+    .dynamic-text.smart-position {
+        left: 30%;
+        top: 25%;
     }
 }
 
