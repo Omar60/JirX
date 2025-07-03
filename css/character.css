@@ -3,14 +3,13 @@
    ========================================================================== */
 
 /* ==========================================================================
-   CONTENEDOR PRINCIPAL DE LA MASCOTA - POSICIÓN CENTRADA VERTICAL Y HORIZONTAL
+   CONTENEDOR PRINCIPAL DE LA MASCOTA - POSICIÓN FIJA EN ESQUINA INFERIOR DERECHA
    ========================================================================== */
 
 .lottie-container {
     position: fixed;
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%);
+    bottom: 30px;
+    right: 30px;
     z-index: var(--z-character);
     cursor: pointer;
     width: 200px;
@@ -20,7 +19,7 @@
 }
 
 .lottie-container:hover {
-    transform: translate(50%, 50%) scale(1.1);
+    transform: scale(1.1);
 }
 
 .lottie-container:focus {
@@ -42,7 +41,7 @@
 }
 
 /* ==========================================================================
-   GLOBO DE DIÁLOGO - POSICIÓN INTELIGENTE SEGÚN MASCOTA CENTRADA
+   GLOBO DE DIÁLOGO - POSICIÓN INTELIGENTE SEGÚN MASCOTA EN ESQUINA
    ========================================================================== */
 
 .character-speech-bubble {
@@ -233,7 +232,7 @@
 }
 
 /* ==========================================================================
-   ANIMACIONES DE LA MASCOTA
+   ANIMACIONES DE LA MASCOTA - SIN CENTRADO
    ========================================================================== */
 
 .lottie-container.click-animation {
@@ -246,22 +245,22 @@
 
 @keyframes mascotClick {
     0% {
-        transform: translate(50%, 50%) scale(1);
+        transform: scale(1);
     }
     50% {
-        transform: translate(50%, 50%) scale(1.2) rotate(5deg);
+        transform: scale(1.2) rotate(5deg);
     }
     100% {
-        transform: translate(50%, 50%) scale(1);
+        transform: scale(1);
     }
 }
 
 @keyframes mascotHover {
     0% {
-        transform: translate(50%, 50%) scale(1);
+        transform: scale(1);
     }
     100% {
-        transform: translate(50%, 50%) scale(1.05);
+        transform: scale(1.05);
     }
 }
 
@@ -321,7 +320,7 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN PARA MASCOTA Y GLOBO
+   RESPONSIVE DESIGN PARA MASCOTA Y GLOBO - SOLO TAMAÑOS, NO POSICIÓN
    ========================================================================== */
 
 @media (max-width: 1200px) {
@@ -357,93 +356,7 @@
     }
 }
 
-@media (max-width: 768px) {
-    .lottie-container {
-        bottom: 30px;
-        right: 30px;
-        transform: none;
-        width: 140px;
-        height: 140px;
-        z-index: var(--z-character);
-    }
-    
-    .lottie-container:hover {
-        transform: scale(1.05);
-    }
-    
-    /* GLOBO ARRIBA DE LA MASCOTA EN MÓVIL */
-    .character-speech-bubble {
-        position: absolute !important;
-        bottom: 160px !important;
-        left: 50% !important;
-        right: auto !important;
-        top: auto !important;
-        transform: translateX(-50%) !important;
-        max-width: 300px !important;
-        font-size: 14px;
-        padding: 16px 20px;
-        z-index: calc(var(--z-character) + 5) !important;
-    }
-    
-    .character-speech-bubble.show {
-        transform: translateX(-50%) translateY(-10px) !important;
-    }
-    
-    .character-speech-bubble.smart-bubble {
-        position: absolute !important;
-        bottom: 160px !important;
-        left: 50% !important;
-        right: auto !important;
-        top: auto !important;
-        transform: translateX(-50%) !important;
-        max-width: 300px !important;
-        font-size: 14px;
-        padding: 16px 20px;
-        z-index: calc(var(--z-character) + 5) !important;
-    }
-    
-    .character-speech-bubble.smart-bubble.show {
-        transform: translateX(-50%) translateY(-10px) !important;
-    }
-    
-    /* FLECHA CENTRADA ABAJO EN MÓVIL */
-    .character-speech-bubble::after,
-    .character-speech-bubble.smart-bubble::after {
-        content: '' !important;
-        position: absolute !important;
-        bottom: -12px !important;
-        left: 50% !important;
-        right: auto !important;
-        top: auto !important;
-        transform: translateX(-50%) !important;
-        width: 0 !important;
-        height: 0 !important;
-        border-left: 12px solid transparent !important;
-        border-right: 12px solid transparent !important;
-        border-top: 12px solid var(--text-white) !important;
-        border-bottom: none !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .lottie-container {
-        width: 120px;
-        height: 120px;
-        bottom: 20px;
-        right: 20px;
-        z-index: calc(var(--z-character) - 10);
-    }
-    
-    /* GLOBO MÁS COMPACTO EN MÓVIL PEQUEÑO */
-    .character-speech-bubble,
-    .character-speech-bubble.smart-bubble {
-        bottom: 140px !important;
-        max-width: 280px !important;
-        font-size: 13px !important;
-        padding: 14px 18px !important;
-        z-index: calc(var(--z-character) - 5) !important;
-    }
-}
+/* Las reglas específicas de posicionamiento se manejan en responsive.css */
 
 /* ==========================================================================
    TOOLTIPS PARA PERSONAJES DEL MARCO
@@ -634,11 +547,11 @@
 }
 
 .lottie-container.interactive-mode:hover {
-    transform: translate(50%, 50%) scale(1.08) rotate(2deg);
+    transform: scale(1.08) rotate(2deg);
 }
 
 .lottie-container.interactive-mode:active {
-    transform: translate(50%, 50%) scale(0.95);
+    transform: scale(0.95);
 }
 
 /* ==========================================================================
