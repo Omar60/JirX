@@ -1,14 +1,14 @@
-// Gestión del contenido dinámico con posicionamiento inteligente y detección de colisiones
+// Gestión del contenido dinámico con posicionamiento centrado y mascota adaptativa
 export class ContentManager {
     constructor() {
         this.dynamicContainer = null;
-        this.currentPositionMode = 'adaptive'; // adaptive, smart, side, top, modal
         this.mascotPosition = { x: 0, y: 0, width: 150, height: 150 };
         this.viewportSize = { width: 0, height: 0 };
         this.collisionDetection = true;
         this.positionHistory = [];
         this.minDistanceFromMascot = 80; // Distancia mínima en píxeles
         this.collisionCheckInterval = null;
+        this.isRepositioning = false; // Flag para evitar reposicionamientos múltiples
     }
 
     init() {
@@ -23,7 +23,7 @@ export class ContentManager {
         this.setupPositionControls();
         this.startCollisionMonitoring();
         
-        console.log('📍 ContentManager inicializado con detección de colisiones dinámicas');
+        console.log('📍 ContentManager inicializado - Texto centrado, mascota adaptativa');
     }
 
     updateViewportSize() {
@@ -37,36 +37,44 @@ export class ContentManager {
         const lottieContainer = document.getElementById('lottieContainer');
         if (lottieContainer) {
             const rect = lottieContainer.getBoundingClientRect();
+            
+            // Obtener el desplazamiento actual del transform
+            const currentTransform = lottieContainer.style.transform;
+            const currentOffset = currentTransform.match(/translateY\(([^)]+)\)/);
+            const translateY = currentOffset ? parseFloat(currentOffset[1]) : 0;
+            
             this.mascotPosition = {
                 x: rect.left,
-                y: rect.top,
+                y: rect.top + translateY, // Incluir el desplazamiento
                 width: rect.width,
                 height: rect.height,
                 right: rect.right,
-                bottom: rect.bottom,
+                bottom: rect.bottom + translateY, // Incluir el desplazamiento
                 centerX: rect.left + rect.width / 2,
-                centerY: rect.top + rect.height / 2
+                centerY: rect.top + rect.height / 2 + translateY, // Incluir el desplazamiento
+                originalY: rect.top, // Guardar posición original
+                currentTranslateY: translateY // Guardar desplazamiento actual
             };
         }
     }
 
     startCollisionMonitoring() {
-        // Monitorear colisiones cada 500ms
+        // Monitorear colisiones cada 1000ms (más lento para evitar rebotes)
         this.collisionCheckInterval = setInterval(() => {
             this.checkAndResolveCollisions();
-        }, 500);
+        }, 1000);
     }
 
     checkAndResolveCollisions() {
         const textElement = this.dynamicContainer.querySelector('.dynamic-text');
-        if (!textElement || !textElement.classList.contains('show')) return;
+        if (!textElement || !textElement.classList.contains('show') || this.isRepositioning) return;
 
         this.detectMascotPosition();
         const textRect = textElement.getBoundingClientRect();
         
         if (this.hasCollision(textRect)) {
-            console.log('🚨 Colisión detectada, reposicionando contenido...');
-            this.resolveCollision(textElement, textRect);
+            console.log('🚨 Colisión detectada, reposicionando mascota hacia abajo...');
+            this.repositionMascot(textRect);
         }
     }
 
@@ -80,113 +88,113 @@ export class ContentManager {
                 textRect.top - buffer > this.mascotPosition.bottom);
     }
 
-    resolveCollision(textElement, textRect) {
-        const viewport = this.viewportSize;
-        const isMobile = viewport.width <= 768;
+    repositionMascot(textRect) {
+        const mascotContainer = document.getElementById('lottieContainer') || 
+                               document.getElementById('characterFrame') || 
+                               document.querySelector('.character-container');
         
-        if (isMobile) {
-            this.resolveMobileCollision(textElement, textRect);
-        } else {
-            this.resolveDesktopCollision(textElement, textRect);
+        if (!mascotContainer || this.isRepositioning) {
+            console.warn('⚠️ Contenedor de mascota no encontrado o ya reposicionando');
+            return;
         }
+
+        // Marcar que estamos reposicionando
+        this.isRepositioning = true;
+
+        // Calcular nueva posición para la mascota (siempre abajo del texto)
+        const buffer = this.minDistanceFromMascot;
+        const newMascotY = textRect.bottom + buffer;
+        
+        // Usar la posición ORIGINAL (sin transform) para calcular el offset correcto
+        const originalMascotY = this.mascotPosition.originalY || this.mascotPosition.y;
+        const targetOffset = newMascotY - originalMascotY;
+        
+        // Verificar si ya está en la posición correcta (evitar rebote)
+        const currentTransform = mascotContainer.style.transform;
+        const currentOffset = currentTransform.match(/translateY\(([^)]+)\)/);
+        const currentY = currentOffset ? parseFloat(currentOffset[1]) : 0;
+        
+        if (Math.abs(currentY - targetOffset) < 5) { // Reducir umbral para mayor precisión
+            console.log('🎯 Mascota ya está en posición correcta, evitando rebote');
+            this.isRepositioning = false;
+            return;
+        }
+        
+        // EXPANDIR LA PÁGINA si es necesario para dar espacio a la mascota
+        const requiredPageHeight = newMascotY + this.mascotPosition.height + 100; // 100px de margen extra
+        
+        if (requiredPageHeight > this.viewportSize.height) {
+            this.expandPageHeight(requiredPageHeight);
+            console.log(`📏 Página expandida a ${requiredPageHeight}px para dar espacio a la mascota`);
+        }
+        
+        // Aplicar nueva posición con animación suave
+        mascotContainer.style.transition = 'transform 0.5s ease-out, opacity 0.3s ease-out';
+        mascotContainer.style.opacity = '1';
+        mascotContainer.style.transform = `translateY(${targetOffset}px)`;
+        
+        console.log(`🎭 Mascota reposicionada: Y=${newMascotY}px (offset: ${targetOffset}px, original: ${originalMascotY}px)`);
+        
+        // Desmarcar después de la animación
+        setTimeout(() => {
+            this.isRepositioning = false;
+        }, 600); // Un poco más que la duración de la animación
     }
 
-    resolveMobileCollision(textElement, textRect) {
-        // En móvil: mover el texto hacia arriba y añadir margen inferior
-        const safeTopPosition = Math.max(20, this.viewportSize.height * 0.1);
-        const safeBottomMargin = this.mascotPosition.height + this.minDistanceFromMascot + 20;
+    // Método para expandir la altura de la página
+    expandPageHeight(requiredHeight) {
+        // Crear o actualizar un div invisible que expanda la página
+        let spacer = document.getElementById('page-height-spacer');
         
-        textElement.style.position = 'relative';
-        textElement.style.marginTop = '0';
-        textElement.style.marginBottom = `${safeBottomMargin}px`;
-        textElement.style.transform = 'none';
-        
-        // Añadir padding al contenedor para evitar scroll problemático
-        const container = textElement.closest('.dynamic-content') || textElement.closest('.content');
-        if (container) {
-            container.style.paddingBottom = `${safeBottomMargin + 40}px`;
+        if (!spacer) {
+            spacer = document.createElement('div');
+            spacer.id = 'page-height-spacer';
+            spacer.style.position = 'absolute';
+            spacer.style.top = '0';
+            spacer.style.left = '0';
+            spacer.style.width = '1px';
+            spacer.style.pointerEvents = 'none';
+            spacer.style.zIndex = '-1';
+            spacer.style.opacity = '0';
+            document.body.appendChild(spacer);
         }
         
-        console.log(`📱 Colisión móvil resuelta: margen inferior ${safeBottomMargin}px`);
+        // Establecer la altura mínima necesaria
+        spacer.style.height = `${requiredHeight}px`;
+        
+        console.log(`📐 Espaciador de página ajustado a ${requiredHeight}px`);
     }
 
-    resolveDesktopCollision(textElement, textRect) {
-        // En escritorio: buscar la mejor posición disponible
-        const bestPosition = this.findBestDesktopPosition(textRect.width, textRect.height);
+    // Método para resetear la posición de la mascota
+    resetMascotPosition() {
+        const mascotContainer = document.getElementById('lottieContainer') || 
+                               document.getElementById('characterFrame') || 
+                               document.querySelector('.character-container');
         
-        if (bestPosition) {
-            textElement.style.position = 'fixed';
-            textElement.style.left = `${bestPosition.x}px`;
-            textElement.style.top = `${bestPosition.y}px`;
-            textElement.style.transform = 'none';
-            textElement.style.zIndex = '1000';
+        if (mascotContainer) {
+            this.isRepositioning = true; // Evitar colisiones durante reset
             
-            console.log(`🖥️ Colisión escritorio resuelta: posición (${bestPosition.x}, ${bestPosition.y})`);
-        } else {
-            // Fallback: posición superior centrada
-            this.moveToSafeTopPosition(textElement);
-        }
-    }
-
-    findBestDesktopPosition(contentWidth, contentHeight) {
-        const margin = 20;
-        const positions = [
-            // Posición superior centrada
-            {
-                x: (this.viewportSize.width - contentWidth) / 2,
-                y: margin,
-                priority: 1
-            },
-            // Posición izquierda centrada
-            {
-                x: margin,
-                y: (this.viewportSize.height - contentHeight) / 2,
-                priority: 2
-            },
-            // Posición superior izquierda
-            {
-                x: margin,
-                y: margin,
-                priority: 3
-            },
-            // Posición superior derecha (si hay espacio)
-            {
-                x: this.viewportSize.width - contentWidth - margin,
-                y: margin,
-                priority: 4
-            }
-        ];
-
-        // Ordenar por prioridad y verificar colisiones
-        positions.sort((a, b) => a.priority - b.priority);
-        
-        for (const pos of positions) {
-            const testRect = {
-                left: pos.x,
-                top: pos.y,
-                right: pos.x + contentWidth,
-                bottom: pos.y + contentHeight
-            };
+            mascotContainer.style.transition = 'transform 0.5s ease-out, opacity 0.3s ease-out';
+            mascotContainer.style.transform = 'translateY(0)';
+            mascotContainer.style.opacity = '1';
+            console.log('🔄 Posición de mascota restablecida');
             
-            if (!this.hasCollision(testRect)) {
-                return pos;
-            }
+            setTimeout(() => {
+                this.isRepositioning = false;
+            }, 600);
         }
         
-        return null;
+        // También resetear la altura de la página
+        this.resetPageHeight();
     }
 
-    moveToSafeTopPosition(textElement) {
-        const safeY = Math.max(20, this.viewportSize.height * 0.05);
-        
-        textElement.style.position = 'fixed';
-        textElement.style.left = '50%';
-        textElement.style.top = `${safeY}px`;
-        textElement.style.transform = 'translateX(-50%)';
-        textElement.style.zIndex = '1000';
-        textElement.style.maxWidth = 'min(90vw, 600px)';
-        
-        console.log(`⬆️ Movido a posición superior segura: ${safeY}px`);
+    // Método para resetear la altura de la página a su estado normal
+    resetPageHeight() {
+        const spacer = document.getElementById('page-height-spacer');
+        if (spacer) {
+            spacer.style.height = '100vh'; // Altura mínima normal
+            console.log('📐 Altura de página restablecida');
+        }
     }
 
     setupResizeListener() {
@@ -202,30 +210,10 @@ export class ContentManager {
     }
 
     setupPositionControls() {
-        // Controles de teclado para cambiar posicionamiento
+        // Controles de teclado simplificados
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
                 switch (e.key) {
-                    case '1':
-                        e.preventDefault();
-                        this.setPositionMode('adaptive');
-                        break;
-                    case '2':
-                        e.preventDefault();
-                        this.setPositionMode('smart');
-                        break;
-                    case '3':
-                        e.preventDefault();
-                        this.setPositionMode('side');
-                        break;
-                    case '4':
-                        e.preventDefault();
-                        this.setPositionMode('top');
-                        break;
-                    case '5':
-                        e.preventDefault();
-                        this.setPositionMode('modal');
-                        break;
                     case 'd':
                         e.preventDefault();
                         this.toggleDebugMode();
@@ -234,20 +222,21 @@ export class ContentManager {
                         e.preventDefault();
                         this.toggleCollisionDetection();
                         break;
+                    case 'r':
+                        e.preventDefault();
+                        this.resetMascotPosition();
+                        break;
                 }
             }
         });
 
         console.log(`
-🎯 CONTROLES DE POSICIONAMIENTO DISPONIBLES:
-=====================================
-Ctrl/Cmd + 1: Modo Adaptativo (por defecto)
-Ctrl/Cmd + 2: Posicionamiento Inteligente
-Ctrl/Cmd + 3: Posicionamiento Lateral
-Ctrl/Cmd + 4: Posicionamiento Superior
-Ctrl/Cmd + 5: Modo Modal/Overlay
+🎯 CONTROLES SIMPLIFICADOS DISPONIBLES:
+====================================
 Ctrl/Cmd + D: Activar/desactivar modo debug
 Ctrl/Cmd + C: Activar/desactivar detección de colisiones
+Ctrl/Cmd + R: Resetear posición de mascota
+Texto SIEMPRE centrado - Solo la mascota se mueve
         `);
     }
 
@@ -270,7 +259,7 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
 
     showCollisionNotification(enabled) {
         const notification = document.createElement('div');
-        notification.textContent = `Detección de colisiones: ${enabled ? 'ACTIVADA' : 'DESACTIVADA'}`;
+        notification.textContent = `Anti-colisión: ${enabled ? 'ACTIVADA - Mascota se mueve abajo' : 'DESACTIVADA'}`;
         notification.style.position = 'fixed';
         notification.style.top = '20px';
         notification.style.left = '50%';
@@ -300,54 +289,11 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
         }, 3000);
     }
 
-    setPositionMode(mode) {
-        this.currentPositionMode = mode;
-        this.repositionCurrentContent();
-        console.log(`📍 Modo de posicionamiento cambiado a: ${mode}`);
-        
-        // Mostrar notificación temporal
-        this.showPositionNotification(mode);
-    }
+    // Método eliminado - ya no necesitamos diferentes modos
+    // El texto siempre estará centrado
 
-    showPositionNotification(mode) {
-        const modeNames = {
-            adaptive: 'Adaptativo con Anti-Colisión',
-            smart: 'Inteligente con Anti-Colisión',
-            side: 'Lateral con Anti-Colisión',
-            top: 'Superior con Anti-Colisión',
-            modal: 'Modal con Anti-Colisión'
-        };
-
-        const notification = document.createElement('div');
-        notification.textContent = `Posicionamiento: ${modeNames[mode]}`;
-        notification.style.position = 'fixed';
-        notification.style.top = '20px';
-        notification.style.left = '50%';
-        notification.style.transform = 'translateX(-50%)';
-        notification.style.background = 'rgba(102, 126, 234, 0.9)';
-        notification.style.color = 'white';
-        notification.style.padding = '8px 16px';
-        notification.style.borderRadius = '20px';
-        notification.style.fontSize = '14px';
-        notification.style.zIndex = '2000';
-        notification.style.opacity = '0';
-        notification.style.transition = 'opacity 0.3s ease';
-
-        document.body.appendChild(notification);
-
-        requestAnimationFrame(() => {
-            notification.style.opacity = '1';
-        });
-
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 300);
-        }, 2000);
-    }
+    // Método eliminado - ya no necesitamos notificaciones de posición
+    // El texto siempre estará centrado
 
     toggleDebugMode() {
         document.body.classList.toggle('debug-positioning');
@@ -404,90 +350,11 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
         });
     }
 
-    calculateSafeZones() {
-        const margin = 20;
-        const minWidth = 300;
-        const minHeight = 200;
-        
-        const zones = [];
-        
-        // Zona superior - SIEMPRE SEGURA
-        zones.push({
-            x: margin,
-            y: margin,
-            width: this.viewportSize.width - margin * 2,
-            height: Math.min(this.viewportSize.height * 0.4, 300),
-            type: 'top'
-        });
-        
-        // Zona izquierda (si hay espacio)
-        if (this.mascotPosition.x > minWidth + margin * 2) {
-            zones.push({
-                x: margin,
-                y: margin,
-                width: this.mascotPosition.x - margin * 2 - this.minDistanceFromMascot,
-                height: this.viewportSize.height - margin * 2,
-                type: 'left'
-            });
-        }
-        
-        // Zona central superior (evitando mascota)
-        const centerX = this.viewportSize.width / 2;
-        const centerY = this.viewportSize.height * 0.25;
-        
-        if (!this.hasCollision({
-            left: centerX - minWidth/2,
-            top: centerY - minHeight/2,
-            right: centerX + minWidth/2,
-            bottom: centerY + minHeight/2
-        })) {
-            zones.push({
-                x: centerX - minWidth/2,
-                y: centerY - minHeight/2,
-                width: minWidth,
-                height: minHeight,
-                type: 'center-upper'
-            });
-        }
-        
-        return zones;
-    }
+    // Método eliminado - ya no necesitamos calcular zonas seguras
+    // El texto siempre estará centrado, solo movemos la mascota
 
-    getBestPosition(contentWidth = 500, contentHeight = 300) {
-        this.detectMascotPosition();
-        const safeZones = this.calculateSafeZones();
-        
-        // Priorizar zonas según el modo actual
-        const priorities = {
-            smart: ['center-upper', 'top', 'left'],
-            side: ['left', 'center-upper', 'top'],
-            top: ['top', 'center-upper', 'left'],
-            adaptive: ['center-upper', 'top', 'left'],
-            modal: ['center-upper', 'top']
-        };
-        
-        const preferredTypes = priorities[this.currentPositionMode] || priorities.adaptive;
-        
-        for (const type of preferredTypes) {
-            const zone = safeZones.find(z => z.type === type && 
-                                      z.width >= contentWidth && 
-                                      z.height >= contentHeight);
-            if (zone) {
-                return {
-                    x: zone.x + (zone.width - contentWidth) / 2,
-                    y: zone.y + (zone.height - contentHeight) / 2,
-                    zone: type
-                };
-            }
-        }
-        
-        // Fallback: parte superior de la pantalla
-        return {
-            x: (this.viewportSize.width - contentWidth) / 2,
-            y: Math.min(80, this.viewportSize.height * 0.1),
-            zone: 'fallback-top'
-        };
-    }
+    // Método eliminado - ya no necesitamos calcular mejores posiciones
+    // El texto siempre estará centrado
 
     showContent(content) {
         if (!content || !this.dynamicContainer) return;
@@ -506,15 +373,10 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
             htmlContent += `<p class="signature">${this.escapeHtml(content.signature)}</p>`;
         }
 
-        // Añadir botón de cierre para modo modal
-        if (this.currentPositionMode === 'modal') {
-            htmlContent += `<button class="close-button" onclick="this.parentElement.style.display='none'">×</button>`;
-        }
-
         textElement.innerHTML = htmlContent;
 
-        // Aplicar clase de posicionamiento
-        this.applyPositioning(textElement);
+        // SIEMPRE mantener el texto centrado
+        this.applyCenteredPositioning(textElement);
 
         this.clearContent();
         this.dynamicContainer.appendChild(textElement);
@@ -523,64 +385,45 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
         requestAnimationFrame(() => {
             textElement.classList.add('show');
             
-            // Verificar colisiones después de que aparezca
-            setTimeout(() => {
-                if (this.collisionDetection) {
-                    this.checkAndResolveCollisions();
-                }
-            }, 100);
+            // Manejar cambio de contenido (restaurar mascota y verificar colisiones)
+            this.onContentChange();
         });
 
         // Guardar en historial
         this.positionHistory.push({
-            mode: this.currentPositionMode,
+            mode: 'centered', // Siempre centrado
             content: content,
             timestamp: Date.now()
         });
 
-        console.log(`📍 Contenido mostrado con posicionamiento anti-colisión: ${this.currentPositionMode}`);
+        console.log(`📍 Contenido mostrado centrado - mascota se adaptará si hay colisión`);
     }
 
-    applyPositioning(element) {
-        // Limpiar clases de posicionamiento previas
-        element.classList.remove('smart-position', 'side-position', 'top-position', 'modal-position', 'adaptive-position');
+    applyCenteredPositioning(element) {
+        // Mantener el estilo romántico original del texto
+        element.style.position = 'fixed';
+        element.style.left = '50%';
+        element.style.top = '50%';
+        element.style.transform = 'translate(-50%, -50%)';
+        element.style.zIndex = '1000';
+        element.style.maxWidth = 'min(90vw, 600px)';
+        element.style.maxHeight = '70vh';
+        element.style.overflowY = 'auto';
+        element.style.textAlign = 'center';
+        element.style.color = 'white';
+        element.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
         
-        // Aplicar clase según modo actual
-        switch (this.currentPositionMode) {
-            case 'smart':
-                element.classList.add('smart-position');
-                this.applySmartPositioning(element);
-                break;
-            case 'side':
-                element.classList.add('side-position');
-                break;
-            case 'top':
-                element.classList.add('top-position');
-                break;
-            case 'modal':
-                element.classList.add('modal-position');
-                break;
-            case 'adaptive':
-            default:
-                element.classList.add('adaptive-position');
-                break;
-        }
+        console.log('🎯 Texto posicionado en el centro con estilo romántico original');
     }
 
-    applySmartPositioning(element) {
-        const rect = element.getBoundingClientRect();
-        const bestPosition = this.getBestPosition(rect.width || 500, rect.height || 300);
-        
-        element.style.left = bestPosition.x + 'px';
-        element.style.top = bestPosition.y + 'px';
-        
-        console.log(`🎯 Posición inteligente aplicada: zona ${bestPosition.zone}`);
-    }
+    // Método eliminado - ya no necesitamos posicionamiento inteligente
+    // El texto siempre estará centrado
 
     repositionCurrentContent() {
         const currentText = this.dynamicContainer.querySelector('.dynamic-text');
         if (currentText) {
-            this.applyPositioning(currentText);
+            // Siempre mantener centrado
+            this.applyCenteredPositioning(currentText);
             
             // Verificar colisiones después del reposicionamiento
             setTimeout(() => {
@@ -668,5 +511,24 @@ Ctrl/Cmd + C: Activar/desactivar detección de colisiones
             this.collisionCheckInterval = null;
         }
         this.hidePositionIndicators();
+        
+        // Limpiar el espaciador de altura
+        const spacer = document.getElementById('page-height-spacer');
+        if (spacer) {
+            spacer.remove();
+        }
+    }
+
+    // Método para detectar cambios de contenido y restaurar mascota
+    onContentChange() {
+        // Restaurar mascota y altura de página cuando cambia el contenido
+        this.resetMascotPosition();
+        
+        // Esperar un poco antes de verificar colisiones
+        setTimeout(() => {
+            if (this.collisionDetection) {
+                this.checkAndResolveCollisions();
+            }
+        }, 200);
     }
 }
