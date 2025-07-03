@@ -102,7 +102,7 @@
 }
 
 /* ==========================================================================
-   LATERALES DEL COLLAGE
+   LATERALES DEL COLLAGE - SIEMPRE EN LOS LATERALES
    ========================================================================== */
 
 .character-side {
@@ -111,7 +111,7 @@
     gap: var(--character-gap);
 }
 
-/* Lado izquierdo */
+/* Lado izquierdo - SIEMPRE EN EL LATERAL IZQUIERDO */
 .left-side {
     left: 20px;
     top: 50%;
@@ -124,7 +124,7 @@
     align-items: center;
 }
 
-/* Lado derecho */
+/* Lado derecho - SIEMPRE EN EL LATERAL DERECHO */
 .right-side {
     right: 20px;
     top: 50%;
@@ -414,7 +414,7 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN PARA CHARACTER FRAME
+   RESPONSIVE DESIGN PARA CHARACTER FRAME - MANTENER LATERALES EN SUS POSICIONES
    ========================================================================== */
 
 @media (max-width: 1200px) {
@@ -444,10 +444,17 @@
         --character-gap: 40px;
     }
     
-    .left-side, .right-side {
-        height: min(65vh, 550px);
+    /* MANTENER LATERALES EN SUS POSICIONES */
+    .left-side {
         left: 15px;
+        height: min(65vh, 550px);
+        transform: translateY(-50%) rotate(-6deg);
+    }
+    
+    .right-side {
         right: 15px;
+        height: min(65vh, 550px);
+        transform: translateY(-50%) rotate(6deg);
     }
     
     .top-side, .bottom-side {
@@ -464,6 +471,7 @@
         --character-gap: 35px;
     }
     
+    /* MANTENER LATERALES EN SUS POSICIONES - TABLET */
     .left-side {
         left: 10px;
         height: min(55vh, 450px);
@@ -498,16 +506,17 @@
         --character-gap: 30px;
     }
     
-    .left-side, .right-side {
-        height: min(45vh, 350px);
-    }
-    
+    /* MANTENER LATERALES EN SUS POSICIONES - MÓVIL */
     .left-side {
         left: 8px;
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(-3deg);
     }
     
     .right-side {
         right: 8px;
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(3deg);
     }
     
     .top-side, .bottom-side {
@@ -516,5 +525,62 @@
     
     .character-frame {
         opacity: 0.95;
+    }
+}
+
+/* ==========================================================================
+   AJUSTES ESPECÍFICOS PARA PANTALLAS MUY PEQUEÑAS
+   ========================================================================== */
+
+@media (max-width: 320px) {
+    :root {
+        --character-corner-width: 90px;
+        --character-corner-height: 115px;
+        --character-item-width: 75px;
+        --character-item-height: 90px;
+        --character-gap: 25px;
+    }
+    
+    /* MANTENER LATERALES INCLUSO EN PANTALLAS MUY PEQUEÑAS */
+    .left-side {
+        left: 5px;
+        height: min(40vh, 300px);
+        transform: translateY(-50%) rotate(-2deg);
+    }
+    
+    .right-side {
+        right: 5px;
+        height: min(40vh, 300px);
+        transform: translateY(-50%) rotate(2deg);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px);
+    }
+    
+    .character-frame {
+        opacity: 0.9;
+    }
+}
+
+/* ==========================================================================
+   AJUSTES PARA ORIENTACIÓN LANDSCAPE EN MÓVIL
+   ========================================================================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+    .left-side {
+        left: 5px;
+        height: min(70vh, 400px);
+        transform: translateY(-50%) rotate(-2deg);
+    }
+    
+    .right-side {
+        right: 5px;
+        height: min(70vh, 400px);
+        transform: translateY(-50%) rotate(2deg);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(40vw, 250px);
     }
 }
