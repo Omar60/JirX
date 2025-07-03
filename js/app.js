@@ -1,4 +1,4 @@
-// Aplicación principal - Punto de entrada
+// Aplicación principal - Punto de entrada con sistema de aleatorización
 import { StoryManager } from './story.js';
 import { CharacterManager } from './character.js';
 import { EffectsManager } from './effects.js';
@@ -25,7 +25,7 @@ class App {
         if (this.isInitialized) return;
 
         try {
-            console.log('🚀 Inicializando aplicación...');
+            console.log('🚀 Inicializando aplicación con sistema aleatorio...');
 
             // Inicializar managers en orden
             this.effectsManager.init();
@@ -47,11 +47,14 @@ class App {
             // Mostrar marco de personajes después de un delay
             setTimeout(() => {
                 this.characterFrameManager.show();
-                console.log('✨ Marco de personajes activado');
+                console.log('✨ Marco de personajes aleatorio activado');
             }, 2000);
 
+            // Añadir indicador de aleatorización
+            this.addRandomizationIndicator();
+
             this.isInitialized = true;
-            console.log('✅ Aplicación inicializada correctamente');
+            console.log('✅ Aplicación inicializada correctamente con sistema aleatorio');
 
         } catch (error) {
             console.error('❌ Error al inicializar la aplicación:', error);
@@ -99,6 +102,29 @@ class App {
                 this.characterFrameManager.reloadImages();
                 console.log('🔄 Recargando imágenes de personajes');
             }
+            // NUEVO: Tecla para aleatorizar
+            if (e.key === 's' || e.key === 'S') {
+                this.characterFrameManager.shuffleImages();
+                console.log('🎲 Aleatorizando imágenes');
+            }
+            // NUEVO: Mostrar estadísticas
+            if (e.key === 'i' || e.key === 'I') {
+                const stats = this.characterFrameManager.getRandomizationStats();
+                console.log('📊 Estadísticas de aleatorización:', stats);
+            }
+        });
+    }
+
+    addRandomizationIndicator() {
+        const indicator = document.createElement('div');
+        indicator.className = 'randomization-indicator';
+        indicator.innerHTML = '🎲 Aleatorio';
+        indicator.title = 'Presiona S para mezclar imágenes';
+        document.body.appendChild(indicator);
+
+        // Hacer clic en el indicador para aleatorizar
+        indicator.addEventListener('click', () => {
+            this.characterFrameManager.shuffleImages();
         });
     }
 
@@ -148,6 +174,16 @@ class App {
         this.characterFrameManager.reloadImages();
     }
 
+    // NUEVO: Método para aleatorizar imágenes
+    shuffleCharacterImages() {
+        this.characterFrameManager.shuffleImages();
+    }
+
+    // NUEVO: Obtener estadísticas de aleatorización
+    getRandomizationStats() {
+        return this.characterFrameManager.getRandomizationStats();
+    }
+
     cleanup() {
         this.characterManager.cleanup();
         this.effectsManager.cleanup();
@@ -173,24 +209,36 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setCharacterNames = (names) => app.setCharacterNames(names);
     window.toggleFrame = () => app.toggleCharacterFrame();
     window.reloadImages = () => app.reloadCharacterImages();
+    window.shuffleImages = () => app.shuffleCharacterImages(); // NUEVO
+    window.getStats = () => app.getRandomizationStats(); // NUEVO
     
     // Mostrar instrucciones en consola
     console.log(`
-🎭 MARCO DE PERSONAJES - INSTRUCCIONES
-=====================================
+🎭 MARCO DE PERSONAJES ALEATORIO - INSTRUCCIONES
+===============================================
 
-📁 Imágenes detectadas en: assets/characters/
-   • ${app.characterFrameManager?.availableImages?.length || 18} imágenes PNG encontradas
+📁 Imágenes detectadas: ${app.characterFrameManager?.detectedImages?.length || 'Detectando...'}
+🎲 Sistema de aleatorización: ACTIVADO
 
 ⌨️  Controles de teclado:
    • F: Mostrar/ocultar marco
    • R: Recargar imágenes
+   • S: 🎲 ALEATORIZAR imágenes (¡NUEVO!)
+   • I: Mostrar estadísticas de aleatorización
 
 🎨 Personalización:
    • setCharacterNames(['Nombre1', 'Nombre2', ...])
    • updateCharacters(['url1', 'url2', ...])
+   • shuffleImages() - 🎲 Mezclar orden aleatorio
+   • getStats() - Ver estadísticas de aleatorización
    • reloadImages() - después de añadir imágenes
 
-✨ ¡Disfruta creando tu página especial!
+🎲 CARACTERÍSTICAS ALEATORIAS:
+   • Cada carga usa un orden completamente aleatorio
+   • Presiona S para re-aleatorizar sin recargar
+   • Tooltips muestran el número de imagen original
+   • Indicador visual en esquina inferior izquierda
+
+✨ ¡Disfruta de tu collage siempre diferente!
     `);
 });
