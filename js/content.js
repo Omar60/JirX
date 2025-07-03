@@ -6,7 +6,7 @@ export class ContentManager {
         this.viewportSize = { width: 0, height: 0 };
         this.collisionDetection = true;
         this.positionHistory = [];
-        this.minDistanceFromMascot = 80; // Distancia mínima en píxeles
+        this.minDistanceFromMascot = 10; // Distancia mínima en píxeles
         this.collisionCheckInterval = null;
         this.isRepositioning = false; // Flag para evitar reposicionamientos múltiples
     }
