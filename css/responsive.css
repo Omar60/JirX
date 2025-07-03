@@ -639,7 +639,7 @@
 }
 
 /* ==========================================================================
-   MÓVIL: GLOBO AL LADO IZQUIERDO DE LA MASCOTA
+   MÓVIL: GLOBO AL LADO IZQUIERDO DE LA MASCOTA + MASCOTA MÁS ABAJO
    ========================================================================== */
 
 /* Móvil grande (480px - 767px) */
@@ -648,10 +648,11 @@
         --mascot-size: 110px;
     }
     
+    /* MASCOTA MÁS ABAJO PARA NO TAPAR TEXTO */
     .lottie-container {
-        bottom: 35px;
+        bottom: 20px !important; /* REDUCIDO DE 35px A 20px */
         right: 15px;
-        z-index: calc(var(--z-character) - 5);
+        z-index: calc(var(--z-character) - 10) !important; /* Z-INDEX MUY BAJO */
     }
     
     /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA */
@@ -666,7 +667,7 @@
         max-width: 180px !important;
         font-size: 12px !important;
         padding: 10px 14px !important;
-        z-index: calc(var(--z-character) - 15) !important;
+        z-index: calc(var(--z-character) - 20) !important; /* Z-INDEX MUY BAJO */
     }
     
     .character-speech-bubble.show,
@@ -691,6 +692,13 @@
         border-left: 8px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
         border-right: none !important;
     }
+    
+    /* TEXTO CENTRAL CON Z-INDEX ALTO Y MARGEN INFERIOR AMPLIO */
+    .dynamic-text {
+        z-index: calc(var(--z-content-mobile) + 20) !important; /* Z-INDEX MUY ALTO */
+        margin-bottom: 140px !important; /* MARGEN INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN */
+        padding-bottom: 2rem !important; /* PADDING INFERIOR ADICIONAL */
+    }
 }
 
 /* Móvil estándar (320px - 479px) */
@@ -699,10 +707,11 @@
         --mascot-size: 100px;
     }
     
+    /* MASCOTA MÁS ABAJO PARA NO TAPAR TEXTO */
     .lottie-container {
-        bottom: 30px;
+        bottom: 15px !important; /* REDUCIDO DE 30px A 15px */
         right: 15px;
-        z-index: calc(var(--z-character) - 10);
+        z-index: calc(var(--z-character) - 15) !important; /* Z-INDEX MUY BAJO */
     }
     
     /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA - MÓVIL ESTÁNDAR */
@@ -717,7 +726,7 @@
         max-width: 160px !important;
         font-size: 11px !important;
         padding: 9px 12px !important;
-        z-index: calc(var(--z-character) - 20) !important;
+        z-index: calc(var(--z-character) - 25) !important; /* Z-INDEX MUY BAJO */
     }
     
     .character-speech-bubble.show,
@@ -742,6 +751,13 @@
         border-left: 8px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
         border-right: none !important;
     }
+    
+    /* TEXTO CENTRAL CON Z-INDEX ALTO Y MARGEN INFERIOR AMPLIO */
+    .dynamic-text {
+        z-index: calc(var(--z-content-mobile) + 25) !important; /* Z-INDEX MUY ALTO */
+        margin-bottom: 130px !important; /* MARGEN INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN */
+        padding-bottom: 1.5rem !important; /* PADDING INFERIOR ADICIONAL */
+    }
 }
 
 /* Móvil muy pequeño (menos de 320px) */
@@ -750,10 +766,11 @@
         --mascot-size: 90px;
     }
     
+    /* MASCOTA MÁS ABAJO PARA NO TAPAR TEXTO */
     .lottie-container {
-        bottom: 25px;
+        bottom: 10px !important; /* REDUCIDO DE 25px A 10px */
         right: 10px;
-        z-index: calc(var(--z-character) - 15);
+        z-index: calc(var(--z-character) - 20) !important; /* Z-INDEX MUY BAJO */
     }
     
     /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA - MÓVIL PEQUEÑO */
@@ -768,7 +785,7 @@
         max-width: 140px !important;
         font-size: 10px !important;
         padding: 8px 10px !important;
-        z-index: calc(var(--z-character) - 25) !important;
+        z-index: calc(var(--z-character) - 30) !important; /* Z-INDEX MUY BAJO */
     }
     
     .character-speech-bubble.show,
@@ -792,6 +809,13 @@
         border-bottom: 6px solid transparent !important;
         border-left: 6px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
         border-right: none !important;
+    }
+    
+    /* TEXTO CENTRAL CON Z-INDEX ALTO Y MARGEN INFERIOR AMPLIO */
+    .dynamic-text {
+        z-index: calc(var(--z-content-mobile) + 30) !important; /* Z-INDEX MUY ALTO */
+        margin-bottom: 120px !important; /* MARGEN INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN */
+        padding-bottom: 1rem !important; /* PADDING INFERIOR ADICIONAL */
     }
 }
 
@@ -887,15 +911,16 @@
 /* Móvil grande */
 @media (min-width: 480px) and (max-width: 767px) {
     .navigation-controls {
-        bottom: -40px;
+        bottom: -35px !important; /* SUBIDO PARA NO CHOCAR CON MASCOTA */
         gap: 10px;
-        z-index: calc(var(--z-navigation) + 5);
+        z-index: calc(var(--z-navigation) + 10) !important; /* Z-INDEX ALTO */
     }
     
     .nav-button {
         width: 42px;
         height: 42px;
         font-size: 15px;
+        z-index: calc(var(--z-navigation) + 15) !important; /* Z-INDEX ALTO */
     }
     
     .step-counter {
@@ -913,15 +938,16 @@
 /* Móvil estándar */
 @media (min-width: 320px) and (max-width: 479px) {
     .navigation-controls {
-        bottom: -35px;
+        bottom: -30px !important; /* SUBIDO PARA NO CHOCAR CON MASCOTA */
         gap: 8px;
-        z-index: calc(var(--z-navigation) + 10);
+        z-index: calc(var(--z-navigation) + 15) !important; /* Z-INDEX ALTO */
     }
     
     .nav-button {
         width: 38px;
         height: 38px;
         font-size: 14px;
+        z-index: calc(var(--z-navigation) + 20) !important; /* Z-INDEX ALTO */
     }
     
     .step-counter {
@@ -938,15 +964,16 @@
 /* Móvil muy pequeño */
 @media (max-width: 319px) {
     .navigation-controls {
-        bottom: -30px;
+        bottom: -25px !important; /* SUBIDO PARA NO CHOCAR CON MASCOTA */
         gap: 6px;
-        z-index: calc(var(--z-navigation) + 15);
+        z-index: calc(var(--z-navigation) + 20) !important; /* Z-INDEX ALTO */
     }
     
     .nav-button {
         width: 35px;
         height: 35px;
         font-size: 12px;
+        z-index: calc(var(--z-navigation) + 25) !important; /* Z-INDEX ALTO */
     }
     
     .step-counter {
@@ -1145,6 +1172,8 @@
     .content {
         min-height: 30vh;
         padding-top: var(--spacing-sm);
+        /* PADDING INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN CON MASCOTA */
+        padding-bottom: 160px !important;
     }
 }
 
@@ -1164,6 +1193,8 @@
     .content {
         min-height: 25vh;
         padding-top: var(--spacing-xs);
+        /* PADDING INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN CON MASCOTA */
+        padding-bottom: 150px !important;
     }
 }
 
@@ -1183,6 +1214,8 @@
     .content {
         min-height: 20vh;
         padding-top: var(--spacing-xs);
+        /* PADDING INFERIOR AMPLIO PARA EVITAR SUPERPOSICIÓN CON MASCOTA */
+        padding-bottom: 140px !important;
     }
 }
 
@@ -1242,13 +1275,17 @@
     .content {
         min-height: 20vh;
         padding-top: var(--spacing-xs);
+        /* PADDING INFERIOR PARA LANDSCAPE */
+        padding-bottom: 100px !important;
     }
     
+    /* MASCOTA MÁS PEQUEÑA Y MÁS ABAJO EN LANDSCAPE */
     .lottie-container {
-        bottom: 20px;
+        bottom: 10px !important;
         right: 10px;
         width: 80px;
         height: 80px;
+        z-index: calc(var(--z-character) - 25) !important;
     }
     
     /* GLOBO AL LADO IZQUIERDO TAMBIÉN EN LANDSCAPE */
@@ -1258,17 +1295,20 @@
         max-width: 120px !important;
         font-size: 9px !important;
         padding: 6px 8px !important;
+        z-index: calc(var(--z-character) - 35) !important;
     }
     
     .navigation-controls {
-        bottom: -25px;
+        bottom: -20px !important;
         gap: 6px;
+        z-index: calc(var(--z-navigation) + 25) !important;
     }
     
     .nav-button {
         width: 32px;
         height: 32px;
         font-size: 12px;
+        z-index: calc(var(--z-navigation) + 30) !important;
     }
     
     /* Reducir marco de personajes en landscape */
@@ -1290,6 +1330,12 @@
     
     .character-frame {
         opacity: 0.7;
+    }
+    
+    /* TEXTO CENTRAL CON MARGEN INFERIOR REDUCIDO EN LANDSCAPE */
+    .dynamic-text {
+        margin-bottom: 90px !important;
+        z-index: calc(var(--z-content-mobile) + 35) !important;
     }
 }
 
@@ -1591,13 +1637,15 @@
     .dynamic-text {
         padding: 16px;
         margin: 8px auto 20px auto !important;
+        margin-bottom: 125px !important; /* MARGEN INFERIOR ESPECÍFICO PARA iPhone SE */
     }
     
     .lottie-container {
         width: 90px;
         height: 90px;
-        bottom: 25px;
+        bottom: 12px !important;
         right: 12px;
+        z-index: calc(var(--z-character) - 18) !important;
     }
     
     /* GLOBO AL LADO IZQUIERDO PARA iPhone SE */
@@ -1607,6 +1655,7 @@
         max-width: 150px !important;
         font-size: 10px !important;
         padding: 8px 10px !important;
+        z-index: calc(var(--z-character) - 28) !important;
     }
 }
 
