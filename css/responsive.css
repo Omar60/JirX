@@ -564,7 +564,7 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE PARA MASCOTA Y GLOBO
+   RESPONSIVE PARA MASCOTA Y GLOBO - POSICIONAMIENTO LATERAL EN MÓVIL
    ========================================================================== */
 
 /* Ultra-wide */
@@ -638,7 +638,11 @@
     }
 }
 
-/* Móvil grande */
+/* ==========================================================================
+   MÓVIL: GLOBO AL LADO IZQUIERDO DE LA MASCOTA
+   ========================================================================== */
+
+/* Móvil grande (480px - 767px) */
 @media (min-width: 480px) and (max-width: 767px) {
     :root {
         --mascot-size: 110px;
@@ -650,21 +654,46 @@
         z-index: calc(var(--z-character) - 5);
     }
     
-    /* Globo forzado a la izquierda */
+    /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA */
     .character-speech-bubble,
     .character-speech-bubble.smart-bubble {
         position: absolute !important;
-        left: -200px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        max-width: 170px !important;
+        left: -200px !important; /* A LA IZQUIERDA DE LA MASCOTA */
+        top: 50% !important; /* CENTRADO VERTICALMENTE CON LA MASCOTA */
+        bottom: auto !important;
+        right: auto !important;
+        transform: translateY(-50%) !important; /* CENTRADO VERTICAL PERFECTO */
+        max-width: 180px !important;
         font-size: 12px !important;
-        padding: 9px 13px !important;
+        padding: 10px 14px !important;
         z-index: calc(var(--z-character) - 15) !important;
+    }
+    
+    .character-speech-bubble.show,
+    .character-speech-bubble.smart-bubble.show {
+        transform: translateY(-50%) !important; /* MANTENER CENTRADO AL MOSTRAR */
+    }
+    
+    /* FLECHA APUNTANDO A LA DERECHA (HACIA LA MASCOTA) */
+    .character-speech-bubble::after,
+    .character-speech-bubble.smart-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: -8px !important; /* FLECHA A LA DERECHA */
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-top: 8px solid transparent !important;
+        border-bottom: 8px solid transparent !important;
+        border-left: 8px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
+        border-right: none !important;
     }
 }
 
-/* Móvil estándar */
+/* Móvil estándar (320px - 479px) */
 @media (min-width: 320px) and (max-width: 479px) {
     :root {
         --mascot-size: 100px;
@@ -676,17 +705,46 @@
         z-index: calc(var(--z-character) - 10);
     }
     
+    /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA - MÓVIL ESTÁNDAR */
     .character-speech-bubble,
     .character-speech-bubble.smart-bubble {
-        left: -180px !important;
+        position: absolute !important;
+        left: -170px !important; /* A LA IZQUIERDA DE LA MASCOTA */
+        top: 50% !important; /* CENTRADO VERTICALMENTE CON LA MASCOTA */
+        bottom: auto !important;
+        right: auto !important;
+        transform: translateY(-50%) !important; /* CENTRADO VERTICAL PERFECTO */
         max-width: 160px !important;
         font-size: 11px !important;
-        padding: 8px 12px !important;
+        padding: 9px 12px !important;
         z-index: calc(var(--z-character) - 20) !important;
+    }
+    
+    .character-speech-bubble.show,
+    .character-speech-bubble.smart-bubble.show {
+        transform: translateY(-50%) !important; /* MANTENER CENTRADO AL MOSTRAR */
+    }
+    
+    /* FLECHA APUNTANDO A LA DERECHA (HACIA LA MASCOTA) */
+    .character-speech-bubble::after,
+    .character-speech-bubble.smart-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: -8px !important; /* FLECHA A LA DERECHA */
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-top: 8px solid transparent !important;
+        border-bottom: 8px solid transparent !important;
+        border-left: 8px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
+        border-right: none !important;
     }
 }
 
-/* Móvil muy pequeño */
+/* Móvil muy pequeño (menos de 320px) */
 @media (max-width: 319px) {
     :root {
         --mascot-size: 90px;
@@ -698,13 +756,42 @@
         z-index: calc(var(--z-character) - 15);
     }
     
+    /* GLOBO AL LADO IZQUIERDO DE LA MASCOTA - MÓVIL PEQUEÑO */
     .character-speech-bubble,
     .character-speech-bubble.smart-bubble {
-        left: -160px !important;
+        position: absolute !important;
+        left: -150px !important; /* A LA IZQUIERDA DE LA MASCOTA */
+        top: 50% !important; /* CENTRADO VERTICALMENTE CON LA MASCOTA */
+        bottom: auto !important;
+        right: auto !important;
+        transform: translateY(-50%) !important; /* CENTRADO VERTICAL PERFECTO */
         max-width: 140px !important;
         font-size: 10px !important;
-        padding: 7px 10px !important;
+        padding: 8px 10px !important;
         z-index: calc(var(--z-character) - 25) !important;
+    }
+    
+    .character-speech-bubble.show,
+    .character-speech-bubble.smart-bubble.show {
+        transform: translateY(-50%) !important; /* MANTENER CENTRADO AL MOSTRAR */
+    }
+    
+    /* FLECHA APUNTANDO A LA DERECHA (HACIA LA MASCOTA) */
+    .character-speech-bubble::after,
+    .character-speech-bubble.smart-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: -6px !important; /* FLECHA A LA DERECHA MÁS PEQUEÑA */
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-top: 6px solid transparent !important;
+        border-bottom: 6px solid transparent !important;
+        border-left: 6px solid var(--text-white) !important; /* FLECHA APUNTANDO A LA DERECHA */
+        border-right: none !important;
     }
 }
 
@@ -1164,12 +1251,13 @@
         height: 80px;
     }
     
+    /* GLOBO AL LADO IZQUIERDO TAMBIÉN EN LANDSCAPE */
     .character-speech-bubble,
     .character-speech-bubble.smart-bubble {
-        left: -150px !important;
-        max-width: 130px !important;
-        font-size: 10px !important;
-        padding: 6px 10px !important;
+        left: -130px !important;
+        max-width: 120px !important;
+        font-size: 9px !important;
+        padding: 6px 8px !important;
     }
     
     .navigation-controls {
@@ -1510,6 +1598,15 @@
         height: 90px;
         bottom: 25px;
         right: 12px;
+    }
+    
+    /* GLOBO AL LADO IZQUIERDO PARA iPhone SE */
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        left: -160px !important;
+        max-width: 150px !important;
+        font-size: 10px !important;
+        padding: 8px 10px !important;
     }
 }
 
