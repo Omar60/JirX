@@ -1,4 +1,4 @@
-// Gestión del marco de personajes adaptativo sin bordes
+// Gestión del marco de personajes adaptativo con sistema de aleatorización completa
 export class CharacterFrameManager {
     constructor() {
         this.frameElement = null;
@@ -13,20 +13,25 @@ export class CharacterFrameManager {
             'Personaje Especial 13', 'Personaje Especial 14', 'Personaje Especial 15',
             'Personaje Especial 16', 'Personaje Especial 17', 'Personaje Especial 18',
             'Personaje Especial 19', 'Personaje Especial 20', 'Personaje Especial 21',
-            'Personaje Especial 22', 'Personaje Especial 23', 'Personaje Especial 24'
+            'Personaje Especial 22', 'Personaje Especial 23', 'Personaje Especial 24',
+            'Personaje Especial 25', 'Personaje Especial 26', 'Personaje Especial 27',
+            'Personaje Especial 28', 'Personaje Especial 29', 'Personaje Especial 30'
         ];
         
-        // Detectar imágenes disponibles automáticamente
-        this.availableImages = [
+        // Lista completa de todas las imágenes disponibles - ACTUALIZADA
+        this.allAvailableImages = [
             'pngwing.com (12).png', 'pngwing.com (13).png', 'pngwing.com (14).png',
             'pngwing.com (15).png', 'pngwing.com (16).png', 'pngwing.com (17).png',
             'pngwing.com (18).png', 'pngwing.com (19).png', 'pngwing.com (20).png',
             'pngwing.com (21).png', 'pngwing.com (22).png', 'pngwing.com (23).png',
             'pngwing.com (24).png', 'pngwing.com (25).png', 'pngwing.com (26).png',
-            'pngwing.com (27).png', 'pngwing.com (28).png', 'pngwing.com (29).png'
+            'pngwing.com (27).png', 'pngwing.com (28).png', 'pngwing.com (29).png',
+            'pngwing.com (31).png', 'pngwing.com (32).png', 'pngwing.com (33).png',
+            'pngwing.com (34).png', 'pngwing.com (35).png', 'pngwing.com (36).png'
         ];
         
         this.detectedImages = [];
+        this.randomizedImages = [];
         this.frameLayout = null;
         this.currentViewport = this.getViewportSize();
     }
@@ -41,24 +46,29 @@ export class CharacterFrameManager {
         // Detectar imágenes disponibles
         await this.detectAvailableImages();
         
+        // Aleatorizar las imágenes detectadas
+        this.randomizeImages();
+        
         // Generar layout adaptativo según viewport
         this.generateResponsiveLayout();
         
-        // Crear el collage dinámicamente
+        // Crear el collage dinámicamente con imágenes aleatorias
         this.createAdaptiveCollage();
         
         this.setupInteractions();
         this.startAnimations();
         this.setupResizeListener();
         
-        console.log(`🎭 Collage adaptativo creado con ${this.detectedImages.length} imágenes para viewport ${this.currentViewport}`);
+        console.log(`🎭 Collage aleatorio creado con ${this.randomizedImages.length} imágenes para viewport ${this.currentViewport}`);
+        console.log(`🎲 Orden aleatorio aplicado:`, this.randomizedImages.slice(0, 10).map(img => img.split('(')[1]?.split(')')[0] || img));
     }
 
     async detectAvailableImages() {
-        console.log('🔍 Detectando imágenes disponibles...');
+        console.log('🔍 Detectando todas las imágenes disponibles...');
         this.detectedImages = [];
         
-        for (const imageName of this.availableImages) {
+        // Intentar detectar todas las imágenes de la lista
+        for (const imageName of this.allAvailableImages) {
             try {
                 const response = await fetch(`assets/characters/${imageName}`, { method: 'HEAD' });
                 if (response.ok) {
@@ -73,17 +83,89 @@ export class CharacterFrameManager {
         // Si no hay imágenes locales, usar placeholders
         if (this.detectedImages.length === 0) {
             console.log('📸 Usando imágenes placeholder de Pexels');
-            this.detectedImages = this.generatePlaceholderImages(18);
+            this.detectedImages = this.generatePlaceholderImages(24);
         }
         
         console.log(`📊 Total de imágenes detectadas: ${this.detectedImages.length}`);
+    }
+
+    // NUEVO: Sistema de aleatorización completa
+    randomizeImages() {
+        console.log('🎲 Aleatorizando orden de las imágenes...');
+        
+        // Crear una copia del array para no modificar el original
+        this.randomizedImages = [...this.detectedImages];
+        
+        // Algoritmo Fisher-Yates para aleatorización perfecta
+        for (let i = this.randomizedImages.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.randomizedImages[i], this.randomizedImages[j]] = [this.randomizedImages[j], this.randomizedImages[i]];
+        }
+        
+        console.log(`🔀 Imágenes aleatorizadas: ${this.randomizedImages.length} elementos mezclados`);
+        
+        // Mostrar las primeras 5 para debug
+        const preview = this.randomizedImages.slice(0, 5).map(img => {
+            const match = img.match(/\((\d+)\)/);
+            return match ? `#${match[1]}` : img;
+        });
+        console.log(`🎯 Primeras 5 imágenes aleatorias: ${preview.join(', ')}`);
+    }
+
+    // NUEVO: Método para re-aleatorizar sin recargar
+    reshuffleImages() {
+        console.log('🔄 Re-aleatorizando imágenes...');
+        this.randomizeImages();
+        this.createAdaptiveCollage();
+        this.setupInteractions();
+        this.startAnimations();
+        
+        // Mostrar notificación
+        this.showShuffleNotification();
+    }
+
+    showShuffleNotification() {
+        const notification = document.createElement('div');
+        notification.textContent = '🎲 ¡Imágenes mezcladas aleatoriamente!';
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.background = 'rgba(102, 126, 234, 0.95)';
+        notification.style.color = 'white';
+        notification.style.padding = '12px 20px';
+        notification.style.borderRadius = '25px';
+        notification.style.fontSize = '14px';
+        notification.style.fontWeight = '600';
+        notification.style.zIndex = '2000';
+        notification.style.opacity = '0';
+        notification.style.transition = 'all 0.3s ease';
+        notification.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+
+        document.body.appendChild(notification);
+
+        requestAnimationFrame(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(-50%) translateY(10px)';
+        });
+
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(-50%) translateY(-10px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 3000);
     }
 
     generatePlaceholderImages(count) {
         const placeholders = [];
         const pexelsIds = [1040881, 1239291, 1181686, 1181690, 1040880, 1239288, 
                           1181681, 1181687, 1040882, 1239289, 1181683, 1181688,
-                          1040883, 1239290, 1181684, 1181689, 1040884, 1239292];
+                          1040883, 1239290, 1181684, 1181689, 1040884, 1239292,
+                          1040885, 1239293, 1181685, 1181691, 1040886, 1239294];
         
         for (let i = 0; i < count; i++) {
             const id = pexelsIds[i % pexelsIds.length];
@@ -102,9 +184,9 @@ export class CharacterFrameManager {
 
     generateResponsiveLayout() {
         const viewport = this.getViewportSize();
-        const imageCount = this.detectedImages.length;
+        const imageCount = this.randomizedImages.length; // Usar imágenes aleatorizadas
         
-        console.log(`🎨 Generando layout para ${imageCount} imágenes en viewport ${viewport}`);
+        console.log(`🎨 Generando layout para ${imageCount} imágenes aleatorias en viewport ${viewport}`);
         
         // Layouts adaptativos según dispositivo y cantidad de imágenes
         const responsiveLayouts = {
@@ -194,7 +276,7 @@ export class CharacterFrameManager {
         
         // Actualizar referencias
         this.characters = this.frameElement.querySelectorAll('[data-character]');
-        console.log(`🎭 Collage creado con ${this.characters.length} elementos para ${this.currentViewport}`);
+        console.log(`🎭 Collage aleatorio creado con ${this.characters.length} elementos para ${this.currentViewport}`);
     }
 
     createCorners(startIndex, cornerCount) {
@@ -206,11 +288,11 @@ export class CharacterFrameManager {
         ];
 
         for (let i = 0; i < cornerCount && i < positions.length; i++) {
-            if (startIndex + i < this.detectedImages.length) {
+            if (startIndex + i < this.randomizedImages.length) {
                 const element = this.createImageElement(
                     positions[i].class,
                     startIndex + i + 1,
-                    this.getImageSrc(startIndex + i),
+                    this.getRandomImageSrc(startIndex + i), // Usar imagen aleatoria
                     positions[i].position
                 );
                 this.frameElement.appendChild(element);
@@ -230,11 +312,11 @@ export class CharacterFrameManager {
             const leftSide = document.createElement('div');
             leftSide.className = `character-side left-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < leftCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < leftCount && currentIndex < maxImages && currentIndex < this.randomizedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
-                    this.getImageSrc(currentIndex),
+                    this.getRandomImageSrc(currentIndex), // Usar imagen aleatoria
                     'left-side'
                 );
                 leftSide.appendChild(item);
@@ -248,11 +330,11 @@ export class CharacterFrameManager {
             const rightSide = document.createElement('div');
             rightSide.className = `character-side right-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < rightCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < rightCount && currentIndex < maxImages && currentIndex < this.randomizedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
-                    this.getImageSrc(currentIndex),
+                    this.getRandomImageSrc(currentIndex), // Usar imagen aleatoria
                     'right-side'
                 );
                 rightSide.appendChild(item);
@@ -274,11 +356,11 @@ export class CharacterFrameManager {
             const topSide = document.createElement('div');
             topSide.className = `character-side top-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < topCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < topCount && currentIndex < maxImages && currentIndex < this.randomizedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
-                    this.getImageSrc(currentIndex),
+                    this.getRandomImageSrc(currentIndex), // Usar imagen aleatoria
                     'top-side'
                 );
                 topSide.appendChild(item);
@@ -292,11 +374,11 @@ export class CharacterFrameManager {
             const bottomSide = document.createElement('div');
             bottomSide.className = `character-side bottom-side ${this.currentViewport}-layout`;
             
-            for (let i = 0; i < bottomCount && currentIndex < maxImages && currentIndex < this.detectedImages.length; i++) {
+            for (let i = 0; i < bottomCount && currentIndex < maxImages && currentIndex < this.randomizedImages.length; i++) {
                 const item = this.createImageElement(
                     'character-item',
                     currentIndex + 1,
-                    this.getImageSrc(currentIndex),
+                    this.getRandomImageSrc(currentIndex), // Usar imagen aleatoria
                     'bottom-side'
                 );
                 bottomSide.appendChild(item);
@@ -320,10 +402,11 @@ export class CharacterFrameManager {
         // Fallback para imágenes locales
         if (imageSrc.startsWith('assets/')) {
             img.onerror = () => {
-                const fallbackIndex = (characterNumber - 1) % 18;
+                const fallbackIndex = (characterNumber - 1) % 24;
                 const pexelsIds = [1040881, 1239291, 1181686, 1181690, 1040880, 1239288, 
                                   1181681, 1181687, 1040882, 1239289, 1181683, 1181688,
-                                  1040883, 1239290, 1181684, 1181689, 1040884, 1239292];
+                                  1040883, 1239290, 1181684, 1181689, 1040884, 1239292,
+                                  1040885, 1239293, 1181685, 1181691, 1040886, 1239294];
                 const id = pexelsIds[fallbackIndex];
                 img.src = `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`;
             };
@@ -333,9 +416,10 @@ export class CharacterFrameManager {
         return element;
     }
 
-    getImageSrc(index) {
-        if (index < this.detectedImages.length) {
-            const imageName = this.detectedImages[index];
+    // NUEVO: Obtener imagen aleatoria por índice
+    getRandomImageSrc(index) {
+        if (index < this.randomizedImages.length) {
+            const imageName = this.randomizedImages[index];
             return imageName.startsWith('http') ? imageName : `assets/characters/${imageName}`;
         }
         return this.generatePlaceholderImages(1)[0];
@@ -377,10 +461,15 @@ export class CharacterFrameManager {
     showCharacterInfo(character, index) {
         const tooltip = document.createElement('div');
         tooltip.className = 'character-tooltip';
+        
+        // Obtener número de imagen actual
+        const currentImageSrc = character.querySelector('img').src;
+        const imageNumber = this.getImageNumberFromSrc(currentImageSrc);
+        
         tooltip.innerHTML = `
             <div class="tooltip-content">
                 <span class="character-name">${this.characterNames[index]}</span>
-                <span class="character-description">Imagen ${index + 1} de ${this.frameLayout.maxImages} • ${this.currentViewport} ✨</span>
+                <span class="character-description">Imagen ${imageNumber} • Posición ${index + 1} de ${this.frameLayout.maxImages} • ${this.currentViewport} ✨</span>
             </div>
         `;
 
@@ -409,6 +498,11 @@ export class CharacterFrameManager {
         character._tooltip = tooltip;
     }
 
+    getImageNumberFromSrc(src) {
+        const match = src.match(/pngwing\.com \((\d+)\)\.png/);
+        return match ? `#${match[1]}` : 'N/A';
+    }
+
     hideCharacterInfo() {
         document.querySelectorAll('.character-tooltip').forEach(tooltip => {
             tooltip.style.opacity = '0';
@@ -434,12 +528,16 @@ export class CharacterFrameManager {
     }
 
     showCharacterMessage(index) {
+        const currentImageSrc = this.characters[index]?.querySelector('img')?.src;
+        const imageNumber = this.getImageNumberFromSrc(currentImageSrc);
+        
         const messages = [
-            `¡${this.characterNames[index]} te envía amor! 💕`,
+            `¡${this.characterNames[index]} (${imageNumber}) te envía amor! 💕`,
             `${this.characterNames[index]} está aquí contigo ✨`,
             `¡Un abrazo virtual de ${this.characterNames[index]}! 🤗`,
             `${this.characterNames[index]} te desea lo mejor 🌟`,
-            `¡${this.characterNames[index]} cree en ti! 💪`
+            `¡${this.characterNames[index]} cree en ti! 💪`,
+            `🎲 ¡Imagen aleatoria ${imageNumber} activada! ✨`
         ];
         
         const randomMessage = messages[Math.floor(Math.random() * messages.length)];
@@ -577,10 +675,11 @@ export class CharacterFrameManager {
     updateCharacterImages(imageUrls) {
         if (!Array.isArray(imageUrls)) return;
         this.detectedImages = imageUrls;
+        this.randomizeImages(); // Re-aleatorizar con nuevas imágenes
         this.generateResponsiveLayout();
         this.createAdaptiveCollage();
         this.setupInteractions();
-        console.log('✅ Imágenes actualizadas y collage regenerado');
+        console.log('✅ Imágenes actualizadas y aleatorizadas');
     }
 
     setCharacterNames(names) {
@@ -590,19 +689,38 @@ export class CharacterFrameManager {
     }
 
     async reloadImages() {
-        console.log('🔄 Recargando collage adaptativo...');
+        console.log('🔄 Recargando y aleatorizando collage...');
         await this.detectAvailableImages();
+        this.randomizeImages(); // Re-aleatorizar después de detectar
         this.generateResponsiveLayout();
         this.createAdaptiveCollage();
         this.setupInteractions();
         this.startAnimations();
-        console.log('✅ Collage recargado con layout responsivo');
+        console.log('✅ Collage recargado con nuevo orden aleatorio');
     }
 
     updateAvailableImages(imageList) {
-        this.availableImages = imageList;
+        this.allAvailableImages = imageList;
         this.reloadImages();
-        console.log('✅ Lista de imágenes actualizada:', imageList);
+        console.log('✅ Lista de imágenes actualizada y aleatorizada:', imageList);
+    }
+
+    // NUEVO: Método público para re-aleatorizar
+    shuffleImages() {
+        this.reshuffleImages();
+    }
+
+    // NUEVO: Obtener estadísticas de aleatorización
+    getRandomizationStats() {
+        return {
+            totalImages: this.detectedImages.length,
+            randomizedOrder: this.randomizedImages.slice(0, 10).map(img => {
+                const match = img.match(/\((\d+)\)/);
+                return match ? `#${match[1]}` : img;
+            }),
+            currentViewport: this.currentViewport,
+            layoutUsed: this.frameLayout
+        };
     }
 
     cleanup() {
@@ -619,9 +737,9 @@ export class CharacterFrameManager {
     }
 }
 
-// Estilos adicionales para collage sin bordes
-const borderlessCollageStyles = document.createElement('style');
-borderlessCollageStyles.textContent = `
+// Estilos adicionales para sistema aleatorio
+const randomCollageStyles = document.createElement('style');
+randomCollageStyles.textContent = `
     @keyframes heartBurst {
         0% {
             opacity: 1;
@@ -661,46 +779,39 @@ borderlessCollageStyles.textContent = `
         color: #ffc0cb;
     }
 
-    /* Layouts específicos por viewport */
-    .mobile-layout {
-        gap: -15px;
+    /* Efectos especiales para imágenes aleatorias */
+    .character-corner.random-highlight,
+    .character-item.random-highlight {
+        animation: randomGlow 1.5s ease-in-out;
     }
 
-    .tablet-layout {
-        gap: -20px;
+    @keyframes randomGlow {
+        0%, 100% {
+            filter: brightness(1) saturate(1);
+        }
+        50% {
+            filter: brightness(1.3) saturate(1.4) hue-rotate(30deg);
+        }
     }
 
-    .laptop-layout {
-        gap: -25px;
+    /* Indicador de aleatorización */
+    .randomization-indicator {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(102, 126, 234, 0.8);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 11px;
+        z-index: 1000;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
     }
 
-    .desktop-layout {
-        gap: -30px;
-    }
-
-    /* Ajustes por cantidad de imágenes */
-    .character-frame[data-image-count="12"] .character-corner {
-        width: 120px !important;
-        height: 150px !important;
-    }
-
-    .character-frame[data-image-count="16"] .character-corner {
-        width: 110px !important;
-        height: 140px !important;
-    }
-
-    .character-frame[data-image-count="20"] .character-corner {
-        width: 100px !important;
-        height: 130px !important;
-    }
-
-    /* Efectos hover mejorados sin bordes */
-    .character-corner:hover,
-    .character-item:hover {
-        transform: scale(1.08) rotate(2deg);
-        filter: brightness(1.15) saturate(1.2);
-        z-index: 50;
+    .randomization-indicator:hover {
+        opacity: 1;
     }
 `;
 
-document.head.appendChild(borderlessCollageStyles);
+document.head.appendChild(randomCollageStyles);

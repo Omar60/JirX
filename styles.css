@@ -1,0 +1,1308 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b94d4 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    max-width: 100vw;
+}
+
+html {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Marco de personajes - COLLAGE CENTRADO Y VISIBLE */
+.character-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: frameAppear 2s ease-out 1s forwards;
+    background: none !important; /* FORZAR SIN FONDO */
+}
+
+@keyframes frameAppear {
+    from {
+        opacity: 0;
+        transform: scale(1.01);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Esquinas del collage - POSICIONES CENTRADAS Y VISIBLES */
+.character-corner {
+    position: absolute;
+    border-radius: 0;
+    overflow: visible !important; /* CAMBIAR DE HIDDEN A VISIBLE */
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatCollage 8s ease-in-out infinite;
+    transform-origin: center;
+    z-index: 5;
+    width: 120px;
+    height: 150px;
+    border: none !important;
+    outline: none !important;
+    background: none !important; /* FORZAR SIN FONDO */
+    background-color: transparent !important; /* FORZAR TRANSPARENTE */
+}
+
+.character-corner:hover {
+    transform: scale(1.05) rotate(2deg);
+    filter: brightness(1.1) saturate(1.2);
+    z-index: 25;
+}
+
+.character-corner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* MANTENER CONTAIN PARA NO CORTAR */
+    object-position: center; /* CENTRAR LA IMAGEN */
+    transition: transform 0.5s ease;
+    filter: brightness(1.05) saturate(1.1);
+    border-radius: 0;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important; /* FORZAR SIN FONDO */
+    background-color: transparent !important; /* FORZAR TRANSPARENTE */
+    backdrop-filter: none !important; /* ELIMINAR BACKDROP */
+}
+
+.character-corner:hover img {
+    transform: scale(1.02) rotate(-1deg);
+}
+
+/* POSICIONES CENTRADAS - Más cerca del centro, completamente visibles */
+.top-left {
+    top: 10px;
+    left: 10px;
+    transform: rotate(-8deg);
+    animation-delay: 0s;
+    z-index: 12;
+}
+
+.top-right {
+    top: 15px;
+    right: 10px;
+    transform: rotate(10deg);
+    animation-delay: 0.8s;
+    z-index: 11;
+}
+
+.bottom-left {
+    bottom: 10px;
+    left: 15px;
+    transform: rotate(6deg);
+    animation-delay: 1.6s;
+    z-index: 10;
+}
+
+.bottom-right {
+    bottom: 15px;
+    right: 10px;
+    transform: rotate(-9deg);
+    animation-delay: 2.4s;
+    z-index: 13;
+}
+
+/* LATERALES ADAPTATIVOS - POSICIONAMIENTO INTELIGENTE EN CENTRO VERTICAL */
+.character-side {
+    position: absolute;
+    display: flex;
+    gap: 40px; /* ESPACIADO GENEROSO ENTRE ELEMENTOS */
+    background: none !important; /* FORZAR SIN FONDO */
+    backdrop-filter: none !important; /* ELIMINAR BACKDROP */
+}
+
+/* LADO IZQUIERDO - CENTRADO VERTICALMENTE Y ADAPTATIVO */
+.left-side {
+    left: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE */
+    top: 50%; /* CENTRADO VERTICALMENTE */
+    transform: translateY(-50%) rotate(-8deg); /* ROTACIÓN SUTIL */
+    flex-direction: column;
+    animation-delay: 0.4s;
+    z-index: 8;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ALTURA DE VIEWPORT */
+    height: min(70vh, 600px); /* MÁXIMO 70% DE LA ALTURA DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
+}
+
+/* LADO DERECHO - CENTRADO VERTICALMENTE Y ADAPTATIVO */
+.right-side {
+    right: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE */
+    top: 50%; /* CENTRADO VERTICALMENTE */
+    transform: translateY(-50%) rotate(8deg); /* ROTACIÓN SUTIL OPUESTA */
+    flex-direction: column;
+    animation-delay: 1.2s;
+    z-index: 7;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ALTURA DE VIEWPORT */
+    height: min(70vh, 600px); /* MÁXIMO 70% DE LA ALTURA DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
+}
+
+/* SUPERIOR E INFERIOR - CENTRADOS HORIZONTALMENTE Y ADAPTATIVOS */
+.top-side {
+    top: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE SUPERIOR */
+    left: 50%; /* CENTRADO HORIZONTALMENTE */
+    transform: translateX(-50%) rotate(-4deg); /* ROTACIÓN SUTIL */
+    flex-direction: row;
+    animation-delay: 2.0s;
+    z-index: 6;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ANCHO DE VIEWPORT */
+    width: min(80vw, 800px); /* MÁXIMO 80% DEL ANCHO DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
+}
+
+.bottom-side {
+    bottom: 15px; /* POSICIÓN VISIBLE DESDE EL BORDE INFERIOR */
+    left: 50%; /* CENTRADO HORIZONTALMENTE */
+    transform: translateX(-50%) rotate(4deg); /* ROTACIÓN SUTIL OPUESTA */
+    flex-direction: row;
+    animation-delay: 2.8s;
+    z-index: 5;
+    /* DISTRIBUCIÓN ADAPTATIVA SEGÚN ANCHO DE VIEWPORT */
+    width: min(80vw, 800px); /* MÁXIMO 80% DEL ANCHO DE PANTALLA */
+    justify-content: center; /* CENTRAR ELEMENTOS DENTRO DEL CONTENEDOR */
+    align-items: center;
+}
+
+/* Items individuales del collage - ESPACIADO PERFECTO */
+.character-item {
+    border-radius: 0;
+    overflow: visible !important; /* CAMBIAR DE HIDDEN A VISIBLE */
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: floatCollage 9s ease-in-out infinite;
+    opacity: 0;
+    animation: characterItemAppear 1.2s ease-out forwards;
+    position: relative;
+    margin: 0; /* SIN MARGEN NEGATIVO - ESPACIADO CONTROLADO POR GAP */
+    width: 85px; /* LIGERAMENTE MÁS GRANDE PARA MEJOR VISIBILIDAD */
+    height: 110px;
+    border: none !important;
+    outline: none !important;
+    background: none !important; /* FORZAR SIN FONDO */
+    background-color: transparent !important; /* FORZAR TRANSPARENTE */
+    flex-shrink: 0; /* EVITAR QUE SE COMPRIMAN */
+}
+
+.character-item:hover {
+    transform: scale(1.08) rotate(-3deg);
+    filter: brightness(1.1) saturate(1.2);
+    z-index: 30;
+}
+
+.character-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* MANTENER CONTAIN PARA NO CORTAR */
+    object-position: center; /* CENTRAR LA IMAGEN */
+    transition: transform 0.4s ease;
+    filter: brightness(1.02) saturate(1.05);
+    border-radius: 0;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important; /* FORZAR SIN FONDO */
+    background-color: transparent !important; /* FORZAR TRANSPARENTE */
+    backdrop-filter: none !important; /* ELIMINAR BACKDROP */
+}
+
+.character-item:hover img {
+    transform: scale(1.03) rotate(2deg);
+}
+
+/* ROTACIONES VARIADAS PARA EFECTO NATURAL - SUAVES Y ELEGANTES */
+.left-side .character-item:nth-child(1) { transform: rotate(12deg); z-index: 18; }
+.left-side .character-item:nth-child(2) { transform: rotate(-15deg); z-index: 17; }
+.left-side .character-item:nth-child(3) { transform: rotate(8deg); z-index: 16; }
+.left-side .character-item:nth-child(4) { transform: rotate(-10deg); z-index: 15; }
+.left-side .character-item:nth-child(5) { transform: rotate(14deg); z-index: 14; }
+
+.right-side .character-item:nth-child(1) { transform: rotate(-12deg); z-index: 19; }
+.right-side .character-item:nth-child(2) { transform: rotate(16deg); z-index: 20; }
+.right-side .character-item:nth-child(3) { transform: rotate(-9deg); z-index: 21; }
+.right-side .character-item:nth-child(4) { transform: rotate(13deg); z-index: 22; }
+.right-side .character-item:nth-child(5) { transform: rotate(-11deg); z-index: 23; }
+
+.top-side .character-item:nth-child(1) { transform: rotate(-8deg); z-index: 24; }
+.top-side .character-item:nth-child(2) { transform: rotate(10deg); z-index: 25; }
+.top-side .character-item:nth-child(3) { transform: rotate(-6deg); z-index: 26; }
+.top-side .character-item:nth-child(4) { transform: rotate(9deg); z-index: 27; }
+.top-side .character-item:nth-child(5) { transform: rotate(-5deg); z-index: 28; }
+.top-side .character-item:nth-child(6) { transform: rotate(7deg); z-index: 29; }
+
+.bottom-side .character-item:nth-child(1) { transform: rotate(15deg); z-index: 30; }
+.bottom-side .character-item:nth-child(2) { transform: rotate(-11deg); z-index: 31; }
+.bottom-side .character-item:nth-child(3) { transform: rotate(12deg); z-index: 32; }
+.bottom-side .character-item:nth-child(4) { transform: rotate(-8deg); z-index: 33; }
+.bottom-side .character-item:nth-child(5) { transform: rotate(10deg); z-index: 34; }
+.bottom-side .character-item:nth-child(6) { transform: rotate(-7deg); z-index: 35; }
+
+/* Animaciones escalonadas para items */
+.character-item:nth-child(1) { animation-delay: 0.1s; }
+.character-item:nth-child(2) { animation-delay: 0.2s; }
+.character-item:nth-child(3) { animation-delay: 0.3s; }
+.character-item:nth-child(4) { animation-delay: 0.4s; }
+.character-item:nth-child(5) { animation-delay: 0.5s; }
+.character-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes characterItemAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.7) rotate(0deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes floatCollage {
+    0%, 100% {
+        transform: translateY(0) rotate(var(--base-rotation, 0deg));
+    }
+    25% {
+        transform: translateY(-8px) rotate(calc(var(--base-rotation, 0deg) + 3deg));
+    }
+    50% {
+        transform: translateY(0) rotate(var(--base-rotation, 0deg));
+    }
+    75% {
+        transform: translateY(8px) rotate(calc(var(--base-rotation, 0deg) - 2deg));
+    }
+}
+
+/* Variables CSS para rotaciones base */
+.top-left { --base-rotation: -8deg; }
+.top-right { --base-rotation: 10deg; }
+.bottom-left { --base-rotation: 6deg; }
+.bottom-right { --base-rotation: -9deg; }
+
+/* Contenedor principal - MEJORADO PARA MEJOR INTEGRACIÓN */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(1px);
+    border-radius: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+    flex-shrink: 0;
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: rgba(255,255,255,0.9);
+    font-weight: 300;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* CONTENIDO DINÁMICO - SISTEMA MEJORADO DE POSICIONAMIENTO */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Cambiado de center a flex-start */
+    position: relative;
+    min-height: 40vh; /* Reducido de 50vh a 40vh */
+    padding-top: 2rem; /* Añadido padding superior */
+}
+
+.dynamic-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Cambiado de center a flex-start */
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 15;
+    margin-top: 1rem; /* Añadido margen superior */
+}
+
+/* MENSAJE CENTRAL - MÚLTIPLES OPCIONES DE POSICIONAMIENTO */
+.dynamic-text {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 1rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 192, 203, 0.5);
+    position: relative;
+    z-index: 15;
+    margin-bottom: 3rem; /* Añadido margen inferior para separar de la mascota */
+}
+
+.dynamic-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* OPCIÓN 1: Posicionamiento inteligente según mascota */
+.dynamic-text.smart-position {
+    position: fixed;
+    left: 50%;
+    top: 30%; /* Cambiado de 50% a 30% para subir la posición */
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    z-index: 15;
+}
+
+/* OPCIÓN 2: Posicionamiento lateral */
+.dynamic-text.side-position {
+    position: fixed;
+    left: 50px;
+    top: 25%; /* Cambiado de 50% a 25% para subir la posición */
+    transform: translateY(-50%);
+    max-width: 400px;
+    z-index: 15;
+}
+
+/* OPCIÓN 3: Posicionamiento superior */
+.dynamic-text.top-position {
+    position: fixed;
+    left: 50%;
+    top: 80px; /* Reducido de 100px a 80px */
+    transform: translateX(-50%);
+    max-width: 500px;
+    z-index: 15;
+}
+
+/* OPCIÓN 4: Posicionamiento modal/overlay */
+.dynamic-text.modal-position {
+    position: fixed;
+    left: 50%;
+    top: 35%; /* Cambiado de 50% a 35% para subir la posición */
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    z-index: 1000;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 3px solid rgba(255, 192, 203, 0.8);
+}
+
+.dynamic-text.modal-position::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
+    backdrop-filter: blur(3px);
+}
+
+/* OPCIÓN 5: Posicionamiento adaptativo según viewport */
+.dynamic-text.adaptive-position {
+    position: relative;
+    margin: 1rem auto 3rem auto; /* Añadido margen inferior de 3rem */
+    max-width: min(90vw, 600px);
+}
+
+/* Estilos del contenido del mensaje */
+.dynamic-text h2 {
+    color: #667eea;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.dynamic-text p {
+    color: #444;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.dynamic-text .signature {
+    font-style: italic;
+    color: #667eea;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(102, 126, 234, 0.3);
+    padding-top: 1rem;
+}
+
+/* BOTÓN DE CIERRE PARA MODAL */
+.dynamic-text.modal-position .close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #667eea;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.dynamic-text.modal-position .close-button:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.1);
+}
+
+/* INDICADOR DE POSICIÓN DE MASCOTA */
+.mascot-position-indicator {
+    position: fixed;
+    bottom: 80px;
+    right: 50px;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: 5;
+    animation: pulse 2s infinite;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Corazones flotantes */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.heart {
+    position: absolute;
+    color: rgba(255, 107, 107, 0.6);
+    font-size: 20px;
+    animation: float 6s infinite ease-in-out;
+}
+
+.heart::before {
+    content: '💖';
+}
+
+.heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+.heart:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 2s; }
+.heart:nth-child(4) { bottom: 10%; right: 20%; animation-delay: 3s; }
+.heart:nth-child(5) { top: 50%; left: 5%; animation-delay: 4s; }
+
+/* Contenedor de corazones interactivos */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.interactive-heart {
+    position: absolute;
+    color: #ff6b6b;
+    font-size: 24px;
+    animation: heartFloat 3s ease-out forwards;
+    pointer-events: none;
+}
+
+/* Personaje Lottie - POSICIÓN MEJORADA */
+.lottie-container {
+    position: fixed;
+    bottom: 60px;
+    right: 30px;
+    z-index: 100;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lottie-container:hover {
+    transform: scale(1.1);
+}
+
+#lottiePlayer {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 15px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    box-shadow: none;
+}
+
+/* GLOBO DE DIÁLOGO - POSICIONAMIENTO INTELIGENTE */
+.character-speech-bubble {
+    position: absolute;
+    bottom: 140px;
+    right: -20px;
+    background: white;
+    padding: 12px 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    text-align: center;
+    min-width: 120px;
+    max-width: 250px;
+    white-space: normal;
+    border: 2px solid rgba(255, 192, 203, 0.5);
+    z-index: 101;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+/* POSICIONAMIENTO INTELIGENTE DEL GLOBO */
+.character-speech-bubble.smart-bubble {
+    bottom: auto;
+    right: auto;
+    left: -280px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 300px;
+}
+
+.character-speech-bubble.smart-bubble::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid white;
+}
+
+.character-speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 30px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+}
+
+.character-speech-bubble.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.character-speech-bubble.smart-bubble.show {
+    opacity: 1;
+    transform: translateY(-50%);
+}
+
+/* Controles de navegación */
+.navigation-controls {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 200;
+}
+
+.navigation-controls.show {
+    opacity: 1;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.95);
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 18px;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-weight: bold;
+    user-select: none;
+}
+
+.nav-button:hover:not(:disabled) {
+    background: #667eea;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.nav-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(200, 200, 200, 0.5);
+    color: #999;
+    border-color: #ccc;
+}
+
+.nav-button:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* RESPONSIVE DESIGN - POSICIONAMIENTO ADAPTATIVO INTELIGENTE */
+@media (max-width: 1200px) {
+    .character-corner {
+        width: 110px !important;
+        height: 140px !important;
+    }
+    
+    .character-item {
+        width: 80px !important;
+        height: 105px !important;
+    }
+    
+    .character-side {
+        gap: 35px !important; /* MANTENER ESPACIADO GENEROSO */
+    }
+    
+    /* LATERALES ADAPTATIVOS EN PANTALLAS MEDIANAS */
+    .left-side {
+        height: min(65vh, 550px); /* REDUCIR LIGERAMENTE LA ALTURA */
+    }
+    
+    .right-side {
+        height: min(65vh, 550px); /* REDUCIR LIGERAMENTE LA ALTURA */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(75vw, 700px); /* REDUCIR LIGERAMENTE EL ANCHO */
+    }
+    
+    /* Ajustar posición del mensaje en pantallas medianas */
+    .dynamic-text.side-position {
+        left: 30px;
+        max-width: 350px;
+        top: 20%; /* Subido también aquí */
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        left: -250px;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .character-corner {
+        width: 100px !important;
+        height: 130px !important;
+    }
+    
+    .character-item {
+        width: 75px !important;
+        height: 95px !important;
+    }
+    
+    .character-side {
+        gap: 30px !important; /* ESPACIADO REDUCIDO PERO GENEROSO */
+    }
+    
+    /* LATERALES ADAPTATIVOS EN TABLETS */
+    .left-side {
+        height: min(60vh, 500px); /* ALTURA ADAPTATIVA PARA TABLETS */
+        left: 10px; /* MÁS CERCA DEL BORDE */
+    }
+    
+    .right-side {
+        height: min(60vh, 500px); /* ALTURA ADAPTATIVA PARA TABLETS */
+        right: 10px; /* MÁS CERCA DEL BORDE */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(70vw, 600px); /* ANCHO ADAPTATIVO PARA TABLETS */
+    }
+    
+    .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    /* Cambiar a posicionamiento adaptativo en tablets */
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin: 1rem auto 3rem auto; /* Añadido margen inferior */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .character-corner {
+        width: 90px !important;
+        height: 115px !important;
+    }
+    
+    .character-item {
+        width: 70px !important;
+        height: 85px !important;
+    }
+    
+    .character-side {
+        gap: 25px !important; /* ESPACIADO ADAPTATIVO PARA MÓVIL */
+    }
+    
+    /* LATERALES ADAPTATIVOS EN MÓVIL - CENTRADO VERTICAL INTELIGENTE */
+    .left-side {
+        left: 5px; /* POSICIÓN VISIBLE */
+        height: min(50vh, 400px); /* ALTURA ADAPTATIVA PARA MÓVIL */
+        transform: translateY(-50%) rotate(-5deg); /* ROTACIÓN MÁS SUTIL */
+    }
+    
+    .right-side {
+        right: 5px; /* POSICIÓN VISIBLE */
+        height: min(50vh, 400px); /* ALTURA ADAPTATIVA PARA MÓVIL */
+        transform: translateY(-50%) rotate(5deg); /* ROTACIÓN MÁS SUTIL */
+    }
+    
+    /* SUPERIOR E INFERIOR ADAPTATIVOS EN MÓVIL */
+    .top-side {
+        top: 10px; /* MÁS VISIBLE */
+        width: min(60vw, 400px); /* ANCHO ADAPTATIVO PARA MÓVIL */
+        transform: translateX(-50%) rotate(-2deg); /* ROTACIÓN MÁS SUTIL */
+    }
+    
+    .bottom-side {
+        bottom: 10px; /* MÁS VISIBLE */
+        width: min(60vw, 400px); /* ANCHO ADAPTATIVO PARA MÓVIL */
+        transform: translateX(-50%) rotate(2deg); /* ROTACIÓN MÁS SUTIL */
+    }
+    
+    .dynamic-content {
+        padding: 1rem;
+        min-height: 30vh; /* Reducido de 40vh a 30vh */
+        margin-top: 0.5rem; /* Reducido el margen superior */
+    }
+    
+    /* MÓVIL: Z-INDEX ALTO PARA TEXTO PRINCIPAL */
+    .dynamic-text,
+    .dynamic-text.smart-position,
+    .dynamic-text.side-position,
+    .dynamic-text.top-position,
+    .dynamic-text.modal-position {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: 0.5rem auto 2rem auto !important; /* Reducido margen superior y inferior */
+        padding: 1.5rem;
+        max-width: 95%;
+        z-index: 150 !important; /* Z-INDEX MUY ALTO PARA MÓVIL */
+    }
+    
+    .dynamic-text.modal-position::before {
+        display: none;
+    }
+    
+    .lottie-container {
+        bottom: 40px;
+        right: 20px;
+        width: 120px;
+        height: 120px;
+        z-index: 100; /* Menor que el texto principal */
+    }
+    
+    /* GLOBO DE MASCOTA FORZADO A LA IZQUIERDA EN MÓVIL */
+    .character-speech-bubble {
+        position: absolute !important;
+        bottom: auto !important;
+        right: auto !important;
+        left: -220px !important; /* FORZADO A LA IZQUIERDA */
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        max-width: 180px !important;
+        font-size: 13px;
+        padding: 10px 14px;
+        z-index: 90 !important; /* Z-INDEX MENOR QUE EL TEXTO PRINCIPAL */
+    }
+    
+    .character-speech-bubble.smart-bubble {
+        position: absolute !important;
+        bottom: auto !important;
+        right: auto !important;
+        left: -220px !important; /* FORZADO A LA IZQUIERDA */
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        max-width: 180px !important;
+        font-size: 13px;
+        padding: 10px 14px;
+        z-index: 90 !important; /* Z-INDEX MENOR QUE EL TEXTO PRINCIPAL */
+    }
+    
+    /* FLECHA DEL GLOBO APUNTANDO A LA DERECHA (HACIA LA MASCOTA) */
+    .character-speech-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: -8px !important; /* Flecha a la derecha */
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-top: 8px solid transparent !important;
+        border-bottom: 8px solid transparent !important;
+        border-left: 8px solid white !important; /* Flecha apuntando a la derecha */
+        border-right: none !important;
+    }
+    
+    .character-speech-bubble.smart-bubble::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: -8px !important; /* Flecha a la derecha */
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-top: 8px solid transparent !important;
+        border-bottom: 8px solid transparent !important;
+        border-left: 8px solid white !important; /* Flecha apuntando a la derecha */
+        border-right: none !important;
+    }
+    
+    .navigation-controls {
+        bottom: -45px;
+        gap: 10px;
+        z-index: 140; /* Z-INDEX ALTO PARA CONTROLES */
+    }
+    
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .character-corner {
+        width: 80px !important;
+        height: 100px !important;
+    }
+    
+    .character-item {
+        width: 65px !important;
+        height: 80px !important;
+    }
+    
+    .character-side {
+        gap: 20px !important; /* ESPACIADO MÍNIMO PERO VISIBLE */
+    }
+    
+    /* LATERALES ULTRA-ADAPTATIVOS EN MÓVIL PEQUEÑO */
+    .left-side {
+        height: min(40vh, 300px); /* ALTURA MÁS COMPACTA */
+        left: 2px; /* POSICIÓN MUY CERCANA AL BORDE */
+    }
+    
+    .right-side {
+        height: min(40vh, 300px); /* ALTURA MÁS COMPACTA */
+        right: 2px; /* POSICIÓN MUY CERCANA AL BORDE */
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px); /* ANCHO MÁS COMPACTO */
+    }
+    
+    .character-frame {
+        opacity: 0.95;
+    }
+    
+    .lottie-container {
+        width: 100px;
+        height: 100px;
+        z-index: 80; /* Z-INDEX AÚN MENOR */
+    }
+    
+    /* GLOBO DE MASCOTA MÁS COMPACTO EN MÓVIL PEQUEÑO */
+    .character-speech-bubble,
+    .character-speech-bubble.smart-bubble {
+        left: -180px !important; /* MÁS CERCA EN PANTALLAS PEQUEÑAS */
+        max-width: 150px !important;
+        font-size: 12px !important;
+        padding: 8px 12px !important;
+        z-index: 70 !important; /* Z-INDEX MUY BAJO */
+    }
+    
+    .dynamic-text {
+        padding: 1rem;
+        margin: 0.5rem auto 1.5rem auto !important; /* Reducido margen inferior */
+        z-index: 160 !important; /* Z-INDEX MUY ALTO PARA MÓVIL PEQUEÑO */
+    }
+    
+    .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+        z-index: 150 !important; /* Z-INDEX ALTO PARA CONTROLES */
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .character-frame,
+    .character-corner,
+    .character-item {
+        animation: none !important;
+    }
+    
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Estados de focus mejorados */
+.lottie-container:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 3px;
+}
+
+.character-corner:focus,
+.character-item:focus {
+    outline: 2px solid #ff6b9d;
+    outline-offset: 2px;
+}
+
+/* Optimizaciones de rendimiento */
+.heart, .interactive-heart, .character-speech-bubble, .nav-button,
+.character-corner, .character-item {
+    will-change: transform, opacity;
+}
+
+.dynamic-text {
+    contain: layout style paint;
+}
+
+.character-frame {
+    contain: layout style;
+}
+
+/* ESTILOS ESPECÍFICOS PARA COLLAGE ADAPTATIVO CENTRADO */
+.character-frame[data-viewport="mobile"] {
+    opacity: 0.9;
+}
+
+.character-frame[data-viewport="tablet"] {
+    opacity: 0.95;
+}
+
+.character-frame[data-viewport="laptop"] {
+    opacity: 1;
+}
+
+.character-frame[data-viewport="desktop"] {
+    opacity: 1;
+}
+
+/* AJUSTES ADAPTATIVOS POR CANTIDAD DE IMÁGENES DETECTADAS */
+.character-frame[data-image-count="4"] .character-corner {
+    width: 140px !important;
+    height: 180px !important;
+}
+
+.character-frame[data-image-count="8"] .character-corner {
+    width: 130px !important;
+    height: 165px !important;
+}
+
+.character-frame[data-image-count="12"] .character-corner {
+    width: 120px !important;
+    height: 150px !important;
+}
+
+.character-frame[data-image-count="16"] .character-corner {
+    width: 110px !important;
+    height: 140px !important;
+}
+
+.character-frame[data-image-count="20"] .character-corner {
+    width: 100px !important;
+    height: 130px !important;
+}
+
+/* AJUSTES ADAPTATIVOS PARA LATERALES SEGÚN CANTIDAD DE IMÁGENES */
+.character-frame[data-image-count="4"] .left-side,
+.character-frame[data-image-count="4"] .right-side {
+    height: min(40vh, 300px); /* MENOS ALTURA CON POCAS IMÁGENES */
+}
+
+.character-frame[data-image-count="8"] .left-side,
+.character-frame[data-image-count="8"] .right-side {
+    height: min(50vh, 400px); /* ALTURA MEDIA */
+}
+
+.character-frame[data-image-count="12"] .left-side,
+.character-frame[data-image-count="12"] .right-side {
+    height: min(60vh, 500px); /* ALTURA ESTÁNDAR */
+}
+
+.character-frame[data-image-count="16"] .left-side,
+.character-frame[data-image-count="16"] .right-side {
+    height: min(70vh, 600px); /* ALTURA AMPLIA */
+}
+
+.character-frame[data-image-count="20"] .left-side,
+.character-frame[data-image-count="20"] .right-side {
+    height: min(80vh, 700px); /* ALTURA MÁXIMA */
+}
+
+/* Efectos hover completamente sin bordes */
+.character-corner.special-effect,
+.character-item.special-effect {
+    animation: specialGlow 1s ease-in-out;
+}
+
+@keyframes specialGlow {
+    0%, 100% {
+        filter: brightness(1) saturate(1);
+    }
+    50% {
+        filter: brightness(1.3) saturate(1.4);
+    }
+}
+
+/* ESTILOS ADICIONALES PARA POSICIONAMIENTO INTELIGENTE */
+
+/* Detección de colisiones visuales */
+.collision-detected .dynamic-text {
+    background: rgba(255, 255, 255, 0.98);
+    border: 3px solid rgba(255, 192, 203, 0.8);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* Indicadores visuales de posición */
+.position-indicator {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: rgba(102, 126, 234, 0.6);
+    border-radius: 50%;
+    z-index: 5;
+    animation: positionPulse 1.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes positionPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.5);
+    }
+}
+
+/* Modo de depuración para posicionamiento */
+.debug-positioning .dynamic-text {
+    border: 2px dashed #ff6b6b;
+}
+
+.debug-positioning .lottie-container {
+    border: 2px dashed #667eea;
+}
+
+.debug-positioning .character-speech-bubble {
+    border: 2px dashed #ffa500;
+}
+
+/* ELIMINACIÓN TOTAL DE FONDOS GRISÁCEOS - REGLAS ESPECÍFICAS */
+.character-corner,
+.character-corner *,
+.character-item,
+.character-item *,
+.character-side,
+.character-side * {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* FORZAR TRANSPARENCIA EN IMÁGENES PNG */
+.character-corner img,
+.character-item img {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    mix-blend-mode: normal !important;
+}
+
+/* ELIMINAR CUALQUIER SOMBRA O EFECTO QUE PUEDA CREAR FONDO */
+.character-corner,
+.character-item {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+.character-corner:hover,
+.character-item:hover {
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* ASEGURAR QUE NO HAY PSEUDO-ELEMENTOS CON FONDO */
+.character-corner::before,
+.character-corner::after,
+.character-item::before,
+.character-item::after {
+    display: none !important;
+}

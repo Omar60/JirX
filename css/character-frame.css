@@ -102,7 +102,7 @@
 }
 
 /* ==========================================================================
-   LATERALES DEL COLLAGE
+   LATERALES DEL COLLAGE - SIEMPRE FIJOS EN LOS LATERALES
    ========================================================================== */
 
 .character-side {
@@ -111,9 +111,9 @@
     gap: var(--character-gap);
 }
 
-/* Lado izquierdo */
+/* Lado izquierdo - SIEMPRE FIJO EN EL LATERAL IZQUIERDO */
 .left-side {
-    left: 20px;
+    left: 20px !important; /* FORZAR POSICIÓN LATERAL */
     top: 50%;
     transform: translateY(-50%) rotate(-8deg);
     flex-direction: column;
@@ -124,9 +124,9 @@
     align-items: center;
 }
 
-/* Lado derecho */
+/* Lado derecho - SIEMPRE FIJO EN EL LATERAL DERECHO */
 .right-side {
-    right: 20px;
+    right: 20px !important; /* FORZAR POSICIÓN LATERAL */
     top: 50%;
     transform: translateY(-50%) rotate(8deg);
     flex-direction: column;
@@ -414,7 +414,7 @@
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN PARA CHARACTER FRAME
+   RESPONSIVE DESIGN PARA CHARACTER FRAME - MANTENER LATERALES SIEMPRE
    ========================================================================== */
 
 @media (max-width: 1200px) {
@@ -426,8 +426,17 @@
         --character-gap: 45px;
     }
     
-    .left-side, .right-side {
+    /* LATERALES SIEMPRE EN SUS POSICIONES - NUNCA CENTRADOS */
+    .left-side {
+        left: 15px !important; /* FORZAR LATERAL IZQUIERDO */
         height: min(70vh, 600px);
+        transform: translateY(-50%) rotate(-6deg);
+    }
+    
+    .right-side {
+        right: 15px !important; /* FORZAR LATERAL DERECHO */
+        height: min(70vh, 600px);
+        transform: translateY(-50%) rotate(6deg);
     }
     
     .top-side, .bottom-side {
@@ -444,10 +453,17 @@
         --character-gap: 40px;
     }
     
-    .left-side, .right-side {
+    /* LATERALES SIEMPRE EN SUS POSICIONES - LAPTOP */
+    .left-side {
+        left: 12px !important; /* FORZAR LATERAL IZQUIERDO */
         height: min(65vh, 550px);
-        left: 15px;
-        right: 15px;
+        transform: translateY(-50%) rotate(-5deg);
+    }
+    
+    .right-side {
+        right: 12px !important; /* FORZAR LATERAL DERECHO */
+        height: min(65vh, 550px);
+        transform: translateY(-50%) rotate(5deg);
     }
     
     .top-side, .bottom-side {
@@ -464,14 +480,15 @@
         --character-gap: 35px;
     }
     
+    /* LATERALES SIEMPRE EN SUS POSICIONES - TABLET */
     .left-side {
-        left: 10px;
+        left: 10px !important; /* FORZAR LATERAL IZQUIERDO */
         height: min(55vh, 450px);
         transform: translateY(-50%) rotate(-4deg);
     }
     
     .right-side {
-        right: 10px;
+        right: 10px !important; /* FORZAR LATERAL DERECHO */
         height: min(55vh, 450px);
         transform: translateY(-50%) rotate(4deg);
     }
@@ -498,16 +515,17 @@
         --character-gap: 30px;
     }
     
-    .left-side, .right-side {
-        height: min(45vh, 350px);
-    }
-    
+    /* LATERALES SIEMPRE EN SUS POSICIONES - MÓVIL */
     .left-side {
-        left: 8px;
+        left: 8px !important; /* FORZAR LATERAL IZQUIERDO */
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(-3deg);
     }
     
     .right-side {
-        right: 8px;
+        right: 8px !important; /* FORZAR LATERAL DERECHO */
+        height: min(45vh, 350px);
+        transform: translateY(-50%) rotate(3deg);
     }
     
     .top-side, .bottom-side {
@@ -517,4 +535,88 @@
     .character-frame {
         opacity: 0.95;
     }
+}
+
+@media (max-width: 320px) {
+    :root {
+        --character-corner-width: 90px;
+        --character-corner-height: 115px;
+        --character-item-width: 75px;
+        --character-item-height: 90px;
+        --character-gap: 25px;
+    }
+    
+    /* LATERALES SIEMPRE EN SUS POSICIONES - MÓVIL PEQUEÑO */
+    .left-side {
+        left: 5px !important; /* FORZAR LATERAL IZQUIERDO */
+        height: min(40vh, 300px);
+        transform: translateY(-50%) rotate(-2deg);
+    }
+    
+    .right-side {
+        right: 5px !important; /* FORZAR LATERAL DERECHO */
+        height: min(40vh, 300px);
+        transform: translateY(-50%) rotate(2deg);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(50vw, 300px);
+    }
+    
+    .character-frame {
+        opacity: 0.9;
+    }
+}
+
+/* ==========================================================================
+   AJUSTES PARA ORIENTACIÓN LANDSCAPE EN MÓVIL
+   ========================================================================== */
+
+@media (max-width: 767px) and (orientation: landscape) {
+    /* LATERALES SIEMPRE EN SUS POSICIONES - LANDSCAPE */
+    .left-side {
+        left: 5px !important; /* FORZAR LATERAL IZQUIERDO */
+        height: min(70vh, 400px);
+        transform: translateY(-50%) rotate(-2deg);
+    }
+    
+    .right-side {
+        right: 5px !important; /* FORZAR LATERAL DERECHO */
+        height: min(70vh, 400px);
+        transform: translateY(-50%) rotate(2deg);
+    }
+    
+    .top-side, .bottom-side {
+        width: min(40vw, 250px);
+    }
+}
+
+/* ==========================================================================
+   REGLAS ESPECÍFICAS PARA EVITAR CENTRADO
+   ========================================================================== */
+
+/* NUNCA permitir que los laterales se centren */
+.left-side {
+    left: 20px !important;
+    right: auto !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+.right-side {
+    right: 20px !important;
+    left: auto !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+/* Asegurar que no hay reglas que fuercen centrado */
+.character-side.left-side {
+    justify-self: start !important;
+    align-self: center !important;
+}
+
+.character-side.right-side {
+    justify-self: end !important;
+    align-self: center !important;
 }
