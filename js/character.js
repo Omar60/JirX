@@ -20,7 +20,7 @@ export class CharacterManager {
             "El amor es hermoso 💖",
             () => `¡Soy ${this.generateMysticName(4)}! ✨`,
             () => `Mi verdadero nombre es ${this.generateMysticName(6)} 🔮`,
-            () => `${this.generateMysticName(5)} significa 'amigo' en idioma místico 🌟`
+            () => `${this.generateMysticName(5)} significa '${this.generateMysticName(5)}' en idioma místico 🌟`
         ];
     }
 
@@ -247,7 +247,7 @@ Alt + A: Posicionamiento automático
         this.lottiePlayer.style.transform = 'scale(1)';
     }
 
-    showMessage(message, autoHide = true, duration = 3000) {
+    showMessage(message, autoHide = true, duration = 6000) {
         if (!this.characterMessage || !this.characterSpeech) return;
 
         this.characterMessage.textContent = message;
@@ -272,7 +272,7 @@ Alt + A: Posicionamiento automático
         if (!this.characterSpeech || !this.characterMessage) return;
 
         this.characterSpeech.classList.add('show');
-        const baseMessage = "¡Hola! Mi nombre es ᚦᚱᚨᚾᚲ 🐱 Haz clic en mí para comenzar esta historia especial...";
+        const baseMessage = "¡Hola! Mi nombre es ᚦᚱᚨᚾᚲ 🐱 Haz clic en mí, tengo algo importante que contarte...";
         this.characterMessage.textContent = baseMessage;
         this.adjustSpeechBubble();
         this.updateSpeechPosition();
@@ -288,7 +288,7 @@ Alt + A: Posicionamiento automático
 
             if (currentText.includes('Mi nombre es')) {
                 const beforeName = currentText.split('Mi nombre es')[0];
-                const afterName = currentText.split('🐱')[1] || ' 🐱 Haz clic en mí para comenzar esta historia especial...';
+                const afterName = currentText.split('🐱')[1] || ' 🐱 Haz clic en mí, tengo algo importante que contarte...';
                 const newText = `${beforeName}Mi nombre es ${mysticName} 🐱${afterName}`;
                 this.characterMessage.textContent = newText;
                 this.adjustSpeechBubble();
