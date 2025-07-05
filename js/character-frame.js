@@ -6,30 +6,29 @@ export class CharacterFrameManager {
         this.isVisible = false;
         this.animationTimeouts = [];
         this.characterNames = [
-            'Personaje Especial 1', 'Personaje Especial 2', 'Personaje Especial 3',
-            'Personaje Especial 4', 'Personaje Especial 5', 'Personaje Especial 6',
-            'Personaje Especial 7', 'Personaje Especial 8', 'Personaje Especial 9',
-            'Personaje Especial 10', 'Personaje Especial 11', 'Personaje Especial 12',
-            'Personaje Especial 13', 'Personaje Especial 14', 'Personaje Especial 15',
-            'Personaje Especial 16', 'Personaje Especial 17', 'Personaje Especial 18',
-            'Personaje Especial 19', 'Personaje Especial 20', 'Personaje Especial 21',
-            'Personaje Especial 22', 'Personaje Especial 23', 'Personaje Especial 24',
-            'Personaje Especial 25', 'Personaje Especial 26', 'Personaje Especial 27',
-            'Personaje Especial 28', 'Personaje Especial 29', 'Personaje Especial 30'
+            'Personaje 1', 'Personaje 2', 'Personaje 3',
+            'Personaje 4', 'Personaje 5', 'Personaje 6',
+            'Personaje 7', 'Personaje 8', 'Personaje 9',
+            'Personaje 10', 'Personaje 11', 'Personaje 12',
+            'Personaje 13', 'Personaje 14', 'Personaje 15',
+            'Personaje 16', 'Personaje 17', 'Personaje 18',
+            'Personaje 19', 'Personaje 20', 'Personaje 21',
+            'Personaje 22', 'Personaje 23', 'Personaje 24',
+            'Personaje 25', 'Personaje 26', 'Personaje 27',
         ];
         
         // Lista completa de todas las imágenes disponibles - ACTUALIZADA
         this.allAvailableImages = [
-            'pngwing.com (12).png', 'pngwing.com (13).png', 'pngwing.com (14).png',
-            'pngwing.com (15).png', 'pngwing.com (16).png', 'pngwing.com (17).png',
-            'pngwing.com (18).png', 'pngwing.com (19).png', 'pngwing.com (20).png',
-            'pngwing.com (21).png', 'pngwing.com (22).png', 'pngwing.com (23).png',
-            'pngwing.com (24).png', 'pngwing.com (25).png', 'pngwing.com (26).png',
-            'pngwing.com (27).png', 'pngwing.com (28).png', 'pngwing.com (29).png',
-            'pngwing.com (31).png', 'pngwing.com (32).png', 'pngwing.com (33).png',
-            'pngwing.com (34).png', 'pngwing.com (35).png', 'pngwing.com (36).png'
+            '1.png', '2.png', '3.png',
+            '4.png', '5.png', '6.png',
+            '7.png', '8.png', '9.png',
+            '10.png', '11.png', '12.png',
+            '13.png', '14.png', '15.png',
+            '16.png', '17.png', '18.png',
+            '19.png', '20.png', '21.png',
+            '22.png', '23.png', '24.png',
+            '25.png', '26.png', '27.png',
         ];
-        
         this.detectedImages = [];
         this.randomizedImages = [];
         this.frameLayout = null;
