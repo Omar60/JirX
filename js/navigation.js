@@ -1,9 +1,10 @@
 // Gestión de la navegación
 export class NavigationManager {
-    constructor(storyManager, characterManager, contentManager) {
+    constructor(storyManager, characterManager, contentManager, effectsManager) {
         this.storyManager = storyManager;
         this.characterManager = characterManager;
         this.contentManager = contentManager;
+        this.effectsManager = effectsManager;
         this.navigationControls = null;
         this.prevButton = null;
         this.nextButton = null;
@@ -96,6 +97,12 @@ export class NavigationManager {
                 break;
             case "ready":
                 this.characterManager.lottiePlayer.style.animation = 'pulse 1s ease-in-out 3';
+                break;
+            case "final":
+                // ¡LLUVIA FINAL DE CORAZONES Y ESTRELLAS!
+                setTimeout(() => {
+                    this.effectsManager.createFinalRain();
+                }, 1000); // Delay de 1 segundo para que aparezca el contenido primero
                 break;
             case "end":
                 // Efectos finales

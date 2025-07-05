@@ -3,6 +3,8 @@ export class EffectsManager {
     constructor() {
         this.heartsContainer = null;
         this.particleIntervals = [];
+        this.testingEnabled = true; // Habilitar/deshabilitar teclas de testing
+        this.finalRainActive = false; // Estado de la lluvia final
     }
 
     init() {
@@ -11,6 +13,7 @@ export class EffectsManager {
             console.warn('Hearts container no encontrado');
         }
         this.setupEventListeners();
+        this.setupTestingKeys();
         this.startBackgroundEffects();
     }
 
@@ -34,6 +37,52 @@ export class EffectsManager {
             if (now - lastSparkle > 100) { // Throttle a 100ms
                 this.createSparkle(e.clientX, e.clientY);
                 lastSparkle = now;
+            }
+        });
+    }
+
+    setupTestingKeys() {
+        document.addEventListener('keydown', (e) => {
+            if (!this.testingEnabled) return;
+
+            // T o t - Testing de lluvia final
+            if (e.key === 't' || e.key === 'T') {
+                if (!this.finalRainActive) {
+                    console.log('🧪 TESTING: Activando lluvia final...');
+                    this.createFinalRain();
+                } else {
+                    console.log('⚠️ TESTING: Lluvia final ya está activa');
+                }
+            }
+
+            // Ctrl + T - Desactivar/activar testing
+            if (e.ctrlKey && (e.key === 't' || e.key === 'T')) {
+                e.preventDefault();
+                this.testingEnabled = !this.testingEnabled;
+                console.log(`🔧 TESTING: ${this.testingEnabled ? 'Activado' : 'Desactivado'}`);
+                
+                // Mostrar notificación visual
+                this.showTestingNotification(this.testingEnabled);
+            }
+
+            // H o h - Testing de corazones individuales
+            if (e.key === 'h' || e.key === 'H') {
+                console.log('🧪 TESTING: Creando corazones aleatorios...');
+                for(let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        this.createRandomHeart();
+                    }, i * 200);
+                }
+            }
+
+            // E o e - Testing de estrellas
+            if (e.key === 'e' || e.key === 'E') {
+                console.log('🧪 TESTING: Creando estrellas...');
+                for(let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        this.createStarParticle();
+                    }, i * 300);
+                }
             }
         });
     }
@@ -180,9 +229,137 @@ export class EffectsManager {
     }
 
     createRandomHeart() {
-        const x = Math.random() * window.innerWidth;
-        const y = Math.random() * window.innerHeight;
-        this.createHeart(x, y);
+        // Posición X aleatoria con un pequeño margen para evitar bordes
+        const margin = 50;
+        const x = margin + Math.random() * (window.innerWidth - margin * 2);
+        
+        // Posición Y inicial variable para más naturalidad
+        const y = -30 - Math.random() * 20; // Entre -30px y -50px
+        
+        this.createFallingHeart(x, y);
+    }
+
+    createFallingHeart(x, y) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '💖';
+        heart.className = 'falling-heart';
+        heart.style.position = 'fixed';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        heart.style.pointerEvents = 'none';
+        heart.style.zIndex = '5';
+        heart.style.fontSize = (18 + Math.random() * 8) + 'px'; // Tamaño variable: 18-26px
+        heart.style.color = '#ff6b6b';
+        
+        // Elegir animación aleatoria incluyendo rotaciones inversas
+        const animations = [
+            'fallAndFloat', 
+            'fallAndFloatAlt1', 
+            'fallAndFloatAlt2',
+            'fallAndFloatReverse',      // Rotación inversa
+            'fallAndFloatReverseAlt'    // Rotación inversa alternativa
+        ];
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        const duration = 4 + Math.random() * 1.5; // Duración similar a estrellas: 4-5.5s
+        
+        heart.style.animation = `${randomAnimation} ${duration}s linear forwards`;
+
+        // Agregar directamente al body para no estar limitado por contenedores
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            if (heart.parentNode) {
+                heart.remove();
+            }
+        }, Math.ceil(duration * 1000));
+    }
+
+    createFinalRain() {
+        if (this.finalRainActive) {
+            console.log('⚠️ Lluvia final ya está en progreso');
+            return;
+        }
+
+        this.finalRainActive = true;
+        console.log('🌧️ Iniciando lluvia final de corazones y estrellas...');
+        
+        // Lluvia intensa de corazones por 6 segundos
+        const heartRain = setInterval(() => {
+            for(let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    this.createRandomHeart();
+                }, i * 100);
+            }
+        }, 300);
+
+        // Lluvia de estrellas por 6 segundos
+        const starRain = setInterval(() => {
+            for(let i = 0; i < 9; i++) {
+                setTimeout(() => {
+                    this.createStarParticle();
+                }, i * 150);
+            }
+        }, 250);
+
+        // Detener después de 12 segundos
+        setTimeout(() => {
+            clearInterval(heartRain);
+            clearInterval(starRain);
+            this.finalRainActive = false;
+            console.log('✨ Lluvia final completada');
+        }, 12000);
+    }
+
+    showTestingNotification(enabled) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${enabled ? '#4caf50' : '#f44336'};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: slideInRight 0.3s ease-out;
+        `;
+        
+        notification.innerHTML = `
+            🔧 Testing ${enabled ? 'ACTIVADO' : 'DESACTIVADO'}
+            <div style="font-size: 11px; margin-top: 4px; opacity: 0.9;">
+                ${enabled ? 'T: Lluvia final | H: Corazones | E: Estrellas' : 'Ctrl+T para reactivar'}
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }, 3000);
+    }
+
+    // Métodos públicos para control externo
+    enableTesting() {
+        this.testingEnabled = true;
+        console.log('🔧 Testing habilitado desde código');
+    }
+
+    disableTesting() {
+        this.testingEnabled = false;
+        console.log('🔧 Testing deshabilitado desde código');
+    }
+
+    getTestingStatus() {
+        return this.testingEnabled;
     }
 
     vibrate() {

@@ -16,7 +16,8 @@ class App {
         this.navigationManager = new NavigationManager(
             this.storyManager,
             this.characterManager,
-            this.contentManager
+            this.contentManager,
+            this.effectsManager
         );
         this.isInitialized = false;
     }
@@ -226,12 +227,23 @@ document.addEventListener('DOMContentLoaded', () => {
    • S: 🎲 ALEATORIZAR imágenes (¡NUEVO!)
    • I: Mostrar estadísticas de aleatorización
 
+🧪 TESTING DE EFECTOS:
+   • T: 🌧️ LLUVIA FINAL (corazones + estrellas)
+   • H: 💖 Corazones aleatorios (5x)
+   • E: ✨ Estrellas de prueba (3x)
+   • Ctrl+T: Activar/desactivar testing
+
 🎨 Personalización:
    • setCharacterNames(['Nombre1', 'Nombre2', ...])
    • updateCharacters(['url1', 'url2', ...])
    • shuffleImages() - 🎲 Mezclar orden aleatorio
    • getStats() - Ver estadísticas de aleatorización
    • reloadImages() - después de añadir imágenes
+
+🔧 Control de Testing:
+   • app.effectsManager.enableTesting() - Habilitar
+   • app.effectsManager.disableTesting() - Deshabilitar
+   • app.effectsManager.getTestingStatus() - Estado actual
 
 🎲 CARACTERÍSTICAS ALEATORIAS:
    • Cada carga usa un orden completamente aleatorio
