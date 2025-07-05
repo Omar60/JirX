@@ -1,18 +1,19 @@
 /* ==========================================================================
    CHARACTER-FRAME.CSS - Marco de Personajes y Collage Adaptativo
+   Sistema de posicionamiento para crear un collage romántico alrededor del contenido
    ========================================================================== */
 
-/* Marco principal del collage */
+/* Marco principal del collage - contenedor invisible de fondo */
 .character-frame {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none;
+    pointer-events: none; /* No interfiere con la interacción del contenido */
     z-index: var(--z-background);
     opacity: 0;
-    animation: frameAppear 2s ease-out 1s forwards;
+    animation: frameAppear 2s ease-out 1s forwards; /* Aparición suave con delay */
 }
 
 @keyframes frameAppear {
@@ -27,23 +28,23 @@
 }
 
 /* ==========================================================================
-   ESQUINAS DEL COLLAGE
+   ESQUINAS DEL COLLAGE - Elementos decorativos en las 4 esquinas
    ========================================================================== */
 
 .character-corner {
     position: absolute;
-    border-radius: 0;
     overflow: visible !important;
     transition: all var(--transition-medium) cubic-bezier(0.4, 0, 0.2, 1);
-    animation: floatCollage 8s ease-in-out infinite;
+    animation: floatCollage 8s ease-in-out infinite; /* Flotación suave continua */
     transform-origin: center;
     z-index: var(--z-frame);
     width: var(--character-corner-width);
     height: var(--character-corner-height);
-    --base-rotation: 0deg;
+    --base-rotation: 0deg; /* Variable personalizada para cada esquina */
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
+/* Efectos hover para interactividad */
 .character-corner:hover {
     transform: scale(1.08) rotate(2deg);
     filter: brightness(1.1) saturate(1.2) drop-shadow(0 6px 15px rgba(0, 0, 0, 0.3));
@@ -57,14 +58,13 @@
     object-position: center;
     transition: transform var(--transition-medium);
     filter: brightness(1.05) saturate(1.1);
-    border-radius: 0;
 }
 
 .character-corner:hover img {
-    transform: scale(1.02) rotate(-1deg);
+    transform: scale(1.02) rotate(-1deg); /* Contra-rotación sutil */
 }
 
-/* Posiciones específicas de las esquinas */
+/* Posicionamiento específico de cada esquina con rotaciones naturales */
 .top-left {
     top: 15px;
     left: 15px;
@@ -102,18 +102,19 @@
 }
 
 /* ==========================================================================
-   LATERALES DEL COLLAGE - SIEMPRE FIJOS EN LOS LATERALES
+   LATERALES DEL COLLAGE - Columnas y filas de imágenes decorativas
    ========================================================================== */
 
+/* Clase base para todos los lados del collage */
 .character-side {
     position: absolute;
     display: flex;
     gap: var(--character-gap);
 }
 
-/* Lado izquierdo - SIEMPRE FIJO EN EL LATERAL IZQUIERDO */
+/* Columna izquierda - SIEMPRE fija en el lateral izquierdo */
 .left-side {
-    left: 20px !important; /* FORZAR POSICIÓN LATERAL */
+    left: 20px !important;
     top: 50%;
     transform: translateY(-50%) rotate(-8deg);
     flex-direction: column;
@@ -124,9 +125,9 @@
     align-items: center;
 }
 
-/* Lado derecho - SIEMPRE FIJO EN EL LATERAL DERECHO */
+/* Columna derecha - SIEMPRE fija en el lateral derecho */
 .right-side {
-    right: 20px !important; /* FORZAR POSICIÓN LATERAL */
+    right: 20px !important;
     top: 50%;
     transform: translateY(-50%) rotate(8deg);
     flex-direction: column;
@@ -137,7 +138,7 @@
     align-items: center;
 }
 
-/* Parte superior */
+/* Fila superior - centrada horizontalmente */
 .top-side {
     top: 20px;
     left: 50%;
@@ -150,7 +151,7 @@
     align-items: center;
 }
 
-/* Parte inferior */
+/* Fila inferior - centrada horizontalmente */
 .bottom-side {
     bottom: 20px;
     left: 50%;
@@ -164,27 +165,27 @@
 }
 
 /* ==========================================================================
-   ITEMS INDIVIDUALES DEL COLLAGE
+   ITEMS INDIVIDUALES DEL COLLAGE - Elementos de imagen dentro de cada lado
    ========================================================================== */
 
 .character-item {
-    border-radius: 0;
     overflow: visible !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     animation: characterItemAppear 1.2s ease-out forwards;
-    opacity: 0;
+    opacity: 0; /* Inicia invisible para animación de entrada */
     position: relative;
     margin: 0;
     width: var(--character-item-width);
     height: var(--character-item-height);
-    flex-shrink: 0;
+    flex-shrink: 0; /* Mantiene tamaño fijo en flex container */
     filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
 }
 
+/* Efectos hover interactivos */
 .character-item:hover {
     transform: scale(1.1) rotate(-3deg);
     filter: brightness(1.1) saturate(1.2) drop-shadow(0 5px 12px rgba(0, 0, 0, 0.25));
-    z-index: 30;
+    z-index: 30; /* Se eleva sobre otros elementos */
 }
 
 .character-item img {
@@ -194,32 +195,31 @@
     object-position: center;
     transition: transform 0.4s ease;
     filter: brightness(1.02) saturate(1.05);
-    border-radius: 0;
 }
 
 .character-item:hover img {
-    transform: scale(1.03) rotate(2deg);
+    transform: scale(1.03) rotate(2deg); /* Micro-rotación en hover */
 }
 
 /* ==========================================================================
-   ROTACIONES VARIADAS PARA EFECTO NATURAL
+   ROTACIONES VARIADAS - Efecto natural y orgánico para cada imagen
    ========================================================================== */
 
-/* Lado izquierdo */
+/* Rotaciones para columna izquierda - alternando direcciones */
 .left-side .character-item:nth-child(1) { transform: rotate(12deg); z-index: 18; }
 .left-side .character-item:nth-child(2) { transform: rotate(-15deg); z-index: 17; }
 .left-side .character-item:nth-child(3) { transform: rotate(8deg); z-index: 16; }
 .left-side .character-item:nth-child(4) { transform: rotate(-10deg); z-index: 15; }
 .left-side .character-item:nth-child(5) { transform: rotate(14deg); z-index: 14; }
 
-/* Lado derecho */
+/* Rotaciones para columna derecha - espejo de la izquierda */
 .right-side .character-item:nth-child(1) { transform: rotate(-12deg); z-index: 19; }
 .right-side .character-item:nth-child(2) { transform: rotate(16deg); z-index: 20; }
 .right-side .character-item:nth-child(3) { transform: rotate(-9deg); z-index: 21; }
 .right-side .character-item:nth-child(4) { transform: rotate(13deg); z-index: 22; }
 .right-side .character-item:nth-child(5) { transform: rotate(-11deg); z-index: 23; }
 
-/* Parte superior */
+/* Rotaciones para fila superior - variaciones sutiles */
 .top-side .character-item:nth-child(1) { transform: rotate(-8deg); z-index: 24; }
 .top-side .character-item:nth-child(2) { transform: rotate(10deg); z-index: 25; }
 .top-side .character-item:nth-child(3) { transform: rotate(-6deg); z-index: 26; }
@@ -227,7 +227,7 @@
 .top-side .character-item:nth-child(5) { transform: rotate(-5deg); z-index: 28; }
 .top-side .character-item:nth-child(6) { transform: rotate(7deg); z-index: 29; }
 
-/* Parte inferior */
+/* Rotaciones para fila inferior - más pronunciadas */
 .bottom-side .character-item:nth-child(1) { transform: rotate(15deg); z-index: 30; }
 .bottom-side .character-item:nth-child(2) { transform: rotate(-11deg); z-index: 31; }
 .bottom-side .character-item:nth-child(3) { transform: rotate(12deg); z-index: 32; }
@@ -236,10 +236,10 @@
 .bottom-side .character-item:nth-child(6) { transform: rotate(-7deg); z-index: 35; }
 
 /* ==========================================================================
-   ANIMACIONES DEL COLLAGE
+   ANIMACIONES DEL COLLAGE - Efectos de entrada y flotación
    ========================================================================== */
 
-/* Animaciones escalonadas para items */
+/* Delays escalonados para entrada secuencial de elementos */
 .character-item:nth-child(1) { animation-delay: 0.1s; }
 .character-item:nth-child(2) { animation-delay: 0.2s; }
 .character-item:nth-child(3) { animation-delay: 0.3s; }
@@ -247,6 +247,7 @@
 .character-item:nth-child(5) { animation-delay: 0.5s; }
 .character-item:nth-child(6) { animation-delay: 0.6s; }
 
+/* Animación de aparición para items individuales */
 @keyframes characterItemAppear {
     from {
         opacity: 0;
@@ -258,6 +259,7 @@
     }
 }
 
+/* Animación de flotación continua para esquinas */
 @keyframes floatCollage {
     0%, 100% {
         transform: translateY(0) rotate(var(--base-rotation, 0deg));
@@ -274,102 +276,38 @@
 }
 
 /* ==========================================================================
-   LAYOUTS ESPECÍFICOS POR VIEWPORT
+   AJUSTES DINÁMICOS POR CANTIDAD DE IMÁGENES
    ========================================================================== */
 
-.mobile-layout {
-    gap: calc(var(--character-gap) - 20px);
-}
+/* Tamaños de esquinas según cantidad total de imágenes disponibles */
+.character-frame[data-image-count="4"] .character-corner { width: 160px !important; height: 200px !important; }
+.character-frame[data-image-count="8"] .character-corner { width: 150px !important; height: 190px !important; }
+.character-frame[data-image-count="16"] .character-corner { width: 130px !important; height: 170px !important; }
+.character-frame[data-image-count="20"] .character-corner { width: 120px !important; height: 160px !important; }
 
-.tablet-layout {
-    gap: calc(var(--character-gap) - 25px);
-}
-
-.laptop-layout {
-    gap: calc(var(--character-gap) - 30px);
-}
-
-.desktop-layout {
-    gap: calc(var(--character-gap) - 35px);
-}
-
-/* ==========================================================================
-   AJUSTES POR CANTIDAD DE IMÁGENES
-   ========================================================================== */
-
-.character-frame[data-image-count="4"] .character-corner {
-    width: 160px !important;
-    height: 200px !important;
-}
-
-.character-frame[data-image-count="8"] .character-corner {
-    width: 150px !important;
-    height: 190px !important;
-}
-
-.character-frame[data-image-count="12"] .character-corner {
-    width: var(--character-corner-width) !important;
-    height: var(--character-corner-height) !important;
-}
-
-.character-frame[data-image-count="16"] .character-corner {
-    width: 130px !important;
-    height: 170px !important;
-}
-
-.character-frame[data-image-count="20"] .character-corner {
-    width: 120px !important;
-    height: 160px !important;
-}
-
-/* Ajustes para laterales según cantidad de imágenes */
+/* Alturas de columnas laterales según cantidad de imágenes */
 .character-frame[data-image-count="4"] .left-side,
-.character-frame[data-image-count="4"] .right-side {
-    height: min(50vh, 400px);
-}
+.character-frame[data-image-count="4"] .right-side { height: min(50vh, 400px); }
 
 .character-frame[data-image-count="8"] .left-side,
-.character-frame[data-image-count="8"] .right-side {
-    height: min(60vh, 500px);
-}
-
-.character-frame[data-image-count="12"] .left-side,
-.character-frame[data-image-count="12"] .right-side {
-    height: min(70vh, 600px);
-}
+.character-frame[data-image-count="8"] .right-side { height: min(60vh, 500px); }
 
 .character-frame[data-image-count="16"] .left-side,
-.character-frame[data-image-count="16"] .right-side {
-    height: min(80vh, 700px);
-}
+.character-frame[data-image-count="16"] .right-side { height: min(80vh, 700px); }
 
 .character-frame[data-image-count="20"] .left-side,
-.character-frame[data-image-count="20"] .right-side {
-    height: min(85vh, 750px);
-}
+.character-frame[data-image-count="20"] .right-side { height: min(85vh, 750px); }
 
 /* ==========================================================================
-   AJUSTES POR VIEWPORT
+   AJUSTES POR TIPO DE DISPOSITIVO
    ========================================================================== */
 
-.character-frame[data-viewport="mobile"] {
-    opacity: 0.9;
-}
-
-.character-frame[data-viewport="tablet"] {
-    opacity: 0.95;
-}
-
-.character-frame[data-viewport="laptop"] {
-    opacity: 1;
-}
-
-.character-frame[data-viewport="desktop"] {
-    opacity: 1;
-}
+/* Opacidad reducida en dispositivos móviles para mejor legibilidad */
+.character-frame[data-viewport="mobile"] { opacity: 0.9; }
+.character-frame[data-viewport="tablet"] { opacity: 0.95; }
 
 /* ==========================================================================
-   EFECTOS ESPECIALES
+   EFECTOS ESPECIALES - Animaciones destacadas para momentos especiales
    ========================================================================== */
 
 .character-corner.special-effect,
@@ -387,180 +325,137 @@
 }
 
 /* ==========================================================================
-   FORZAR TRANSPARENCIA TOTAL
+   DISEÑO RESPONSIVE - Adaptación a diferentes tamaños de pantalla
    ========================================================================== */
 
-.character-corner,
-.character-corner *,
-.character-item,
-.character-item *,
-.character-side,
-.character-side * {
-    background: none !important;
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* Eliminar pseudo-elementos con fondo */
-.character-corner::before,
-.character-corner::after,
-.character-item::before,
-.character-item::after {
-    display: none !important;
-}
-
-/* ==========================================================================
-   RESPONSIVE DESIGN PARA CHARACTER FRAME - MANTENER LATERALES SIEMPRE
-   ========================================================================== */
-
+/* Desktop grande (1200px+) - máximo espacio disponible */
 @media (max-width: 1200px) {
-    :root {
-        --character-corner-width: 130px;
-        --character-corner-height: 170px;
-        --character-item-width: 95px;
-        --character-item-height: 125px;
-        --character-gap: 45px;
-    }
-    
-    /* LATERALES SIEMPRE EN SUS POSICIONES - NUNCA CENTRADOS */
     .left-side {
-        left: 15px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 15px !important;
         height: min(70vh, 600px);
         transform: translateY(-50%) rotate(-6deg);
     }
     
     .right-side {
-        right: 15px !important; /* FORZAR LATERAL DERECHO */
+        right: 15px !important;
         height: min(70vh, 600px);
         transform: translateY(-50%) rotate(6deg);
     }
     
-    .top-side, .bottom-side {
+    .top-side {
         width: min(80vw, 800px);
+        transform: translateX(-50%) rotate(-4deg) !important;
+    }
+    
+    .bottom-side {
+        width: min(80vw, 800px);
+        transform: translateX(-50%) rotate(4deg) !important;
     }
 }
 
+/* Laptop (1024px+) - espacios más compactos */
 @media (max-width: 1024px) {
-    :root {
-        --character-corner-width: 120px;
-        --character-corner-height: 155px;
-        --character-item-width: 90px;
-        --character-item-height: 115px;
-        --character-gap: 40px;
-    }
-    
-    /* LATERALES SIEMPRE EN SUS POSICIONES - LAPTOP */
     .left-side {
-        left: 12px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 12px !important;
         height: min(65vh, 550px);
         transform: translateY(-50%) rotate(-5deg);
     }
     
     .right-side {
-        right: 12px !important; /* FORZAR LATERAL DERECHO */
+        right: 12px !important;
         height: min(65vh, 550px);
         transform: translateY(-50%) rotate(5deg);
     }
     
-    .top-side, .bottom-side {
+    .top-side {
         width: min(75vw, 700px);
+        transform: translateX(-50%) rotate(-3deg) !important;
+    }
+    
+    .bottom-side {
+        width: min(75vw, 700px);
+        transform: translateX(-50%) rotate(3deg) !important;
     }
 }
 
+/* Tablet (768px+) - ajustes para pantallas medianas */
 @media (max-width: 768px) {
-    :root {
-        --character-corner-width: 110px;
-        --character-corner-height: 140px;
-        --character-item-width: 85px;
-        --character-item-height: 105px;
-        --character-gap: 35px;
-    }
-    
-    /* LATERALES SIEMPRE EN SUS POSICIONES - TABLET */
     .left-side {
-        left: 10px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 10px !important;
         height: min(55vh, 450px);
         transform: translateY(-50%) rotate(-4deg);
     }
     
     .right-side {
-        right: 10px !important; /* FORZAR LATERAL DERECHO */
+        right: 10px !important;
         height: min(55vh, 450px);
         transform: translateY(-50%) rotate(4deg);
     }
     
     .top-side {
-        top: 15px;
+        top: 15px !important;
         width: min(65vw, 500px);
         transform: translateX(-50%) rotate(-2deg);
     }
     
     .bottom-side {
-        bottom: 15px;
+        bottom: 15px !important;
         width: min(65vw, 500px);
         transform: translateX(-50%) rotate(2deg);
     }
 }
 
+/* Móvil grande (480px+) - optimizado para touch */
 @media (max-width: 480px) {
-    :root {
-        --character-corner-width: 100px;
-        --character-corner-height: 125px;
-        --character-item-width: 80px;
-        --character-item-height: 95px;
-        --character-gap: 30px;
-    }
-    
-    /* LATERALES SIEMPRE EN SUS POSICIONES - MÓVIL */
     .left-side {
-        left: 8px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 8px !important;
         height: min(45vh, 350px);
         transform: translateY(-50%) rotate(-3deg);
     }
     
     .right-side {
-        right: 8px !important; /* FORZAR LATERAL DERECHO */
+        right: 8px !important;
         height: min(45vh, 350px);
         transform: translateY(-50%) rotate(3deg);
     }
     
-    .top-side, .bottom-side {
+    .top-side {
         width: min(55vw, 400px);
+        transform: translateX(-50%) rotate(-2deg) !important;
+    }
+    
+    .bottom-side {
+        width: min(55vw, 400px);
+        transform: translateX(-50%) rotate(2deg) !important;
     }
     
     .character-frame {
-        opacity: 0.95;
+        opacity: 0.95; /* Menos intrusivo en móvil */
     }
 }
 
+/* Móvil pequeño (320px+) - máxima compatibilidad */
 @media (max-width: 320px) {
-    :root {
-        --character-corner-width: 90px;
-        --character-corner-height: 115px;
-        --character-item-width: 75px;
-        --character-item-height: 90px;
-        --character-gap: 25px;
-    }
-    
-    /* LATERALES SIEMPRE EN SUS POSICIONES - MÓVIL PEQUEÑO */
     .left-side {
-        left: 5px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 5px !important;
         height: min(40vh, 300px);
         transform: translateY(-50%) rotate(-2deg);
     }
     
     .right-side {
-        right: 5px !important; /* FORZAR LATERAL DERECHO */
+        right: 5px !important;
         height: min(40vh, 300px);
         transform: translateY(-50%) rotate(2deg);
     }
     
-    .top-side, .bottom-side {
+    .top-side {
         width: min(50vw, 300px);
+        transform: translateX(-50%) rotate(-1deg) !important;
+    }
+    
+    .bottom-side {
+        width: min(50vw, 300px);
+        transform: translateX(-50%) rotate(1deg) !important;
     }
     
     .character-frame {
@@ -568,55 +463,59 @@
     }
 }
 
-/* ==========================================================================
-   AJUSTES PARA ORIENTACIÓN LANDSCAPE EN MÓVIL
-   ========================================================================== */
-
+/* Orientación horizontal en móvil - ajuste especial */
 @media (max-width: 767px) and (orientation: landscape) {
-    /* LATERALES SIEMPRE EN SUS POSICIONES - LANDSCAPE */
     .left-side {
-        left: 5px !important; /* FORZAR LATERAL IZQUIERDO */
+        left: 5px !important;
         height: min(70vh, 400px);
         transform: translateY(-50%) rotate(-2deg);
     }
     
     .right-side {
-        right: 5px !important; /* FORZAR LATERAL DERECHO */
+        right: 5px !important;
         height: min(70vh, 400px);
         transform: translateY(-50%) rotate(2deg);
     }
     
-    .top-side, .bottom-side {
+    .top-side {
         width: min(40vw, 250px);
+        transform: translateX(-50%) rotate(-1deg) !important;
+    }
+    
+    .bottom-side {
+        width: min(40vw, 250px);
+        transform: translateX(-50%) rotate(1deg) !important;
     }
 }
 
 /* ==========================================================================
-   REGLAS ESPECÍFICAS PARA EVITAR CENTRADO
+   REGLAS DE POSICIONAMIENTO FIJO - Evitar centrado no deseado
    ========================================================================== */
 
-/* NUNCA permitir que los laterales se centren */
+/* Forzar posición lateral fija para columnas */
 .left-side {
     left: 20px !important;
     right: auto !important;
-    margin-left: 0 !important;
-    margin-right: auto !important;
 }
 
 .right-side {
     right: 20px !important;
     left: auto !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
 }
 
-/* Asegurar que no hay reglas que fuercen centrado */
-.character-side.left-side {
-    justify-self: start !important;
-    align-self: center !important;
+/* Forzar posición centrada horizontal para filas superiores e inferiores */
+.top-side {
+    top: 20px !important;
+    bottom: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) rotate(-4deg) !important;
 }
 
-.character-side.right-side {
-    justify-self: end !important;
-    align-self: center !important;
+.bottom-side {
+    bottom: 20px !important;
+    top: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) rotate(4deg) !important;
 }
