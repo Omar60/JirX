@@ -77,14 +77,7 @@ export class CharacterFrameManager {
             } catch (error) {
                 console.log(`⚠️ Imagen no encontrada: ${imageName}`);
             }
-        }
-        
-        // Si no hay imágenes locales, usar placeholders
-        if (this.detectedImages.length === 0) {
-            console.log('📸 Usando imágenes placeholder de Pexels');
-            this.detectedImages = this.generatePlaceholderImages(24);
-        }
-        
+        }              
         console.log(`📊 Total de imágenes detectadas: ${this.detectedImages.length}`);
     }
 
@@ -157,20 +150,6 @@ export class CharacterFrameManager {
                 }
             }, 300);
         }, 3000);
-    }
-
-    generatePlaceholderImages(count) {
-        const placeholders = [];
-        const pexelsIds = [1040881, 1239291, 1181686, 1181690, 1040880, 1239288, 
-                          1181681, 1181687, 1040882, 1239289, 1181683, 1181688,
-                          1040883, 1239290, 1181684, 1181689, 1040884, 1239292,
-                          1040885, 1239293, 1181685, 1181691, 1040886, 1239294];
-        
-        for (let i = 0; i < count; i++) {
-            const id = pexelsIds[i % pexelsIds.length];
-            placeholders.push(`https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`);
-        }
-        return placeholders;
     }
 
     getViewportSize() {
@@ -421,7 +400,6 @@ export class CharacterFrameManager {
             const imageName = this.randomizedImages[index];
             return imageName.startsWith('http') ? imageName : `assets/characters/${imageName}`;
         }
-        return this.generatePlaceholderImages(1)[0];
     }
 
     setupResizeListener() {
