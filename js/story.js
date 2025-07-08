@@ -69,7 +69,7 @@ export class StoryManager {
                 content: {
                     title: "Una Puerta Abierta, Sin Presión",
                     text: "Si en algún momento decides que es tiempo de buscar lo que realmente mereces, si anhelas reencontrarte con esa persona increíble que sé que eres, quiero que sepas que estoy aquí. No para aprovecharme, ni para presionar, sino para ofrecerte mi apoyo incondicional y, si tú lo sientes, la posibilidad de construir algo nuevo y hermoso juntos. Este mensaje es un reflejo puro de mi cariño y respeto, sin más pretensiones que tu bienestar y la esperanza de que, si hay una oportunidad, la consideres.",
-                    signature: "Con todo mi cariño y respeto, [Tu nombre]"
+                    signature: "Con todo mi cariño y respeto ~ "
                 }
             },
             {
