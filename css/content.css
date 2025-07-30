@@ -752,3 +752,1016 @@
         max-width: 600px;
     }
 }
+
+/* ==========================================================================
+   MÓDULO: SISTEMA DE MENSAJES EXCLUSIVOS POR CÓDIGO QR
+   ========================================================================== */
+
+/* -------------------------
+   QR Messages Container (Independiente)
+   ------------------------- */
+
+.qr-messages-container {
+    position: relative;
+    z-index: var(--z-content);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    contain: layout style;
+    /* NO interferir con el contenido principal */
+}
+
+/* -------------------------
+   QR Central Mode (Reemplaza historia)
+   ------------------------- */
+
+.qr-central-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+}
+
+.qr-central-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    z-index: 500;
+    padding: 2rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.qr-central-message {
+    background: var(--bg-white-95);
+    border-radius: var(--border-radius-lg);
+    padding: 32px 40px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-strong);
+    backdrop-filter: blur(15px);
+    max-width: 700px;
+    width: 92%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all var(--transition-cubic-slow);
+    border: 3px solid var(--pink-border-strong);
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    z-index: 600;
+    pointer-events: auto;
+}
+
+.qr-central-message::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.1), transparent 60%);
+    animation: romanticGlow 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.qr-central-message::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(102, 126, 234, 0.05) 0%, 
+        rgba(118, 75, 162, 0.08) 50%, 
+        rgba(139, 148, 212, 0.05) 100%);
+    border-radius: var(--border-radius-lg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes romanticGlow {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        opacity: 0.4;
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+.qr-central-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* -------------------------
+   QR Central Content
+   ------------------------- */
+
+.qr-central-content {
+    font-family: var(--font-decorative);
+    font-size: var(--font-content-title);
+    color: var(--primary-color);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: var(--spacing-lg);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    letter-spacing: 0.5px;
+}
+
+.qr-central-subtitle {
+    font-size: var(--font-content-text);
+    color: var(--text-dark);
+    font-style: italic;
+    margin-bottom: var(--spacing-lg);
+    font-weight: 400;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* -------------------------
+   QR Central Hearts Animation
+   ------------------------- */
+
+.romantic-hearts-central {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.romantic-hearts-central::before,
+.romantic-hearts-central::after {
+    content: '💕';
+    position: absolute;
+    color: var(--heart-soft);
+    animation: floatRomanticHeart 6s ease-in-out infinite;
+    font-size: 16px;
+    text-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
+}
+
+.romantic-hearts-central::before {
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+    font-size: 14px;
+}
+
+.romantic-hearts-central::after {
+    top: 65%;
+    right: 18%;
+    animation-delay: 3s;
+    font-size: 18px;
+}
+
+@keyframes floatRomanticHeart {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translateY(-8px) rotate(3deg) scale(1.05);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-4px) rotate(-2deg) scale(0.95);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(-10px) rotate(4deg) scale(1.1);
+        opacity: 0.4;
+    }
+}
+
+/* -------------------------
+   Central Message Animations
+   ------------------------- */
+
+.qr-central-message.central-magical-entrance {
+    animation: contentSlideUp 0.8s ease-out;
+}
+
+@keyframes contentSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -------------------------
+   QR Central Type Variants
+   ------------------------- */
+
+.qr-central-message.type-sweet::before {
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08), transparent 60%);
+}
+
+.qr-central-message.type-romantic::before {
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.1), transparent 60%);
+}
+
+.qr-central-message.type-playful::before {
+    background: radial-gradient(circle, rgba(139, 148, 212, 0.08), transparent 60%);
+}
+
+.qr-central-message.type-tender::before {
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.06), transparent 60%);
+}
+
+.qr-central-message.type-passionate::before {
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.12), transparent 60%);
+}
+
+/* -------------------------
+   Preservar elementos decorativos en modo QR Central
+   ------------------------- */
+
+/* Asegurar que el marco del personaje permanezca visible */
+body.qr-central-mode .character-frame {
+    z-index: 400 !important;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* Asegurar que los corazones flotantes permanezcan visibles */
+body.qr-central-mode .floating-hearts {
+    z-index: 300 !important;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Mantener el contenedor de corazones visible */
+body.qr-central-mode .hearts-container {
+    z-index: 250 !important;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Mantener efectos de corazón individuales */
+body.qr-central-mode .heart {
+    z-index: 280 !important;
+    opacity: 0.6;
+}
+
+/* Mantener título y subtítulo visible pero atenuado */
+body.qr-central-mode .header {
+    z-index: 200 !important;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Asegurar que el contenedor principal mantenga estructura */
+body.qr-central-mode .container {
+    z-index: 150 !important;
+}
+
+/* -------------------------
+   QR Message Container Base (Versión pequeña para errores)
+   ------------------------- */
+
+.qr-exclusive-message {
+    background: var(--bg-white-95);
+    border-radius: var(--border-radius-lg);
+    padding: 28px 36px;
+    margin: var(--spacing-md) auto;
+    box-shadow: var(--shadow-strong);
+    backdrop-filter: blur(15px);
+    max-width: 650px;
+    width: 95%;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: all var(--transition-cubic-slow);
+    border: 3px solid var(--pink-border-strong);
+    position: relative;
+    z-index: var(--z-content);
+    text-align: center;
+    overflow: hidden;
+    contain: layout style paint;
+    will-change: transform, opacity;
+}
+
+.qr-exclusive-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* -------------------------
+   QR Message Visual Effects
+   ------------------------- */
+
+.qr-exclusive-message::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08), transparent 60%);
+    animation: romanticGlow 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes romanticGlow {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1);
+        opacity: 0.6;
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* -------------------------
+   QR Message Type Variants
+   ------------------------- */
+
+.qr-exclusive-message.type-sweet {
+    border-color: var(--pink-border);
+    background: var(--bg-white-98);
+}
+
+.qr-exclusive-message.type-romantic {
+    border-color: var(--primary-color);
+    background: var(--bg-white-98);
+}
+
+.qr-exclusive-message.type-playful {
+    border-color: var(--accent-color);
+    background: var(--bg-white-98);
+}
+
+.qr-exclusive-message.type-tender {
+    border-color: var(--heart-color);
+    background: var(--bg-white-98);
+}
+
+.qr-exclusive-message.type-passionate {
+    border-color: var(--secondary-color);
+    background: var(--bg-white-98);
+}
+
+/* -------------------------
+   QR Message Content
+   ------------------------- */
+
+.qr-message-content {
+    font-family: var(--font-decorative);
+    font-size: var(--font-content-text);
+    color: var(--primary-color);
+    font-weight: 700;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    letter-spacing: 0.3px;
+}
+
+.qr-message-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-style: italic;
+    margin-top: var(--spacing-sm);
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* -------------------------
+   QR Message UI Elements
+   ------------------------- */
+
+.qr-exclusive-indicator {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(5px);
+    box-shadow: var(--shadow-soft);
+}
+
+/* -------------------------
+   QR Message Decorations
+   ------------------------- */
+
+.qr-exclusive-message .romantic-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.qr-exclusive-message .romantic-hearts::before,
+.qr-exclusive-message .romantic-hearts::after {
+    content: '💖';
+    position: absolute;
+    color: var(--heart-soft);
+    font-size: 14px;
+    animation: floatRomanticHeart 10s ease-in-out infinite;
+    z-index: 1;
+}
+
+.qr-exclusive-message .romantic-hearts::before {
+    top: 15%;
+    left: 8%;
+    animation-delay: 0s;
+    font-size: 12px;
+}
+
+.qr-exclusive-message .romantic-hearts::after {
+    top: 70%;
+    right: 10%;
+    animation-delay: 5s;
+    font-size: 16px;
+}
+
+@keyframes floatRomanticHeart {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.2;
+    }
+    25% {
+        transform: translateY(-8px) rotate(90deg) scale(1.1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-5px) rotate(180deg) scale(0.9);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateY(-12px) rotate(270deg) scale(1.2);
+        opacity: 0.3;
+    }
+}
+
+/* -------------------------
+   QR Message Animations
+   ------------------------- */
+
+.qr-exclusive-message.magical-entrance {
+    animation: contentSlideUp 0.8s ease-out;
+}
+
+/* -------------------------
+   QR Access Denied Module
+   ------------------------- */
+
+.qr-access-denied {
+    background: linear-gradient(135deg, #fff5f5, #ffe6e6);
+    border: 3px solid #ffb3b3;
+    text-align: center;
+    padding: 32px;
+    border-radius: var(--border-radius-lg);
+    max-width: 500px;
+    margin: var(--spacing-lg) auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-cubic-slow);
+    contain: layout style;
+}
+
+.qr-access-denied.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.qr-access-denied h3 {
+    color: #d63384;
+    font-family: var(--font-decorative);
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.qr-access-denied p {
+    color: rgba(214, 51, 132, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-xs);
+}
+
+.qr-access-denied .lock-icon {
+    font-size: 2rem;
+    color: rgba(214, 51, 132, 0.6);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* -------------------------
+   QR Anti-Collision System (Solo para mascota)
+   ------------------------- */
+
+.qr-exclusive-message.safe-position {
+    margin-bottom: 140px !important;
+    z-index: var(--z-content-mobile) !important;
+}
+
+.qr-exclusive-message.collision-detected {
+    background: var(--bg-white-98) !important;
+    border: 4px solid var(--pink-border-strong) !important;
+    box-shadow: var(--shadow-modal) !important;
+    animation: qrCollisionAlert 0.5s ease-in-out 3;
+    z-index: 1000 !important;
+}
+
+@keyframes qrCollisionAlert {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.02);
+    }
+}
+
+/* Asegurar que QR no interfiera con contenido principal */
+.qr-messages-container + .dynamic-text,
+.dynamic-text + .qr-messages-container {
+    margin-top: var(--spacing-lg) !important;
+}
+
+/* ==========================================================================
+   MÓDULO: QR RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* -------------------------
+   QR Central Mode Responsive
+   ------------------------- */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .qr-central-container {
+        padding: 1.5rem;
+    }
+    
+    .qr-central-message {
+        padding: 32px 40px;
+        max-width: 85%;
+    }
+    
+    .qr-central-content {
+        font-size: 2rem;
+    }
+    
+    .qr-central-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .qr-central-container {
+        padding: 1rem;
+    }
+    
+    .qr-central-message {
+        padding: 28px 32px;
+        max-width: 90%;
+    }
+    
+    .qr-central-content {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+    
+    .qr-central-subtitle {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+    .qr-central-container {
+        padding: 0.75rem;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .qr-central-message {
+        padding: 24px 28px;
+        max-width: 95%;
+        border-radius: var(--border-radius-md);
+        margin: auto;
+        position: relative;
+        top: 0;
+        transform: translateY(0);
+    }
+    
+    .qr-central-content {
+        font-size: 1.4rem;
+        line-height: 1.3;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .qr-central-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .qr-central-indicator {
+        font-size: 0.85rem;
+        margin-bottom: var(--spacing-sm);
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 319px) {
+    .qr-central-container {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+    
+    .qr-central-message {
+        padding: 20px 24px;
+        max-width: 98%;
+        border-radius: var(--border-radius-sm);
+        margin: 0;
+        position: relative;
+        top: 0;
+        transform: none;
+    }
+    
+    .qr-central-message.show {
+        transform: none;
+    }
+    
+    .qr-central-content {
+        font-size: 1.2rem;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .qr-central-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .romantic-hearts-central::before,
+    .romantic-hearts-central::after {
+        font-size: 14px;
+    }
+}
+
+/* -------------------------
+   Preservar elementos decorativos en todas las resoluciones
+   ------------------------- */
+
+/* Desktop y laptop - elementos decorativos visibles */
+@media (min-width: 1024px) {
+    body.qr-central-mode .character-frame {
+        opacity: 0.9;
+        z-index: 400 !important;
+    }
+    
+    body.qr-central-mode .floating-hearts {
+        opacity: 0.8;
+        z-index: 300 !important;
+    }
+    
+    body.qr-central-mode .hearts-container {
+        opacity: 0.7;
+        z-index: 250 !important;
+    }
+    
+    body.qr-central-mode .header {
+        opacity: 0.6;
+        z-index: 200 !important;
+    }
+}
+
+/* Tablet - elementos decorativos moderadamente visibles */
+@media (min-width: 768px) and (max-width: 1023px) {
+    body.qr-central-mode .character-frame {
+        opacity: 0.8;
+        z-index: 400 !important;
+    }
+    
+    body.qr-central-mode .floating-hearts {
+        opacity: 0.7;
+        z-index: 300 !important;
+    }
+    
+    body.qr-central-mode .hearts-container {
+        opacity: 0.5;
+        z-index: 250 !important;
+    }
+    
+    body.qr-central-mode .header {
+        opacity: 0.4;
+        z-index: 200 !important;
+    }
+}
+
+/* Móvil - elementos decorativos sutilmente visibles */
+@media (max-width: 767px) {
+    body.qr-central-mode .character-frame {
+        opacity: 0.7;
+        z-index: 400 !important;
+    }
+    
+    body.qr-central-mode .floating-hearts {
+        opacity: 0.6;
+        z-index: 300 !important;
+    }
+    
+    body.qr-central-mode .hearts-container {
+        opacity: 0.4;
+        z-index: 250 !important;
+    }
+    
+    body.qr-central-mode .header {
+        opacity: 0.3;
+        z-index: 200 !important;
+    }
+}
+
+/* -------------------------
+   Tablet QR Adaptations (Mensajes de error)
+   ------------------------- */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .qr-exclusive-message {
+        padding: 24px 28px;
+        margin: var(--spacing-sm) auto;
+        margin-bottom: 120px !important;
+        max-width: 90%;
+    }
+    
+    .qr-message-content {
+        font-size: 1.25rem;
+    }
+    
+    .qr-access-denied {
+        padding: 28px 24px;
+        max-width: 85%;
+    }
+}
+
+/* -------------------------
+   Mobile Large QR Adaptations
+   ------------------------- */
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .qr-exclusive-message {
+        padding: 24px 28px;
+        margin: var(--spacing-sm) auto;
+        margin-bottom: 160px !important;
+        max-width: 95%;
+    }
+    
+    .qr-message-content {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+    
+    .qr-exclusive-indicator {
+        top: 8px;
+        right: 12px;
+        padding: 3px 8px;
+        font-size: 0.65rem;
+    }
+    
+    .qr-access-denied {
+        padding: 24px 20px;
+        margin: var(--spacing-sm) auto;
+    }
+}
+
+/* -------------------------
+   Mobile Standard QR Adaptations
+   ------------------------- */
+
+@media (min-width: 320px) and (max-width: 479px) {
+    .qr-exclusive-message {
+        padding: 20px 24px;
+        margin-bottom: 180px !important;
+        max-width: 98%;
+    }
+    
+    .qr-message-content {
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+    
+    .qr-message-subtitle {
+        font-size: 0.85rem;
+    }
+    
+    .qr-exclusive-indicator {
+        top: 8px;
+        right: 12px;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+    
+    .qr-access-denied {
+        padding: 20px 16px;
+        margin: var(--spacing-xs) auto;
+    }
+    
+    .qr-access-denied h3 {
+        font-size: 1.1rem;
+    }
+    
+    .qr-access-denied p {
+        font-size: 0.9rem;
+    }
+}
+
+/* -------------------------
+   Mobile Small QR Adaptations
+   ------------------------- */
+
+@media (max-width: 319px) {
+    .qr-exclusive-message {
+        padding: 16px 20px;
+        margin-bottom: 160px !important;
+        max-width: 99%;
+    }
+    
+    .qr-message-content {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+    
+    .qr-message-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .qr-exclusive-indicator {
+        top: 6px;
+        right: 10px;
+        font-size: 0.65rem;
+        padding: 2px 5px;
+    }
+}
+
+/* ==========================================================================
+   MÓDULO: QR ACCESSIBILITY & PERFORMANCE
+   ========================================================================== */
+
+/* -------------------------
+   Central Mode Accessibility
+   ------------------------- */
+
+.qr-central-message:focus-within {
+    outline: 4px solid var(--primary-color);
+    outline-offset: 6px;
+}
+
+/* -------------------------
+   Reduced Motion Support (Central Mode)
+   ------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .qr-central-message {
+        transition: opacity 0.3s ease;
+    }
+    
+    .qr-central-message.show {
+        transform: none;
+    }
+    
+    .qr-central-message.central-magical-entrance {
+        animation: none;
+    }
+    
+    .romantic-hearts-central::before,
+    .romantic-hearts-central::after {
+        animation: none;
+        opacity: 0.2;
+    }
+    
+    .qr-central-message::before {
+        animation: none;
+        background: linear-gradient(45deg, #ff69b4, #ff87a3);
+    }
+}
+
+/* -------------------------
+   High Contrast Support (Central Mode)
+   ------------------------- */
+
+@media (prefers-contrast: high) {
+    .qr-central-message {
+        border: 6px solid var(--primary-color);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        background: white;
+    }
+    
+    .qr-central-content {
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        color: #000;
+    }
+    
+    .qr-central-message::before {
+        background: var(--primary-color);
+    }
+}
+
+/* -------------------------
+   Print Styles (Central Mode)
+   ------------------------- */
+
+@media print {
+    .qr-central-container {
+        position: static !important;
+        background: white !important;
+        backdrop-filter: none !important;
+    }
+    
+    .qr-central-message {
+        background: white !important;
+        border: 3px solid #000 !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        page-break-inside: avoid;
+        max-width: 100% !important;
+        padding: 2rem !important;
+    }
+    
+    .qr-central-message::before,
+    .romantic-hearts-central {
+        display: none !important;
+    }
+    
+    .qr-central-indicator {
+        color: #000 !important;
+    }
+    
+    .qr-central-content {
+        color: #000 !important;
+        text-shadow: none !important;
+    }
+    
+    .qr-central-subtitle {
+        color: #333 !important;
+    }
+    
+    .qr-central-signature {
+        color: #000 !important;
+        border-top-color: #ccc !important;
+    }
+}
+
+/* -------------------------
+   QR Central Mode States
+   ------------------------- */
+
+.qr-central-mode .header {
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.qr-central-mode .floating-hearts {
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
+}
+
+/* Ocultar elementos específicos en modo central */
+body.qr-central-mode .lottie-container,
+body.qr-central-mode .navigation-controls,
+body.qr-central-mode .character-speech-bubble {
+    display: none !important;
+}
+
+/* Ajustes de performance para modo central */
+.qr-central-message {
+    contain: layout style paint;
+    will-change: transform, opacity;
+}
+
+.qr-central-container {
+    contain: layout style;
+    will-change: opacity;
+}
