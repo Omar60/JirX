@@ -90,6 +90,12 @@ class QRExclusiveSystem {
                 type: "tender",
                 subtitle: "Porque tus ojos brillan de una manera que me tiene completamente hipnotizado",
                 priority: 1
+            },
+            'message_9': {
+                text: "Siempre que necesites apoyo, estaré ahí",
+                type: "sweet",
+                subtitle: "Vales mucho, no lo olvides",
+                priority: 1
             }
         };
     }
